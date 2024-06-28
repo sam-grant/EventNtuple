@@ -39,3 +39,8 @@ physics.analyzers.TrkAna.FitType : LoopHelix
 physics.analyzers.TrkAna.FillTrkPIDInfo : false
 
 services.TFileService.fileName: "nts.owner.trkana-reco.version.sequencer.root"
+
+# Bug 47 
+
+# physics.analyzers.TrkAnaNeg.FillTriggerInfo : true
+# physics.analyzers.TrkAnaNeg.debugLevel : 2
