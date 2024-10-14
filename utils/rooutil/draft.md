@@ -1,11 +1,30 @@
 # RooUtil (draft)
 
-RooUtil is a utility class to help analyze EventNtuple in ROOT-based analysis frameworks.
+RooUtil is a utility class to help analyze EventNtuple in ROOT-based analysis frameworks. It can be used simply like so:
 
-It is currently under development and the available branches are listed [below](#Supported-Branches)
+```
+#include "EventNtuple/utils/rooutil/inc/RooUtil.hh"
+void PrintEvents(std::string filename) {
+
+  RooUtil util(filename);
+  std::cout << filename << " has " << util.GetNEvents() << " events" << std::endl;
+
+  // Now loop through the events
+  for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
+    const auto& event = util.GetEvent(i_event);
+    // Any single-object branch can be accessed with...
+    event.branchname->leafname;
+  }
+}
+```
+
+Branches can be directly accessed from this ```event```. However to aid in the complex structure of the ntuple, we also provide helper classes that combine certain branches together.
+
+This is currently under development and the available branches are listed [below](#Supported-Branches)
+
 
 ## Classes
-There are various classes that combine together branches at different dimenions
+There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
@@ -53,4 +72,13 @@ int n_e_minus_good_tracks = event.CountTracks(my_cut);
 
 ```
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
+```
+
+## Possible Speed Optimizations
+By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you want reading. This can increase the speed by as much as a factor of 10.
+
+```
+RooUtil util(filename);
+util.TurnOffAllBranches(); // first turn all branches off
+util.TurnOnBranches(std::vector<std::string>{"branch1", "branch2"});
 ```

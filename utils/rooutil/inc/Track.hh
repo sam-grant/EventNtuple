@@ -8,23 +8,16 @@
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
 
 struct Track {
-  Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs, bool debug = false) : trk(trk), trksegs(trksegs), debug(debug) {
+  Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs) : trk(trk), trksegs(trksegs) {
 
     // Create the underlying track segments
     for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
       TrackSegment segment(&(trksegs->at(i_segment))); // passing the addresses of the underlying structs
-      if (debug) {
-        std::cout << "Track::Track(): Adding segment #" << i_segment << " to segments..." << std::endl;
-      }
       segments.emplace_back(segment);
     }
 
     // Time order the segments
     std::sort(segments.begin(), segments.end(), TrackSegment::earliest);
-
-    if (debug) {
-      std::cout << "Track::Track(): All done." << std::endl;
-    }
   }
 
   int nSegments() const { return trksegs->size(); }
@@ -41,7 +34,6 @@ struct Track {
   }
 
   TrackSegments segments;
-  bool debug = false;
 
   // Pointers to the data
   mu2e::TrkInfo* trk = nullptr;
