@@ -3,6 +3,7 @@
 
 #include "EventNtuple/inc/EventInfo.hh"
 #include "EventNtuple/inc/EventInfoMC.hh"
+#include "EventNtuple/inc/TrkInfoMC.hh"
 
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 
@@ -17,16 +18,20 @@ struct Event {
 
     // Check if the MC branches exist
     if (ntuple->GetBranch("evtinfomc")) {
-      ntuple->SetBranchStatus("evtinfomc", 1);
       ntuple->SetBranchAddress("evtinfomc", &this->evtinfomc);
+    }
+    if (ntuple->GetBranch("trkmc")) {
+      ntuple->SetBranchAddress("trkmc", &this->trkmc);
     }
   };
 
   void Update() {
     tracks.clear();
-
     for (int i_track = 0; i_track < nTracks(); ++i_track) {
       Track track(&(trk->at(i_track)), &(trksegs->at(i_track))); // passing the addresses of the underlying structs
+      if (trkmc != nullptr) {
+        track.trkmc = &(trkmc->at(i_track));
+      }
       tracks.emplace_back(track);
     }
   }
@@ -57,6 +62,7 @@ struct Event {
   mu2e::EventInfoMC* evtinfomc = nullptr;
 
   std::vector<mu2e::TrkInfo>* trk = nullptr;
+  std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
 };
 

@@ -37,6 +37,7 @@ struct Track {
 
   // Pointers to the data
   mu2e::TrkInfo* trk = nullptr;
+  mu2e::TrkInfoMC* trkmc = nullptr;
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
 };
 

@@ -82,3 +82,16 @@ RooUtil util(filename);
 util.TurnOffAllBranches(); // first turn all branches off
 util.TurnOnBranches(std::vector<std::string>{"branch1", "branch2"});
 ```
+
+## For Developers
+### Adding a new branch
+Checklist:
+
+1. In [Event.hh](inc/Event.hh) add the pointers at the bottom of the file
+2. In [Event.hh](inc/Event.hh) constructor, set the branch address
+  - make sure to test for existence if the branch may not exist (e.g. it is an MC branch)
+3. In [Event.hh](inc/Event.hh) add the #include to the underlying object
+4. Add to validation places:
+  - [PrintEvents.C](examples/PrintEvents.C): at least the first and last leaf in the struct
+  - [create_val_file_rooutil.C](../../validation/create_val_file_rooutil.C)
+5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```

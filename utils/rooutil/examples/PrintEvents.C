@@ -28,6 +28,13 @@ void PrintEvents(std::string filename, bool has_mc = false) {
       std::cout << "trk: " << trk.status << "," << trk.nhits << "," << trk.nactive << "," << trk.avgedep << std::endl;
     }
 
+    // trkmc branch
+    if (has_mc) {
+      for (const auto& trkmc : *(event.trkmc)) {
+        std::cout << "trkmc: " << trkmc.valid << "," << trkmc.nhits << "," << trkmc.nactive << "," << trkmc.t0 << std::endl;
+      }
+    }
+
     // trksegs branch
     for (const auto& trksegs : *(event.trksegs)) {
       for (const auto& trkseg : trksegs) {

@@ -78,6 +78,24 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trksegs_sid = new TH1F("h_trksegs_sid", "", 100,0,100);
   TH1F* h_trksegs_sindex = new TH1F("h_trksegs_sindex", "", 100,0,100);
 
+  TH1F* h_trkmc_valid = new TH1F("h_trkmc_valid", "",100,0,100);
+  TH1F* h_trkmc_ndigi = new TH1F("h_trkmc_ndigi", "",100,0,100);
+  TH1F* h_trkmc_ndigigood = new TH1F("h_trkmc_ndigigood", "",100,0,100);
+  TH1F* h_trkmc_nhits = new TH1F("h_trkmc_nhits", "",100,0,100);
+  TH1F* h_trkmc_nactive = new TH1F("h_trkmc_nactive", "",100,0,100);
+  TH1F* h_trkmc_nambig = new TH1F("h_trkmc_nambig", "",100,0,100);
+  TH1F* h_trkmc_nipaup = new TH1F("h_trkmc_nipaup", "",100,0,100);
+  TH1F* h_trkmc_nipadown = new TH1F("h_trkmc_nipadown", "",100,0,100);
+  TH1F* h_trkmc_nstup = new TH1F("h_trkmc_nstup", "",100,0,100);
+  TH1F* h_trkmc_nstdown = new TH1F("h_trkmc_nstdown", "",100,0,100);
+  TH1F* h_trkmc_maxr = new TH1F("h_trkmc_maxr", "",100,0,100);
+  TH1F* h_trkmc_rad = new TH1F("h_trkmc_rad", "",100,0,100);
+  TH1F* h_trkmc_lam = new TH1F("h_trkmc_lam", "",100,0,100);
+  TH1F* h_trkmc_cx = new TH1F("h_trkmc_cx", "",100,0,100);
+  TH1F* h_trkmc_cy = new TH1F("h_trkmc_cy", "",100,0,100);
+  TH1F* h_trkmc_phi0 = new TH1F("h_trkmc_phi0", "",100,0,100);
+  TH1F* h_trkmc_t0 = new TH1F("h_trkmc_t0", "",100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -149,6 +167,26 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
         h_trksegs_sid->Fill(trkseg.sid);
         h_trksegs_sindex->Fill(trkseg.sindex);
       }
+    }
+
+    for (const auto& trkmc : *(event.trkmc)) {
+      h_trkmc_valid->Fill(trkmc.valid);
+      h_trkmc_ndigi->Fill(trkmc.ndigi);
+      h_trkmc_ndigigood->Fill(trkmc.ndigigood);
+      h_trkmc_nhits->Fill(trkmc.nhits);
+      h_trkmc_nactive->Fill(trkmc.nactive);
+      h_trkmc_nambig->Fill(trkmc.nambig);
+      h_trkmc_nipaup->Fill(trkmc.nipaup);
+      h_trkmc_nipadown->Fill(trkmc.nipadown);
+      h_trkmc_nstup->Fill(trkmc.nstup);
+      h_trkmc_nstdown->Fill(trkmc.nstdown);
+      h_trkmc_maxr->Fill(trkmc.maxr);
+      h_trkmc_rad->Fill(trkmc.rad);
+      h_trkmc_lam->Fill(trkmc.lam);
+      h_trkmc_cx->Fill(trkmc.cx);
+      h_trkmc_cy->Fill(trkmc.cy);
+      h_trkmc_phi0->Fill(trkmc.phi0);
+      h_trkmc_t0->Fill(trkmc.t0);
     }
   }
 
