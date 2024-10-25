@@ -2,8 +2,8 @@
 // Namespace for collecting tools used in MC truth evaluation
 // Original author: Dave Brown (LBNL) 8/10/2016
 //
-#ifndef TrkAna_InfoMCStructHelper_hh
-#define TrkAna_InfoMCStructHelper_hh
+#ifndef EventNtuple_InfoMCStructHelper_hh
+#define EventNtuple_InfoMCStructHelper_hh
 #include "fhiclcpp/types/Atom.h"
 #include "Offline/RecoDataProducts/inc/StrawHitIndex.hh"
 #include "Offline/MCDataProducts/inc/StrawDigiMC.hh"
@@ -11,21 +11,24 @@
 #include "Offline/MCDataProducts/inc/CrvCoincidenceClusterMC.hh"
 
 #include "Offline/RecoDataProducts/inc/KalSeed.hh"
-#include "TrkAna/inc/TrkInfoMC.hh"
-#include "TrkAna/inc/SimInfo.hh"
-#include "TrkAna/inc/TrkStrawHitInfoMC.hh"
-#include "TrkAna/inc/CaloClusterInfoMC.hh"
-#include "TrkAna/inc/MCStepInfo.hh"
-#include "TrkAna/inc/MCStepSummaryInfo.hh"
-#include "TrkAna/inc/CrvHitInfoMC.hh"
+#include "EventNtuple/inc/TrkInfoMC.hh"
+#include "EventNtuple/inc/SimInfo.hh"
+#include "EventNtuple/inc/TrkStrawHitInfoMC.hh"
+#include "EventNtuple/inc/CaloClusterInfoMC.hh"
+#include "EventNtuple/inc/MCStepInfo.hh"
+#include "EventNtuple/inc/MCStepSummaryInfo.hh"
+#include "EventNtuple/inc/SurfaceStepInfo.hh"
+#include "EventNtuple/inc/CrvHitInfoMC.hh"
 #include "Offline/RecoDataProducts/inc/KalSeed.hh"
 #include "Offline/MCDataProducts/inc/KalSeedMC.hh"
 #include "BTrk/BbrGeom/HepPoint.h"
 #include "Offline/MCDataProducts/inc/PrimaryParticle.hh"
+#include "Offline/MCDataProducts/inc/SurfaceStep.hh"
 #include "Offline/BFieldGeom/inc/BFieldManager.hh"
 #include "Offline/GeometryService/inc/GeomHandle.hh"
 #include "Offline/GlobalConstantsService/inc/GlobalConstantsHandle.hh"
 #include "Offline/GlobalConstantsService/inc/ParticleDataList.hh"
+#include "art/Framework/Principal/Handle.h"
 
 #include <vector>
 #include <functional>
@@ -62,7 +65,7 @@ namespace mu2e {
       InfoMCStructHelper(const Config& conf);
       void updateEvent(const art::Event& event);
 
-      void fillTrkInfoMC(const KalSeed& kseed, const KalSeedMC& kseedmc, std::vector<TrkInfoMC>& all_trkinfomcs);
+      void fillTrkInfoMC(const KalSeed& kseed, const KalSeedMC& kseedmc, art::Handle<SurfaceStepCollection> surfaceStepsHandle, std::vector<TrkInfoMC>& all_trkinfomcs);
       void fillTrkInfoMCDigis(const KalSeed& kseed, const KalSeedMC& kseedmc, TrkInfoMC& trkinfomc);
       void fillHitInfoMC(const KalSeedMC& kseedmc, TrkStrawHitInfoMC& tshinfomc, const TrkStrawHitMC& tshmc);
       void fillAllSimInfos(const KalSeedMC& kseedmc, const PrimaryParticle& primary, std::vector<std::vector<SimInfo>>& all_siminfos, int n_generations, int n_match);
@@ -71,6 +74,8 @@ namespace mu2e {
       void fillCaloClusterInfoMC(CaloClusterMC const& ccmc, std::vector<CaloClusterInfoMC>& ccimc);
       void fillExtraMCStepInfos(KalSeedMC const& kseedmc, StepPointMCCollection const& mcsteps,
                                 std::vector<MCStepInfos>& mcsics, std::vector<MCStepSummaryInfo>& mcssis);
+      void fillSurfaceStepInfos(KalSeedMC const& kseedmc, SurfaceStepCollection const& surfsteps,std::vector<SurfaceStepInfo>& ssic);
+
   };
 }
 

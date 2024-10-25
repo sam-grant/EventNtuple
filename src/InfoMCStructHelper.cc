@@ -2,7 +2,7 @@
 // Namespace for collecting tools used in MC truth evaluation
 // Original author: Dave Brown (LBNL) 8/10/2016
 //
-#include "TrkAna/inc/InfoMCStructHelper.hh"
+#include "EventNtuple/inc/InfoMCStructHelper.hh"
 #include "Offline/MCDataProducts/inc/StepPointMC.hh"
 #include "Offline/MCDataProducts/inc/SimParticle.hh"
 #include "Offline/MCDataProducts/inc/MCRelationship.hh"
@@ -48,7 +48,7 @@ namespace mu2e {
     _onSpill = (ewMarker.spillType() == EventWindowMarker::SpillType::onspill);
   }
 
-  void InfoMCStructHelper::fillTrkInfoMC(const KalSeed& kseed, const KalSeedMC& kseedmc, std::vector<TrkInfoMC>& all_trkinfomcs) {
+  void InfoMCStructHelper::fillTrkInfoMC(const KalSeed& kseed, const KalSeedMC& kseedmc, art::Handle<SurfaceStepCollection> surfaceStepsHandle, std::vector<TrkInfoMC>& all_trkinfomcs) {
     // use the primary match of the track
     // primary associated SimParticle
     TrkInfoMC trkinfomc;
@@ -83,6 +83,28 @@ namespace mu2e {
       trkinfomc.cy = lh.cy();
       trkinfomc.phi0= lh.phi0();
       trkinfomc.t0 = lh.t0();
+      // SurfaceStep counts
+      const static SurfaceId ipasid(SurfaceIdDetail::IPA);
+      const static SurfaceId stsid(SurfaceIdDetail::ST_Foils,-1);
+      if(surfaceStepsHandle.isValid()){
+        auto const& surfsteps = *surfaceStepsHandle;
+        for (auto const& ss : surfsteps) {
+          if(ss.simParticle()->id() == simp._spkey){
+            if(ss.surfaceId() == ipasid){
+              if(ss.momentum().Z() > 0)
+                ++trkinfomc.nipadown;
+              else
+                ++trkinfomc.nipaup;
+            }
+            if(ss.surfaceId() == stsid){
+              if(ss.momentum().Z() > 0)
+                ++trkinfomc.nstdown;
+              else
+                ++trkinfomc.nstup;
+            }
+          }
+        }
+      }
     }
 
     fillTrkInfoMCDigis(kseed, kseedmc, trkinfomc);
@@ -374,4 +396,16 @@ namespace mu2e {
     mcsics.push_back(mcsic);
     mcssis.push_back(mcssi);
   }
+
+  void InfoMCStructHelper::fillSurfaceStepInfos(KalSeedMC const& kseedmc, SurfaceStepCollection const& surfsteps,std::vector<SurfaceStepInfo>& ssic) {
+    // only look at SurfaceSteps associated with the primary MC truth match particle
+    auto simp = kseedmc.simParticle().simParticle(_spcH);
+    for (auto const& ss : surfsteps) {
+      if(ss.simParticle() == simp){
+      //  std::cout << "Found matching surface step sid" << ss << " particle time " << simp->startGlobalTime() << std::endl;
+        ssic.emplace_back(ss); // temporary
+      }
+    }
+  }
+
 }
