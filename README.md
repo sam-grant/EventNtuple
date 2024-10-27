@@ -17,6 +17,8 @@ The EventNtuple is a simplified data format that can be used for Mu2e analyses.
 ## Structure
 The EventNtuple structure is complex.
 
+A [list of branches is available](./doc/branches.md)
+
 The help understand what all the branches and leaves mean, we have an [```ntuplehelper```](doc/ntuplehelper.md) tool
 
 ## How to Analyze an EventNtuple
