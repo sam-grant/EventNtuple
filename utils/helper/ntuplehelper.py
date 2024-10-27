@@ -63,7 +63,7 @@ class nthelper:
 
         return explanation
 
-    def list_all_branches(self, export_to_md):
+    def list_all_branches(self, export_to_md=False):
         if not export_to_md:
             print("Single-Object Branches")
             print("======================")
