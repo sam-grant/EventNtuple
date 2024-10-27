@@ -69,9 +69,9 @@ class nthelper:
             print("======================")
         else:
             with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/doc/branches.md", 'w') as f:
-                f.write("## Single-Object Branches")
-                print("| branch | explanation |\n")
-                print("|--------+-------------|\n")
+                f.write("## Single-Object Branches\n")
+                f.write("| branch | explanation |\n")
+                f.write("|--------+-------------|\n")
 
         for branch in self.single_object_branches:
             explanation = self.get_branch_explanation(branch)
