@@ -5,9 +5,9 @@
 The EventNtuple is a simplified data format that can be used for Mu2e analyses.
 
 ## Structure
-The EventNtuple structure is complex.
+The EventNtuple structure is complex. Some branches consist of a single object (e.g. ```evtinfo```), some are vectors of objects (e.g. ```trk```) and some are vectors-of-vectors of objects (e.g. ```trksegs```).
 
-The help understand what all the branches and leaves mean, we have an [```ntuplehelper```](doc/ntuplehelper.md) tool
+To help understand what all the branches and leaves mean, we have an [```ntuplehelper```](doc/ntuplehelper.md) tool
 
 ## Utilities
 To help with analyzing the EventNtuple given its complex structure, we have two sets of utilities:
