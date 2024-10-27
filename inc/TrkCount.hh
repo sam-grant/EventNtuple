@@ -3,7 +3,7 @@
 #include <string>
 // root
 //
-// TrkCount: branch to count tracks and track-related quantities in an event
+// TrkCount: counts track types and track-related quantities in an event (MARKED FOR REMOVAL)
 // Dave Brown, LBNL 7/8/2016
 namespace mu2e
 {

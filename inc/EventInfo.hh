@@ -1,5 +1,5 @@
 //
-// EventInfo: Event-level information
+// EventInfo: event-level information
 // Dave Brown (LBNL)
 //
 #ifndef EventInfo_HH
