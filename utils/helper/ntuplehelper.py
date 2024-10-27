@@ -63,19 +63,52 @@ class nthelper:
 
         return explanation
 
-    def list_all_branches(self):
-        print("Single-Object Branches")
-        print("======================")
+    def list_all_branches(self, export_to_md):
+        if not export_to_md:
+            print("Single-Object Branches")
+            print("======================")
+        else:
+            print("==Single-Object Branches==")
+            print("| branch | explanation |")
+            print("|--------+-------------|")
+
         for branch in self.single_object_branches:
-            print(self.get_branch_explanation(branch))
-        print("\nVector Branches")
-        print("================")
+            explanation = self.get_branch_explanation(branch)
+            if not export_to_md:
+                print(explanation)
+            else:
+                tokens=explanation.split(":")
+                print("| " + tokens[0] + " | " + tokens[1] + "|")
+
+        if not export_to_md:
+            print("\nVector Branches")
+            print("================")
+        else:
+            print("\n==Vector Branches==")
+            print("| branch | explanation |")
+            print("|--------+-------------|")
         for branch in self.vector_object_branches:
-            print(self.get_branch_explanation(branch))
-        print("\nVector-of-Vector Branches")
-        print("=============================")
+            explanation = self.get_branch_explanation(branch)
+            if not export_to_md:
+                print(explanation)
+            else:
+                tokens=explanation.split(":")
+                print("| " + tokens[0] + " | " + tokens[1] + "|")
+
+        if not export_to_md:
+            print("\nVector-of-Vector Branches")
+            print("================")
+        else:
+            print("\n==Vector-of-Vector Branches==")
+            print("| branch | explanation |")
+            print("|--------+-------------|")
         for branch in self.vector_vector_object_branches:
-            print(""+self.get_branch_explanation(branch))
+            explanation = self.get_branch_explanation(branch)
+            if not export_to_md:
+                print(explanation)
+            else:
+                tokens=explanation.split(":")
+                print("| " + tokens[0] + " | " + tokens[1] + "|")
 
     # def check_track_type(self, branch):
     #     retval = ["", ""]
