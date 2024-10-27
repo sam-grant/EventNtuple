@@ -68,10 +68,9 @@ class nthelper:
             print("Single-Object Branches")
             print("======================")
         else:
-            with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/doc/branches.md", 'w') as f:
-                f.write("## Single-Object Branches\n")
-                f.write("| branch | explanation |\n")
-                f.write("|--------+-------------|\n")
+            print("## Single-Object Branches\n")
+            print("| branch | explanation |\n")
+            print("|--------+-------------|\n")
 
         for branch in self.single_object_branches:
             explanation = self.get_branch_explanation(branch)
@@ -79,8 +78,7 @@ class nthelper:
                 print(explanation)
             else:
                 tokens=explanation.split(":")
-                with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/doc/branches.md", 'w') as f:
-                    f.write("| " + tokens[0] + " | " + tokens[1] + "|")
+                print("| " + tokens[0] + " | " + tokens[1] + "|")
 
         if not export_to_md:
             print("\nVector Branches")
