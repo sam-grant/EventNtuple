@@ -1,5 +1,5 @@
 //
-// TrkSegInfo: an array of array branch that contains track fit results at particular Surfaces. Example structure: [ [trk1_surfA, trk1_surfB, ...], [trk2_surf_A, trk2_surfC], ... [ trkN_surfB, trkN_surfC] ]
+// TrkSegInfo: track fit results at particular surfaces
 // All momenta are in units of MeV/c, time in nsec WRT when the proton bunch pulse peak hits the production target,
 // positions are in mm WRT the center of the tracker.
 // Dave Brown (LBNL)

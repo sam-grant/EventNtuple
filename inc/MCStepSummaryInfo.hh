@@ -1,5 +1,5 @@
 //
-// MCStepSummaryInfo: branch to summarize total StepPointMC information in a given location
+// MCStepSummaryInfo: information that summarizes all StepPointMCs in a given location
 //
 #ifndef MCStepSummaryInfo_HH
 #define MCStepSummaryInfo_HH

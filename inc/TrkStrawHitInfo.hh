@@ -1,5 +1,5 @@
 //
-// TrkStrawHitInfo: branch describing straw hits assigned to a track, for use in TTree diagnostics
+// TrkStrawHitInfo: information about the straw hits assigned to a track
 //
 #ifndef TrkStrawHitInfoHH
 #define TrkStrawHitInfoHH

@@ -1,5 +1,5 @@
 //
-// MVAResultInfo: array branch containing the output of a multi-variate analysis (MVA)
+// MVAResultInfo: the output of a multi-variate analysis (MVA)
 // structs used to record MVAResult information into EventNtuple
 // Andy Edmonds (January 2024)
 //
