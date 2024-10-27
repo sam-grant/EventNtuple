@@ -70,7 +70,7 @@ class nthelper:
         else:
             print("## Single-Object Branches\n")
             print("| branch | explanation |\n")
-            print("|--------+-------------|\n")
+            print("|--------|-------------|\n")
 
         for branch in self.single_object_branches:
             explanation = self.get_branch_explanation(branch)
@@ -86,7 +86,7 @@ class nthelper:
         else:
             print("\n==Vector Branches==")
             print("| branch | explanation |")
-            print("|--------+-------------|")
+            print("|--------|-------------|")
         for branch in self.vector_object_branches:
             explanation = self.get_branch_explanation(branch)
             if not export_to_md:
@@ -101,7 +101,7 @@ class nthelper:
         else:
             print("\n==Vector-of-Vector Branches==")
             print("| branch | explanation |")
-            print("|--------+-------------|")
+            print("|--------|-------------|")
         for branch in self.vector_vector_object_branches:
             explanation = self.get_branch_explanation(branch)
             if not export_to_md:

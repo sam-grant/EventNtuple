@@ -2,7 +2,7 @@
 
 | branch | explanation |
 
-|--------+-------------|
+|--------|-------------|
 
 | evtinfo |   event-level information|
 | evtinfomc |   MC-truth event-level information|
@@ -13,7 +13,7 @@
 
 ==Vector Branches==
 | branch | explanation |
-|--------+-------------|
+|--------|-------------|
 | trk |   information about the reconstructed track|
 | trkmc |   MC-truth information about the track|
 | trkcalohit |   the calorimeter cluster assigned to a track|
@@ -25,7 +25,7 @@
 
 ==Vector-of-Vector Branches==
 | branch | explanation |
-|--------+-------------|
+|--------|-------------|
 | trksegs |   track fit results at particular surfaces|
 | trksegpars_lh |   LoopHelix track parameters at each trkseg surface (used for looping tracks)|
 | trksegpars_ch |   CentralHelix track parameters at each trkseg surface (used for field-on cosmic tracks)|
