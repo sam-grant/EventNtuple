@@ -1,6 +1,9 @@
 ==Single-Object Branches==
+
 | branch | explanation |
+
 |--------+-------------|
+
 | evtinfo |   event-level information|
 | evtinfomc |   MC-truth event-level information|
 | hitcount |   counts of different hit types in an event|

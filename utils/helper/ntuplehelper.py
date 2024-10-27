@@ -68,9 +68,9 @@ class nthelper:
             print("Single-Object Branches")
             print("======================")
         else:
-            print("==Single-Object Branches==")
-            print("| branch | explanation |")
-            print("|--------+-------------|")
+            print("==Single-Object Branches==\n")
+            print("| branch | explanation |\n")
+            print("|--------+-------------|\n")
 
         for branch in self.single_object_branches:
             explanation = self.get_branch_explanation(branch)
