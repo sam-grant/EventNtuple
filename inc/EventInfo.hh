@@ -1,5 +1,5 @@
 //
-// EventInfo: branch to store event-level information
+// EventInfo: Event-level information
 // Dave Brown (LBNL)
 //
 #ifndef EventInfo_HH
