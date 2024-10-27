@@ -1,3 +1,1 @@
-## Single-Object Branches
-| branch | explanation |
-|--------+-------------|
+| crvsummarymc |   summary of the MC-truth CRV information in the event|

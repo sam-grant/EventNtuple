@@ -79,7 +79,8 @@ class nthelper:
                 print(explanation)
             else:
                 tokens=explanation.split(":")
-                print("| " + tokens[0] + " | " + tokens[1] + "|")
+                with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/doc/branches.md", 'w') as f:
+                    f.write("| " + tokens[0] + " | " + tokens[1] + "|")
 
         if not export_to_md:
             print("\nVector Branches")
