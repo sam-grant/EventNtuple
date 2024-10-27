@@ -2,6 +2,10 @@ import os
 
 class nthelper:
 
+    single_object_branches = ['evtinfo', 'evtinfomc', 'hitcount', 'tcnt', 'crvsummary', 'crvsummarymc']
+    vector_object_branches = ['trk', 'trkmc', 'trkcalohit', 'trkcalohitmc', 'crvcoincs', 'crvcoincsmc', 'crvcoincsmcplane', 'trkqual']
+    vector_vector_object_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trkmcsim', 'trkhits', 'trkhitsmc', 'trkmats', 'trkmcsco', 'trkmcssi', 'trksegsmc' ]
+
     track_types_dict = { 'kl' : "kinematic line fit (i.e. straight-line fit)",
                          'dem' : "downstream e-minus fit",
                          'uem' : "upstream e-minus fit",
@@ -77,9 +81,8 @@ class nthelper:
             # Check if this is a track branch
             branch_to_search = i_branch
             track_type, explanation = self.check_track_type(i_branch)
-            branch_output = i_branch;
+            branch_output = i_branch + " branch: ";
             if (explanation != ""):
-                branch_output += " ("+track_type+" = "+explanation+")"
                 branch_to_search = i_branch.replace(track_type, "trk", 1) # we have keyed all the different track-related branches to "trk" in e.g. branch_struct_dict; also only replace 1 occurance so that klkl branch is handled correctly
 
             leaf_output = "";
@@ -89,13 +92,30 @@ class nthelper:
                 struct_file = struct;
                 if (".hh" not in struct_file):
                     struct_file += ".hh"
+
+
+
 #                print(struct_file)
                 with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/inc/"+struct_file, 'r') as f:
                     lines = f.readlines()
                     for row in lines:
                         if (row.find("// "+struct) != -1):
                             #print(row)
-                            branch_output += row.replace("// "+struct, "").replace('\n', ''); # remove the trailing newline as well
+                            branch_output += row.replace("// "+struct+":", "").replace('\n', ''); # remove the trailing newline as well
+                            if (i_branch in self.single_object_branches):
+                                branch_output += ".\n   - structure: single object"
+                                branch_output += "\n   - object: "+struct
+                            elif (i_branch in self.vector_object_branches):
+                                branch_output += ".\n   - structure: vector of objects"
+                                branch_output += "\n   - object: "+ struct
+                                branch_output += "\n   - example: ["+i_branch+"1, "+i_branch+"2, ..., "+i_branch+"N]"
+                            elif (i_branch in self.vector_vector_object_branches):
+                                branch_output += ".\n   - structure: vector of vector of objects"
+                                branch_output += "\n   - object: "+ struct
+                                # split branch name into "trk" + other thing, and remove the trailing 's' indicating it is plural
+                                split_on="trk"
+                                token=i_branch.split(split_on)[1].rstrip('s')
+                                branch_output += "\n   - example: [ ["+split_on+"1_"+token+"A, "+split_on+"1_"+token+"B, ... ], [ "+split_on+"2_"+token+"A, "+split_on+"2_"+token+"C, ... ], ..., ["+split_on+"N_"+token+"B, "+split_on+"N_"+token+"D, ... ] ]"
 
                         # Check whether this row is an explanation for a leaf that we are asking for
                         for i_leaf in leaves:
