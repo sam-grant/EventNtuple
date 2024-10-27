@@ -88,8 +88,8 @@ class nthelper:
             print("================")
         else:
             print("## Vector Branches\n")
-            print("| branch | explanation |")
-            print("|--------|-------------|")
+            print("| branch | explanation | leaf information |")
+            print("|--------|-------------|------------------|")
         for branch in self.vector_object_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
@@ -105,8 +105,8 @@ class nthelper:
             print("================")
         else:
             print("## Vector-of-Vector Branches\n")
-            print("| branch | explanation |")
-            print("|--------|-------------|")
+            print("| branch | explanation | leaf information |")
+            print("|--------|-------------|------------------|")
         for branch in self.vector_vector_object_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
