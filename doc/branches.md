@@ -1,17 +1,15 @@
 ## Single-Object Branches
 
 | branch | explanation |
-
 |--------|-------------|
-
 | evtinfo |   event-level information|
 | evtinfomc |   MC-truth event-level information|
 | hitcount |   counts of different hit types in an event|
 | tcnt |   counts track types and track-related quantities in an event (MARKED FOR REMOVAL)|
 | crvsummary |   summary of the CRV information in the event|
 | crvsummarymc |   summary of the MC-truth CRV information in the event|
+## Vector Branches
 
-==Vector Branches==
 | branch | explanation |
 |--------|-------------|
 | trk |   information about the reconstructed track|
@@ -22,8 +20,8 @@
 | crvcoincsmc |   information about the MC track which most likely caused the CRV coincidence triplets|
 | crvcoincsmcplane |   information about the point where the MC trajectory crosses the xz plane of CRV-T|
 | trkqual |   the output of a multi-variate analysis (MVA)|
+## Vector-of-Vector Branches
 
-==Vector-of-Vector Branches==
 | branch | explanation |
 |--------|-------------|
 | trksegs |   track fit results at particular surfaces|
