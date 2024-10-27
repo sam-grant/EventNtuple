@@ -117,6 +117,9 @@ class nthelper:
                 tokens=explanation.split(":")
                 print("| " + tokens[0] + " | " + tokens[1] + "| [see " + struct_file + "](../inc/"+struct_file+")")
 
+        if not export_to_md:
+            print("\n\nTo get all leaf information on any of the branches above run \"ntuplehelper branch.*\" (For example: \"ntuplehelper trk.*\")")
+
 
     def whatis(self, array):
         if type(array) is not list: # if a single string is passed, put it into an array
