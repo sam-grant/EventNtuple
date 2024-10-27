@@ -92,11 +92,13 @@ class nthelper:
             print("|--------|-------------|")
         for branch in self.vector_object_branches:
             explanation = self.get_branch_explanation(branch)
+            struct = self.branch_struct_dict[branch]
+            struct_file = struct + ".hh";
             if not export_to_md:
                 print(explanation)
             else:
                 tokens=explanation.split(":")
-                print("| " + tokens[0] + " | " + tokens[1] + "|")
+                print("| " + tokens[0] + " | " + tokens[1] + "| [see " + struct_file + "](../inc/"+struct_file+")")
 
         if not export_to_md:
             print("\nVector-of-Vector Branches")
@@ -107,11 +109,13 @@ class nthelper:
             print("|--------|-------------|")
         for branch in self.vector_vector_object_branches:
             explanation = self.get_branch_explanation(branch)
+            struct = self.branch_struct_dict[branch]
+            struct_file = struct + ".hh";
             if not export_to_md:
                 print(explanation)
             else:
                 tokens=explanation.split(":")
-                print("| " + tokens[0] + " | " + tokens[1] + "|")
+                print("| " + tokens[0] + " | " + tokens[1] + "| [see " + struct_file + "](../inc/"+struct_file+")")
 
     # def check_track_type(self, branch):
     #     retval = ["", ""]
