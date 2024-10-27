@@ -10,11 +10,15 @@ def main():
         description='A python utility class to get information about branches and leaves in the Mu2e EventNtuple',
         epilog='For help, post to the #trkana Slack channel')
 
+    parser.add_argument('--list-all-branches', action='store_true', help="Lists all branches")
     parser.add_argument('branches', nargs='*', help="Use format \"branch.leaf\". Multiple items are allowed. Using a \"*\" for the leaf will print description of all leaves for the branch")
 
     args = parser.parse_args()
 
     nth = nthelper()
+    if (args.list_all_branches):
+        nth.list_all_branches();
+
     nth.whatis(args.branches)
 
 

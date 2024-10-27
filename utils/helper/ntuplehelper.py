@@ -4,7 +4,7 @@ class nthelper:
 
     single_object_branches = ['evtinfo', 'evtinfomc', 'hitcount', 'tcnt', 'crvsummary', 'crvsummarymc']
     vector_object_branches = ['trk', 'trkmc', 'trkcalohit', 'trkcalohitmc', 'crvcoincs', 'crvcoincsmc', 'crvcoincsmcplane', 'trkqual']
-    vector_vector_object_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trkmcsim', 'trkhits', 'trkhitsmc', 'trkmats', 'trkmcsco', 'trkmcssi', 'trksegsmc' ]
+    vector_vector_object_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trkmcsim', 'trkhits', 'trkhitsmc', 'trkmats', 'trkmcsci', 'trkmcssi', 'trksegsmc' ]
 
     track_types_dict = { 'kl' : "kinematic line fit (i.e. straight-line fit)",
                          'dem' : "downstream e-minus fit",
@@ -14,8 +14,7 @@ class nthelper:
                          'dep' : "downstream e-plus fit",
                          'uep' : "upstream e-plus fit",
                          'dmp' : "downstream mu-plus fit",
-                         'ump' : "upstream mu-plus fit",
-                         'trk' : "track"
+                         'ump' : "upstream mu-plus fit"
                         }
 
     # A dictionary of branch name to header file containing the struct
@@ -47,15 +46,46 @@ class nthelper:
                            "trksegsmc" : "SurfaceStepInfo"
                           }
 
-    def check_track_type(self, branch):
-        retval = ["", ""]
-        if "crv" not in branch: # "umm" is matching "crvsummary"
-            for key in self.track_types_dict:
-                if key in branch: # branch could be "demmc" but key will be "dem"
-                    retval = [key, self.track_types_dict[key]]
-                    break
+    #
+    def get_branch_explanation(self, branch):
+        explanation=""
+        if branch in self.track_types_dict.keys():
+            explanation = "This is an outdated (v5) branch."
+        else:
+            explanation = branch + ": ";
+            struct = self.branch_struct_dict[branch]
+            struct_file = struct + ".hh";
+            with open(os.environ.get("EVENTNTUPLE_INC")+"/EventNtuple/inc/"+struct_file, 'r') as f:
+                lines = f.readlines()
+                for row in lines:
+                    if (row.find("// "+struct) != -1):
+                        explanation += row.replace("// "+struct+":", "").replace('\n', ''); # remove the trailing newline as well
 
-        return retval
+        return explanation
+
+    def list_all_branches(self):
+        print("Single-Object Branches")
+        print("======================")
+        for branch in self.single_object_branches:
+            print(self.get_branch_explanation(branch))
+        print("\nVector Branches")
+        print("================")
+        for branch in self.vector_object_branches:
+            print(self.get_branch_explanation(branch))
+        print("\nVector-of-Vector Branches")
+        print("=============================")
+        for branch in self.vector_vector_object_branches:
+            print(""+self.get_branch_explanation(branch))
+
+    # def check_track_type(self, branch):
+    #     retval = ["", ""]
+    #     if "crv" not in branch: # "umm" is matching "crvsummary"
+    #         for key in self.track_types_dict:
+    #             if key in branch: # branch could be "demmc" but key will be "dem"
+    #                 retval = [key, self.track_types_dict[key]]
+    #                 break
+
+    #     return retval
 
     def whatis(self, array):
         if type(array) is not list: # if a single string is passed, put it into an array
@@ -79,6 +109,7 @@ class nthelper:
 #            print(i_branch, leaves)
 
             # Check if this is a track branch
+            branch_explanation = self.get_branch_explanation(i_branch)
             branch_to_search = i_branch
             track_type, explanation = self.check_track_type(i_branch)
             branch_output = i_branch + " branch: ";
@@ -116,7 +147,6 @@ class nthelper:
                                 split_on="trk"
                                 token=i_branch.split(split_on)[1].rstrip('s')
                                 branch_output += "\n   - example: [ ["+split_on+"1_"+token+"A, "+split_on+"1_"+token+"B, ... ], [ "+split_on+"2_"+token+"A, "+split_on+"2_"+token+"C, ... ], ..., ["+split_on+"N_"+token+"B, "+split_on+"N_"+token+"D, ... ] ]"
-
                         # Check whether this row is an explanation for a leaf that we are asking for
                         for i_leaf in leaves:
                             if i_leaf == "*":
