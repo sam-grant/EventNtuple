@@ -39,7 +39,9 @@ namespace mu2e
 
       // Get the PEs per layer from the reco pulses
       std::array<float, CRVId::nLayers> PEsPerLayer_ = {0.}; // PEs per layer array, each element initiliased to zero
+      std::array<std::array<float, CRVId::nSidesPerBar>, CRVId::nLayers> PEsPerLayerPerSide_ = {0.}; // 2D PEs per layer per SiPM array, length fixed to CRVId::nLayers, each element initiliased to zero
       const std::vector<art::Ptr<CrvRecoPulse> > coincRecoPulses_ = cluster.GetCrvRecoPulses(); // Get the reco pulses from the coincidence 
+      
       for(size_t j=0; j<coincRecoPulses_.size(); j++) // Loop through the pulses
       {
         // Skip duplicate pulses (those with multiple peaks)
@@ -49,8 +51,15 @@ namespace mu2e
         const CRSScintillatorBar &crvCounter = CRS->getBar(crvBarIndex);
         const CRSScintillatorBarId &crvCounterId = crvCounter.id();
         int layerNumber = crvCounterId.getLayerNumber();
+        // Get the side number 
+        // The negative side has SiPM indices 0 and 2, the postive side has indices 1 and 3.
+        // zero/one index indicates negative/positive; negative/positive indicates direction wrt the axis in the coordinate system.
+        int side = coincRecoPulses_.at(j)->GetSiPMNumber() % CRVId::nSidesPerBar; 
+
         // Sum PEs for this coincidence, indexed by layer number
         PEsPerLayer_[layerNumber] += coincRecoPulses_.at(j)->GetPEsNoFit(); // The coincidences were found using the NoFit option, so use that here as well  
+        // Sum PEs for this coincidence, indexed by layer number and side number
+        PEsPerLayerPerSide_[layerNumber][side] += coincRecoPulses_.at(j)->GetPEsNoFit(); 
       }
 
       //fill the Reco collection
@@ -60,6 +69,7 @@ namespace mu2e
           cluster.GetStartTime(), cluster.GetEndTime(), cluster.GetAvgHitTime(),
           cluster.GetPEs(),
           PEsPerLayer_, // PEsPerLayer array is not a member of the mu2e::CrvCoincidenceCluster class...
+          PEsPerLayerPerSide_, // ""
           cluster.GetCrvRecoPulses().size(),
           cluster.GetLayers().size(),
           cluster.GetSlope());
