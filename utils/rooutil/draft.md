@@ -28,15 +28,15 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk``` | ```trksegs``` |
-| Track | ```trk``` | ```trksegs``` | none |
-| TrackSegment | ```trkseg``` | none | none |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk``` | ```trksegs```, ```trksegmcs``` |
+| Track | ```trk``` | ```trksegs```, `trksegmcs``` | none |
+| TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
 
 ## Supported Branches
 The currently supported branches are:
 * evtinfo, evtinfomc
 * trk
-* trksegs
+* trksegs, trksegmcs
 
 ## Cut Functions
 
@@ -53,6 +53,7 @@ Here are the common cut functions defined in ```EventNtuple/utils/rooutil/inc/co
 |```tracker_entrance``` | track segments | true if track segment is at tracker entrance |
 |```tracker_middle``` | track segments | true if track segment is at tracker middle |
 |```tracker_exit``` | track segments | true if track segment is at tracker exit |
+|```has_mc_step``` | track segments | true if there is a corresponding MC step |
 
 ### Combining Cut Functions
 
@@ -68,7 +69,7 @@ bool my_cut(onst Track& track) {
 int n_e_minus_good_tracks = event.CountTracks(my_cut);
 ```
 
-2. or, be combine them in a [lambda function](https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170) (similar to python):
+2. or, you can combine cuts in a [lambda function](https://learn.microsoft.com/en-us/cpp/cpp/lambda-expressions-in-cpp?view=msvc-170) (similar to python):
 
 ```
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
@@ -94,4 +95,6 @@ Checklist:
 4. Add to validation places:
   - [PrintEvents.C](examples/PrintEvents.C): at least the first and last leaf in the struct
   - [create_val_file_rooutil.C](../../validation/create_val_file_rooutil.C)
+     - copy contents of struct
+     - then copy and replace e.g. "int " with "TH1F* h_trksegsmc_" etc
 5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
