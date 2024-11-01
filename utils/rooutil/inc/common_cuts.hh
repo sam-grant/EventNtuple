@@ -64,6 +64,12 @@ bool tracker_exit(const TrackSegment& segment) {
   else { return false; }
 }
 
+// Track Segment has corresponding surface step
+bool has_mc_step(const TrackSegment& segment) {
+  if (segment.trksegmc != nullptr) { return true; }
+  else { return false; }
+}
+
 
 // More complex cuts
 

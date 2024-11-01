@@ -23,6 +23,9 @@ struct Event {
     if (ntuple->GetBranch("trkmc")) {
       ntuple->SetBranchAddress("trkmc", &this->trkmc);
     }
+    if (ntuple->GetBranch("trksegsmc")) {
+      ntuple->SetBranchAddress("trksegsmc", &this->trksegsmc);
+    }
   };
 
   void Update() {
@@ -32,6 +35,10 @@ struct Event {
       if (trkmc != nullptr) {
         track.trkmc = &(trkmc->at(i_track));
       }
+      if (trksegsmc != nullptr) {
+        track.trksegsmc = &(trksegsmc->at(i_track));
+      }
+      track.Update();
       tracks.emplace_back(track);
     }
   }
@@ -64,6 +71,7 @@ struct Event {
   std::vector<mu2e::TrkInfo>* trk = nullptr;
   std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
+  std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
 };
 
 #endif

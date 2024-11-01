@@ -20,6 +20,22 @@ struct Track {
     std::sort(segments.begin(), segments.end(), TrackSegment::earliest);
   }
 
+  void Update() {
+    for (auto& segment : segments) {
+      if (trksegsmc != nullptr) { // if we have MC information
+        // search for corresponding SurfaceStepInfo (it will have the same sid and sindex)
+        // also, trksegs and trksegms may not be the same length...
+        for (size_t i_segment_mc = 0; i_segment_mc < trksegsmc->size(); ++i_segment_mc) {
+          if (segment.trkseg->sid == trksegsmc->at(i_segment_mc).sid
+              && segment.trkseg->sindex == trksegsmc->at(i_segment_mc).sindex) {
+
+            segment.trksegmc = &(trksegsmc->at(i_segment_mc));
+          }
+        }
+      }
+    }
+  }
+
   int nSegments() const { return trksegs->size(); }
 
   TrackSegments GetSegments() const { return segments; }
@@ -39,6 +55,7 @@ struct Track {
   mu2e::TrkInfo* trk = nullptr;
   mu2e::TrkInfoMC* trkmc = nullptr;
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
+  std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
 };
 
 typedef std::function<bool(const Track&)> TrackCut;

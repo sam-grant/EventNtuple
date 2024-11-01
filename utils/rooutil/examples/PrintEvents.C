@@ -41,5 +41,13 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         std::cout << "trksegs: " << trkseg.mom.R() << "," << trkseg.sid << "," << trkseg.sindex << std::endl;
       }
     }
+    if (has_mc) {
+      for (const auto& trksegsmc : *(event.trksegsmc)) {
+        std::cout << trksegsmc.size() << std::endl;
+        for (const auto& trksegmc : trksegsmc) {
+          std::cout << "trksegsmc: " << trksegmc.mom.R() << "," << trksegmc.sid << "," << trksegmc.sindex << std::endl;
+        }
+      }
+    }
   }
 }

@@ -3,12 +3,14 @@
 
 #include <functional>
 #include "EventNtuple/inc/TrkSegInfo.hh"
+#include "EventNtuple/inc/SurfaceStepInfo.hh"
 
 struct TrackSegment {
   TrackSegment(mu2e::TrkSegInfo* trkseg) : trkseg(trkseg) { }
 
   // Pointers to the data
   mu2e::TrkSegInfo* trkseg = nullptr;
+  mu2e::SurfaceStepInfo* trksegmc = nullptr;
 
   static bool earliest(const TrackSegment& seg1, const TrackSegment& seg2) {
     return seg1.trkseg->time < seg2.trkseg->time;

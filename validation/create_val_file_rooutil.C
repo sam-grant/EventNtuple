@@ -96,6 +96,18 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkmc_phi0 = new TH1F("h_trkmc_phi0", "",100,0,100);
   TH1F* h_trkmc_t0 = new TH1F("h_trkmc_t0", "",100,0,100);
 
+  TH1F* h_trksegsmc_sid = new TH1F("h_trksegsmc_sid", "", 100,0,100);
+  TH1F* h_trksegsmc_sindex = new TH1F("h_trksegsmc_sindex", "", 100,0,100);
+  TH1F* h_trksegsmc_time = new TH1F("h_trksegsmc_time", "", 100,0,100);
+  TH1F* h_trksegsmc_edep = new TH1F("h_trksegsmc_edep", "", 100,0,100);
+  TH1F* h_trksegsmc_path = new TH1F("h_trksegsmc_path", "", 100,0,100);
+  TH1F* h_trksegsmc_pos_x = new TH1F("h_trksegsmc_pos_x", "", 100,0,100);
+  TH1F* h_trksegsmc_pos_y = new TH1F("h_trksegsmc_pos_y", "", 100,0,100);
+  TH1F* h_trksegsmc_pos_z = new TH1F("h_trksegsmc_pos_z", "", 100,0,100);
+  TH1F* h_trksegsmc_mom_x = new TH1F("h_trksegsmc_mom_x", "", 100,0,100);
+  TH1F* h_trksegsmc_mom_y = new TH1F("h_trksegsmc_mom_y", "", 100,0,100);
+  TH1F* h_trksegsmc_mom_z = new TH1F("h_trksegsmc_mom_z", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -187,6 +199,22 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkmc_cy->Fill(trkmc.cy);
       h_trkmc_phi0->Fill(trkmc.phi0);
       h_trkmc_t0->Fill(trkmc.t0);
+    }
+
+    for (const auto& trksegsmc : *(event.trksegsmc)) {
+      for (const auto& trksegmc : trksegsmc) {
+        h_trksegsmc_sid->Fill(trksegmc.sid);
+        h_trksegsmc_sindex->Fill(trksegmc.sindex);
+        h_trksegsmc_time->Fill(trksegmc.time);
+        h_trksegsmc_edep->Fill(trksegmc.edep);
+        h_trksegsmc_path->Fill(trksegmc.path);
+        h_trksegsmc_pos_x->Fill(trksegmc.pos.x());
+        h_trksegsmc_pos_y->Fill(trksegmc.pos.y());
+        h_trksegsmc_pos_z->Fill(trksegmc.pos.z());
+        h_trksegsmc_mom_x->Fill(trksegmc.mom.x());
+        h_trksegsmc_mom_y->Fill(trksegmc.mom.y());
+        h_trksegsmc_mom_z->Fill(trksegmc.mom.z());
+      }
     }
   }
 
