@@ -22,6 +22,9 @@ Branches can be directly accessed from this ```event```. However to aid in the c
 
 This is currently under development and the available branches are listed [below](#Supported-Branches)
 
+## ```rooutilhelper```
+
+```rootuilhelper --list-available-cuts``` lists the cuts that are already available in common_cuts.hh
 
 ## Classes
 There are various classes that combine together branches at different dimensions
@@ -75,6 +78,13 @@ int n_e_minus_good_tracks = event.CountTracks(my_cut);
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
 ```
 
+### Adding new cuts
+Feel free to add to common_cuts.hh some notes on the file.
+
+We use the following special characters for the cuts to be printed with ```rooutilhelper```:
+* ```//+``` gives the cut section heading
+* ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
+
 ## Possible Speed Optimizations
 By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you want reading. This can increase the speed by as much as a factor of 10.
 
@@ -98,3 +108,4 @@ Checklist:
      - copy contents of struct
      - then copy and replace e.g. "int " with "TH1F* h_trksegsmc_" etc
 5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
+6. Add to documentation
