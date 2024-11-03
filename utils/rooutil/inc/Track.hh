@@ -4,11 +4,13 @@
 #include <functional>
 #include "EventNtuple/inc/TrkInfo.hh"
 #include "EventNtuple/inc/TrkSegInfo.hh"
+#include "EventNtuple/inc/TrkCaloHitInfo.hh"
 
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
 
 struct Track {
-  Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs) : trk(trk), trksegs(trksegs) {
+  Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs, mu2e::TrkCaloHitInfo* trkcalohit)
+    : trk(trk), trksegs(trksegs), trkcalohit(trkcalohit) {
 
     // Create the underlying track segments
     for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
@@ -56,6 +58,7 @@ struct Track {
   mu2e::TrkInfoMC* trkmc = nullptr;
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
   std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
+  mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
 };
 
 typedef std::function<bool(const Track&)> TrackCut;

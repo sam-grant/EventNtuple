@@ -108,6 +108,30 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trksegsmc_mom_y = new TH1F("h_trksegsmc_mom_y", "", 100,0,100);
   TH1F* h_trksegsmc_mom_z = new TH1F("h_trksegsmc_mom_z", "", 100,0,100);
 
+  TH1F* h_trkcalohit_active = new TH1F("h_trkcalohit_active", "", 100,0,100);
+  TH1F* h_trkcalohit_did = new TH1F("h_trkcalohit_did", "", 100,0,100);
+  TH1F* h_trkcalohit_poca_x = new TH1F("h_trkcalohit_poca_x", "", 100,0,100);
+  TH1F* h_trkcalohit_poca_y = new TH1F("h_trkcalohit_poca_y", "", 100,0,100);
+  TH1F* h_trkcalohit_poca_z = new TH1F("h_trkcalohit_poca_z", "", 100,0,100);
+  TH1F* h_trkcalohit_mom_x = new TH1F("h_trkcalohit_mom_x", "", 100,0,100);
+  TH1F* h_trkcalohit_mom_y = new TH1F("h_trkcalohit_mom_y", "", 100,0,100);
+  TH1F* h_trkcalohit_mom_z = new TH1F("h_trkcalohit_mom_z", "", 100,0,100);
+  TH1F* h_trkcalohit_cdepth = new TH1F("h_trkcalohit_cdepth", "", 100,0,100);
+  TH1F* h_trkcalohit_trkdepth = new TH1F("h_trkcalohit_trkdepth", "", 100,0,100);
+  TH1F* h_trkcalohit_dphidot = new TH1F("h_trkcalohit_dphidot", "", 100,0,100);
+  TH1F* h_trkcalohit_doca = new TH1F("h_trkcalohit_doca", "", 100,0,100);
+  TH1F* h_trkcalohit_dt = new TH1F("h_trkcalohit_dt", "", 100,0,100);
+  TH1F* h_trkcalohit_ptoca = new TH1F("h_trkcalohit_ptoca", "", 100,0,100);
+  TH1F* h_trkcalohit_tocavar = new TH1F("h_trkcalohit_tocavar", "", 100,0,100);
+  TH1F* h_trkcalohit_tresid = new TH1F("h_trkcalohit_tresid", "", 100,0,100);
+  TH1F* h_trkcalohit_tresidmvar = new TH1F("h_trkcalohit_tresidmvar", "", 100,0,100);
+  TH1F* h_trkcalohit_tresidpvar = new TH1F("h_trkcalohit_tresidpvar", "", 100,0,100);
+  TH1F* h_trkcalohit_ctime = new TH1F("h_trkcalohit_ctime", "", 100,0,100);
+  TH1F* h_trkcalohit_ctimeerr = new TH1F("h_trkcalohit_ctimeerr", "", 100,0,100);
+  TH1F* h_trkcalohit_csize = new TH1F("h_trkcalohit_csize", "", 100,0,100);
+  TH1F* h_trkcalohit_edep = new TH1F("h_trkcalohit_edep", "", 100,0,100);
+  TH1F* h_trkcalohit_edeperr = new TH1F("h_trkcalohit_edeperr", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -215,6 +239,32 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
         h_trksegsmc_mom_y->Fill(trksegmc.mom.y());
         h_trksegsmc_mom_z->Fill(trksegmc.mom.z());
       }
+    }
+
+    for (const auto& trkcalohit : *(event.trkcalohit)) {
+      h_trkcalohit_active->Fill(trkcalohit.active);
+      h_trkcalohit_did->Fill(trkcalohit.did);
+      h_trkcalohit_poca_x->Fill(trkcalohit.poca.x());
+      h_trkcalohit_poca_y->Fill(trkcalohit.poca.y());
+      h_trkcalohit_poca_z->Fill(trkcalohit.poca.z());
+      h_trkcalohit_mom_x->Fill(trkcalohit.mom.x());
+      h_trkcalohit_mom_y->Fill(trkcalohit.mom.y());
+      h_trkcalohit_mom_z->Fill(trkcalohit.mom.z());
+      h_trkcalohit_cdepth->Fill(trkcalohit.cdepth);
+      h_trkcalohit_trkdepth->Fill(trkcalohit.trkdepth);
+      h_trkcalohit_dphidot->Fill(trkcalohit.dphidot);
+      h_trkcalohit_doca->Fill(trkcalohit.doca);
+      h_trkcalohit_dt->Fill(trkcalohit.dt);
+      h_trkcalohit_ptoca->Fill(trkcalohit.ptoca);
+      h_trkcalohit_tocavar->Fill(trkcalohit.tocavar);
+      h_trkcalohit_tresid->Fill(trkcalohit.tresid);
+      h_trkcalohit_tresidmvar->Fill(trkcalohit.tresidmvar);
+      h_trkcalohit_tresidpvar->Fill(trkcalohit.tresidpvar);
+      h_trkcalohit_ctime->Fill(trkcalohit.ctime);
+      h_trkcalohit_ctimeerr->Fill(trkcalohit.ctimeerr);
+      h_trkcalohit_csize->Fill(trkcalohit.csize);
+      h_trkcalohit_edep->Fill(trkcalohit.edep);
+      h_trkcalohit_edeperr->Fill(trkcalohit.edeperr);
     }
   }
 

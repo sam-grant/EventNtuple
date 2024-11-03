@@ -31,32 +31,26 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk``` | ```trksegs```, ```trksegmcs``` |
-| Track | ```trk``` | ```trksegs```, `trksegmcs``` | none |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs``` |
+| Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, `trksegmcs``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
 
 ## Supported Branches
 The currently supported branches are:
 * evtinfo, evtinfomc
-* trk
+* trk, trkmc
 * trksegs, trksegmcs
+* trkcalohit
 
 ## Cut Functions
 
 ### Common Cut Functions
 
-Here are the common cut functions defined in ```EventNtuple/utils/rooutil/inc/common_cuts.hh``` with explanations:
+There are the common cut functions defined in ```EventNtuple/utils/rooutil/inc/common_cuts.hh```, They can be listed (with explanations) using:
 
-| function | cuts on | result |
-|----|----|----|
-|```is_e_minus``` | tracks | true if e-minus hypothesis |
-|```is_e_plus``` | tracks | true if e-plus hypothesis |
-|```is_mu_minus``` | tracks | true if mu-minus hypothesis |
-|```is_mu_plus``` | tracks | true if mu-plus hypothesis |
-|```tracker_entrance``` | track segments | true if track segment is at tracker entrance |
-|```tracker_middle``` | track segments | true if track segment is at tracker middle |
-|```tracker_exit``` | track segments | true if track segment is at tracker exit |
-|```has_mc_step``` | track segments | true if there is a corresponding MC step |
+```
+rootuilhelper --list-available-cuts
+```
 
 ### Combining Cut Functions
 
@@ -65,10 +59,12 @@ There are two ways to combine cut functions:
 1. Write a new one yourself e.g:
 
 ```
+// before your main function
 bool my_cut(onst Track& track) {
    return good_track(track) && is_e_minus(track);
 }
 ...
+// iin your main function's event loop
 int n_e_minus_good_tracks = event.CountTracks(my_cut);
 ```
 
@@ -79,11 +75,12 @@ int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_
 ```
 
 ### Adding new cuts
-Feel free to add to common_cuts.hh some notes on the file.
+Feel free to add to common_cuts.hh
 
-We use the following special characters for the cuts to be printed with ```rooutilhelper```:
-* ```//+``` gives the cut section heading
-* ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
+Some notes on the file:
+* We use the following special characters for the cuts to be printed with ```rooutilhelper```:
+   * ```//+``` gives the cut section heading
+   * ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
 
 ## Possible Speed Optimizations
 By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you want reading. This can increase the speed by as much as a factor of 10.
@@ -105,7 +102,17 @@ Checklist:
 4. Add to validation places:
   - [PrintEvents.C](examples/PrintEvents.C): at least the first and last leaf in the struct
   - [create_val_file_rooutil.C](../../validation/create_val_file_rooutil.C)
-     - copy contents of struct
-     - then copy and replace e.g. "int " with "TH1F* h_trksegsmc_" etc
+     - copy contents of struct into place where histograms are defined
+     - then copy and replace "type " with "TH1F* h_branchname_" (e.g. "float " with "TH1F* h_trkcalohit_")
+     - then copy in " = new TH1F("h_branchname_", "", 100,0,100); //"
+     - delete line after "//"
+     - add in leaf names to histname (and make separate x, y, z histograms for XYZVectorF leaves)
+     - copy histogram lines into main loop
+     - search and replace "TH1F* " with ""
+     - search and replace " = new TH1F("h_" with "->Fill("
+     - search and replace "", "", 100,0,100);" with ");"
+     - search and replace "(branchname_" with "(branchname."
+     - update histogram ranges
 5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
+   - be sure to test it with an example script
 6. Add to documentation

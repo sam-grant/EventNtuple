@@ -43,11 +43,15 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     }
     if (has_mc) {
       for (const auto& trksegsmc : *(event.trksegsmc)) {
-        std::cout << trksegsmc.size() << std::endl;
         for (const auto& trksegmc : trksegsmc) {
           std::cout << "trksegsmc: " << trksegmc.mom.R() << "," << trksegmc.sid << "," << trksegmc.sindex << std::endl;
         }
       }
+    }
+
+    // trkcalohit branch
+    for (const auto& trkcalohit : *(event.trkcalohit)) {
+      std::cout << "trkcalohit: " << trkcalohit.active << "," << trkcalohit.mom.R() << "," << trkcalohit.edep << "," << trkcalohit.edeperr << std::endl;
     }
   }
 }
