@@ -53,5 +53,13 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     for (const auto& trkcalohit : *(event.trkcalohit)) {
       std::cout << "trkcalohit: " << trkcalohit.active << "," << trkcalohit.mom.R() << "," << trkcalohit.edep << "," << trkcalohit.edeperr << std::endl;
     }
+
+    // crvcoincs branch
+    for (const auto& crvcoinc : *(event.crvcoincs)) {
+      std::cout << "crvcoinc: " << crvcoinc.sectorType << "," << crvcoinc.PEs << "," << crvcoinc.angle << std::endl;
+      for (const auto& layer_PE : crvcoinc.PEsPerLayer) {
+        std::cout << "crvcoinc layer PE: " << layer_PE << std::endl;
+      }
+    }
   }
 }

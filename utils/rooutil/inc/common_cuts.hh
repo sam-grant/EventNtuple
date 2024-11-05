@@ -8,6 +8,7 @@
 
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
+#include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
 
 //+ Track Particle Types
 bool is_e_minus(const Track& track) { // track fit used e-minus hypothesis
@@ -42,7 +43,7 @@ bool is_downstream(const TrackSegment& segment) { // track fit segment is going 
 bool is_upstream(const TrackSegment& segment) { // track fit segment is going in -z direction
   // the sign of p_z tells us whether this segment is going upstream or downstream
   if (segment.trkseg->mom.z() < 0) {
-      return true;
+    return true;
   }
   else { return false; }
 }
@@ -95,5 +96,16 @@ bool is_reflected(const Track& track) { // track is refelected (i.e. has both an
   }
 }
 
+//+ CrvCoinc cuts
+bool three_of_four_coinc(const CrvCoinc& crv_coinc) { // CRV coincidence has exactly three layers hit
+  if (crv_coinc.reco->nLayers == 3) { return true; }
+  else { return false; }
+}
+
+//+ Track & CrvCoinc cuts
+bool track_crv_coincidence(const TrackSegment& segment, const CrvCoinc& crv_coinc) { // time difference between track segment and crv_coinc is less than 250 ns
+  if ( std::fabs(segment.trkseg->time - crv_coinc.reco->time) < 250) { return true; }
+  else { return false; }
+}
 
 #endif

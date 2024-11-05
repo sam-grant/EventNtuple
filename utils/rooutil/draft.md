@@ -34,6 +34,7 @@ There are various classes that combine together branches at different dimensions
 | Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs``` |
 | Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, `trksegmcs``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
+| CrvCoinc | ```crvcoinc``` | none | none |
 
 ## Supported Branches
 The currently supported branches are:
@@ -41,6 +42,7 @@ The currently supported branches are:
 * trk, trkmc
 * trksegs, trksegmcs
 * trkcalohit
+* crvcoincs
 
 ## Cut Functions
 

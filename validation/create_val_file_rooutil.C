@@ -132,6 +132,19 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkcalohit_edep = new TH1F("h_trkcalohit_edep", "", 100,0,100);
   TH1F* h_trkcalohit_edeperr = new TH1F("h_trkcalohit_edeperr", "", 100,0,100);
 
+  TH1F* h_crvcoincs_sectorType = new TH1F("h_crvcoincs_sectorType", "", 100,0,100);
+  TH1F* h_crvcoincs_pos_x = new TH1F("h_crvcoincs_pos_x", "", 100,0,100);
+  TH1F* h_crvcoincs_pos_y = new TH1F("h_crvcoincs_pos_y", "", 100,0,100);
+  TH1F* h_crvcoincs_pos_z = new TH1F("h_crvcoincs_pos_z", "", 100,0,100);
+  TH1F* h_crvcoincs_timeStart = new TH1F("h_crvcoincs_timeStart", "", 100,0,100);
+  TH1F* h_crvcoincs_timeEnd = new TH1F("h_crvcoincs_timeEnd", "", 100,0,100);
+  TH1F* h_crvcoincs_time = new TH1F("h_crvcoincs_time", "", 100,0,100);
+  TH1F* h_crvcoincs_PEs = new TH1F("h_crvcoincs_PEs", "", 100,0,100);
+  TH1F* h_crvcoincs_PEsPerLayer = new TH1F("h_crvcoincs_PEsPerLayer", "", 100,0,100);
+  TH1F* h_crvcoincs_nHits = new TH1F("h_crvcoincs_nHits", "", 100,0,100);
+  TH1F* h_crvcoincs_nLayers = new TH1F("h_crvcoincs_nLayers", "", 100,0,100);
+  TH1F* h_crvcoincs_angle = new TH1F("h_crvcoincs_angle", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -265,6 +278,23 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkcalohit_csize->Fill(trkcalohit.csize);
       h_trkcalohit_edep->Fill(trkcalohit.edep);
       h_trkcalohit_edeperr->Fill(trkcalohit.edeperr);
+    }
+
+    for (const auto& crvcoinc : *(event.crvcoincs)) {
+      h_crvcoincs_sectorType->Fill(crvcoinc.sectorType);
+      h_crvcoincs_pos_x->Fill(crvcoinc.pos.x());
+      h_crvcoincs_pos_y->Fill(crvcoinc.pos.y());
+      h_crvcoincs_pos_z->Fill(crvcoinc.pos.z());
+      h_crvcoincs_timeStart->Fill(crvcoinc.timeStart);
+      h_crvcoincs_timeEnd->Fill(crvcoinc.timeEnd);
+      h_crvcoincs_time->Fill(crvcoinc.time);
+      h_crvcoincs_PEs->Fill(crvcoinc.PEs);
+      for (const auto& layer_PEs : crvcoinc.PEsPerLayer) {
+        h_crvcoincs_PEsPerLayer->Fill(layer_PEs);
+      }
+      h_crvcoincs_nHits->Fill(crvcoinc.nHits);
+      h_crvcoincs_nLayers->Fill(crvcoinc.nLayers);
+      h_crvcoincs_angle->Fill(crvcoinc.angle);
     }
   }
 
