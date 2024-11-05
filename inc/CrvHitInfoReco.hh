@@ -21,13 +21,13 @@ namespace mu2e
     float             time = -1; // average hit time
     float             PEs = -1;   //total number of PEs for this cluster
     std::array<float, CRVId::nLayers> PEsPerLayer = {-1};  // PEs per layer for this cluster
-    std::array<std::array<float, CRVId::nSidesPerBar>, CRVId::nLayers> PEsPerLayerPerSide = {-1}; // PEs per layer per side for this cluster
+    std::array<float, CRVId::nLayers * CRVId::nSidesPerBar> sidePEsPerLayer = {-1};// PEs per layer per side for this cluster
     int               nHits = -1;      //number of coincidence hits in this cluster
     int               nLayers = -1;      //number of coincidence layers in this cluster
     float             angle = -999;   //coincidence direction
 
     CrvHitInfoReco(){}
-    CrvHitInfoReco(int sectorType, CLHEP::Hep3Vector hpos, float timeWindowStart, float timeWindowEnd, float timeAvg, float PEs, std::array<float, CRVId::nLayers> PEsPerLayer, std::array<std::array<float, CRVId::nSidesPerBar>, CRVId::nLayers> PEsPerLayerPerSide, int nCoincidenceHits, int nCoincidenceLayers, float coincidenceAngle);
+    CrvHitInfoReco(int sectorType, CLHEP::Hep3Vector hpos, float timeWindowStart, float timeWindowEnd, float timeAvg, float PEs, std::array<float, CRVId::nLayers> PEsPerLayer, std::array<float, CRVId::nLayers * CRVId::nSidesPerBar> sidePEsPerLayer, int nCoincidenceHits, int nCoincidenceLayers, float coincidenceAngle);
   };
   typedef std::vector<CrvHitInfoReco> CrvHitInfoRecoCollection;  //this is the reco vector which will be stored in the main TTree
 }
