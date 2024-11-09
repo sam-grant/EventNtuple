@@ -53,4 +53,8 @@ muse build -j4 --mu2eCompactPrint
 mu2e -c ...
 ```
 
-8. Add to validation and RooUtil
+8. Add to validation and RooUtil and ntuplehelper
+   * instructions to be completed
+9. Update documentation
+   * update ```doc/branches.md```
+   * add an example script somewhere
