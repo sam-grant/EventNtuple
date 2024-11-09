@@ -6,7 +6,7 @@
 3. [How to Analyze an EventNtuple](#How-to-Analyze-an-EventNtuple)
 4. [How to Create an EventNtuple](#How-to-Create-an-EventNtuple)
 5. [Validation](#Validation)
-6. [Instructions for Developers](#Instructions-for-Developers)
+6. [Notes for Developers](#Notes-for-Developers)
 7. [Previous Verisons](#Previous-Versions)
    - [Upgrading from v5 to 6](#Upgrading-from-v5-to-v6)
 8. [Other Useful Links](#Other-Useful-Links)
@@ -42,8 +42,8 @@ This will create a file called ```nts.owner.description.version.sequencer.root``
 
 Note: Other fcl files are available. See table [here](fcl/README.md) to see if another one is more appropriate for your use case.
 
-## Instructions for Developers
-Instructions for developers contributing to EventNtuples are [here](doc/developers.md)
+## Notes for Developers
+Notes for developers contributing to EventNtuples are [here](doc/developers.md)
 
 ## Validation
 Validation scripts and instructions are [here](validation/README.md)

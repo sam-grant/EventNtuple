@@ -1,12 +1,20 @@
 # Notes for Developers
 
-This page contains some miscellanous notes and instructions for developers. On this page:
+This page contains some miscellanous notes for developers
 
+On this page:
+
+* [Structure of the Code](#Structure-of-the-Code)
 * [Adding a branch to EventNtuple](#Adding-a-branch-EventNtuple)
 
-## Adding a branch to EventNtuple
-Every branch is associated with an "InfoStruct". These are C++-style ```structs``` that contain all the leaves. We typically fill these with information from an Offline data product.
+## Structure of the Code
+The code is structured in the following way:
 
+* ```src/EventNtupleMaker_module.cc`` contains the art analyzer module that creates the ```TTree```
+* ```inc/*Info*.hh``` contain C++-style ```structs``` which correspond to a branch with the struct members being the leaves. We call these InfoStructs
+* ```src/InfoStructHelper.cc``` contain helper functions that take an Offline data product and an InfoStruct and fills the members of the InfoStruct with information from the Offline data product
+
+## Adding a branch to EventNtuple
 ### Things to think about:
 * will the branch contain a single object, an array of objects, or an array of array of objects
 
