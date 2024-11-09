@@ -1,8 +1,8 @@
-# Instructions for Developers
+# Notes for Developers
 
-This page contains some instructions for developers
+This page contains some miscellanous notes and instructions for developers. On this page:
 
-## General 
+* [Adding a branch to EventNtuple](#Adding-a-branch-EventNtuple)
 
 ## Adding a branch to EventNtuple
 Every branch is associated with an "InfoStruct". These are C++-style ```structs``` that contain all the leaves. We typically fill these with information from an Offline data product.
