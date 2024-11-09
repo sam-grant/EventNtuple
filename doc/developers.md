@@ -1,0 +1,37 @@
+# Instructions for Developers
+
+This page contains some instructions for developers
+
+## General 
+
+## Adding a branch to EventNtuple
+Every branch is associated with an "InfoStruct". These are C++-style ```structs``` that contain all the leaves. We typically fill these with information from an Offline data product.
+
+Things to think about:
+* will the branch contain a single object, an array of objects, or an array of array of objects
+
+Changes to make to the code:
+
+1. Create a new struct in ```inc/``` (or identify one that can be re-used)
+   * make sure to add a comment line like ```// NameOfStruct: description``` for [```ntuplehelper```(./ntuplehelper.md) compatibility
+   * also make sure to add a description for every leaf as an in-line comment for [```ntuplehelper```](./ntuplehelper.md) compatibility
+   * all leaves should be initialized to default values
+   * there should be a ```reset()``` function
+2. Add fill functions to either ```InfoStructHelper``` or ```InfoMCStructHelper``` depending on whether these are reco or MC data products
+   * make sure to pass by reference
+3. In ```src/EventNtuple_module.cc```:
+   * add a ```#include``` to your new InfoStruct (if applicable)
+   * in ```struct Config``` add a ```fhicl::Atom<art::InputTag>``` for the
+   * in the ```private:``` block, add
+      * an ```art::InputTag``` for the collection name
+      * an ```art::Handle<DataProduct>``` for the collection
+      * an ```InfoStruct``` (or ```std::vector<InfoStruct```) to hold the data for the EventNtuple
+   * in the constructor:
+      * get the tags from the input in the initializer list
+      * fill in empty InfoStructs
+   * in ```beginJob()``` create the branch
+      * make sure to add a ```.``` to the end of the branch name so that the leaves can be accessed with ROOT
+   * in ```analyze()```:
+      * at the start, reset your InfoStructs so that data is not left in them from previous events
+      * get the data product from the event using the ```art::InputTag```
+      * fill in your InfoStructs with the ```_infoStructHelper```
