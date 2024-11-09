@@ -7,10 +7,10 @@ This page contains some instructions for developers
 ## Adding a branch to EventNtuple
 Every branch is associated with an "InfoStruct". These are C++-style ```structs``` that contain all the leaves. We typically fill these with information from an Offline data product.
 
-Things to think about:
+### Things to think about:
 * will the branch contain a single object, an array of objects, or an array of array of objects
 
-Changes to make to the code:
+### Changes to make to the code:
 
 1. Create a new struct in ```inc/``` (or identify one that can be re-used)
    * make sure to add a comment line like ```// NameOfStruct: description``` for [```ntuplehelper```(./ntuplehelper.md) compatibility
