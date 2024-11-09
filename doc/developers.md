@@ -5,7 +5,7 @@ This page contains some miscellanous notes for developers
 On this page:
 
 * [Structure of the Code](#Structure-of-the-Code)
-* [Adding a branch to EventNtuple](#Adding-a-branch-EventNtuple)
+* [Adding a branch to EventNtuple](#Adding-a-branch-to-EventNtuple)
 
 ## Structure of the Code
 The code is structured in the following way:
@@ -43,3 +43,14 @@ The code is structured in the following way:
       * at the start, reset your InfoStructs so that data is not left in them from previous events
       * get the data product from the event using the ```art::InputTag```
       * fill in your InfoStructs with the ```_infoStructHelper```
+4. In ```src/classes.h``` add your new InfoStruct header file
+5. In ```src/classes_def.xml``` add your InfoStruct and vector<InfoStruct> etc. if applicable
+6. In ```fcl/prolog.fcl``` add your new input tag fhicl parameter
+7. Compile and test:
+
+```
+muse build -j4 --mu2eCompactPrint
+mu2e -c ...
+```
+
+8. Add to validation and RooUtil
