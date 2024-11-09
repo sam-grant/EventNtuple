@@ -10,7 +10,7 @@ On this page:
 ## Structure of the Code
 The code is structured in the following way:
 
-* ```src/EventNtupleMaker_module.cc`` contains the art analyzer module that creates the ```TTree```
+* ```src/EventNtupleMaker_module.cc``` contains the art analyzer module that creates the ```TTree```
 * ```inc/*Info*.hh``` contain C++-style ```structs``` which correspond to a branch with the struct members being the leaves. We call these InfoStructs
 * ```src/InfoStructHelper.cc``` contain helper functions that take an Offline data product and an InfoStruct and fills the members of the InfoStruct with information from the Offline data product
 
