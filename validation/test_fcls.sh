@@ -102,8 +102,8 @@ else
     echo "FAIL"
 fi
 
-echo -n "creating v6 file for validation script... "
-mu2e -c fcl/from_mcs-mockdata.fcl -S ../filelists/mcs.mu2e.ensemble-1BB-CEDIOCRYCosmic-2400000s-p95MeVc-Triggered.MDC2020ae_perfect_v1_3.art.list --TFileName nts.ntuple.v6.root -n 100 >> ${log_file} 2>&1
+echo -n "creating file for validation script... "
+mu2e -c fcl/from_mcs-mockdata.fcl -S ../filelists/mcs.mu2e.ensemble-1BB-CEDIOCRYCosmic-2400000s-p95MeVc-Triggered.MDC2020ae_perfect_v1_3.art.list --TFileName nts.ntuple.after.root -n 100 >> ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
 else
@@ -111,7 +111,7 @@ else
 fi
 
 echo -n "creating validation file... "
-root -l -b -q validation/create_val_file.C\(\"nts.ntuple.v6.root\",\"val.ntuple.v6.root\"\) >> ${log_file} 2>&1
+root -l -b -q validation/create_val_file.C\(\"nts.ntuple.after.root\",\"val.ntuple.after.root\"\) >> ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
 else
