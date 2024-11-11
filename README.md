@@ -43,7 +43,7 @@ This will create a file called ```nts.owner.description.version.sequencer.root``
 Note: Other fcl files are available. See table [here](fcl/README.md) to see if another one is more appropriate for your use case.
 
 ## Notes for Developers
-Notes for developers contributing to EventNtuples are [here](doc/developers.md)
+Notes for developers contributing to EventNtuple are [here](doc/developers.md)
 
 ## Validation
 Validation scripts and instructions are [here](validation/README.md)
