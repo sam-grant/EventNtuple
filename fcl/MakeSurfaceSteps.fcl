@@ -1,0 +1,9 @@
+#
+# create SurfaceSteps from reco output if necessary. this script should be sourced as epilog
+#
+physics.producers.MakeSS : {
+  @table::CommonMC.MakeSS
+  VDStepPointMCs : "compressRecoMCs:virtualdetector"
+  AbsorberStepPointMCs : "compressRecoMCs:protonabsorber"
+  TargetStepPointMCs : "compressRecoMCs:stoppingtarget"
+}

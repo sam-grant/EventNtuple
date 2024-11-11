@@ -1,7 +1,6 @@
-# Minimal job to run TrkAna on the 'best' downstream electrons. Runs on mcs files
-#include "Offline/fcl/minimalMessageService.fcl"
-#include "Offline/fcl/standardServices.fcl"
-#include "EventNtuple/fcl/prolog.fcl"
+# Minimal job to run TrkAna on the 'best' downstream electrons. Runs on mcs files. This is intended for calibration, so it includes
+# hit information in the branch
+#include "EventNtuple/fcl/from_mcs-mockdata.fcl"
 
 process_name: TADeM
 source : { module_type : RootInput }
@@ -40,12 +39,12 @@ physics :
       branches :  [
         { input: "MergeKKDeM"
           branch : "trk"
-          options : { fillMC : true   genealogyDepth : -1 }
+          options : { fillMC : true fillHits : true  genealogyDepth : -1 }
         }
       ]
-#      ExtraMCStepCollectionTags : [ "compressRecoMCs:protonabsorber", "compressRecoMCs:stoppingtarget" ]
-      SurfaceStepCollectionTag : "compressRecoMCs"
-#      SurfaceStepCollectionTag : "MakeSS"
+      # switch if surface steps were made in reco
+      #      SurfaceStepCollectionTag : "compressRecoMCs"
+      SurfaceStepCollectionTag : "MakeSS"
     }
   }
   EndPath : [TrkAnaDeM]
@@ -54,3 +53,6 @@ physics.trigger_paths : [ TriggerPath ]
 physics.end_paths : [ EndPath ]
 services.TimeTracker.printSummary: true
 services.TFileService.fileName: "nts.owner.TADeM.version.sequence.root"
+# if SurfaceSteps were made in reco comment the line below
+#include "EventNtuple/fcl/MakeSurfaceSteps.fcl"
+
