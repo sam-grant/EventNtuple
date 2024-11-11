@@ -65,8 +65,8 @@ mu2e -c EventNtuple/fcl/from_mcs-mockdata.fcl -s test-art-file.art -n 10
 9. Add to validation, RooUtil, and PyUtil
    * [instructions to be completed... for the time being contact Andy and Sophie for this]
 10. Run validation
-   * both [test_fcls.sh](./validation/README.md#Validating-EventNtuple-Runs), and
-   * and [valCompare](./validation/README.md#Validating-EventNtuple-Contents) steps
+   * both [test_fcls.sh](../validation/README.md#Validating-EventNtuple-Runs), and
+   * and [valCompare](../validation/README.md#Validating-EventNtuple-Contents) steps
 11. Update documentation
    * update ```doc/branches.md``` using ```ntuplehelper``` (see [here](./ntuplehelper.md#creating-branchesmd))
    * add an example script somewhere that uses the new branch
