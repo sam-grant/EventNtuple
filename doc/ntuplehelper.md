@@ -83,3 +83,14 @@ We create the [branches.md](./branches.md) page by running this script as follow
 rm doc/branches.md
 ntuplehelper --list-all-branches --export-to-md > doc/branches.md
 ```
+
+### Adding a branch
+If you add a branch to EventNtuple, then make the following changes to ```utils/helper/ntuplehelper.py``` so that users can discover your new branch:
+* add the branch name to one of ```single_object_branches```, ```vector_object_branches```, or ```vector_vector_object_branches```
+* to ```branch_struct_dict``` add the branch name and the name of the InfoStruct
+
+You can then test that your branch works with:
+
+```
+ntuplehelper branchname.*
+```
