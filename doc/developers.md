@@ -59,5 +59,5 @@ mu2e -c EventNtuple/fcl/from_mcs-mockdata.fcl -s test-art-file.art -n 10
    * [instructions to be completed... for the time being contact Andy and Sophie for this]
 10. Run full validation
 11. Update documentation
-   * update ```doc/branches.md``` using ```ntuplehelper``` (see [here](./ntuplehelper.md#creating-branches.md))
+   * update ```doc/branches.md``` using ```ntuplehelper``` (see [here](./ntuplehelper.md#creating-branchesmd))
    * add an example script somewhere that uses the new branch
