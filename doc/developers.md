@@ -11,8 +11,8 @@ On this page:
 The code is structured in the following way:
 
 * ```src/EventNtupleMaker_module.cc``` contains the art analyzer module that creates the ```TTree```
-* ```inc/*Info*.hh``` contain C++-style ```structs``` which correspond to a branch with the struct members being the leaves. We call these InfoStructs
-* ```src/InfoStructHelper.cc``` contain helper functions that take an Offline data product and an InfoStruct and fills the members of the InfoStruct with information from the Offline data product
+* ```inc/*Info*.hh``` contain C++-style ```structs``` (which we call "InfoStructs"). Each InfoStruct corresponds to a branch and the struct members correspond to leaves
+* ```src/InfoStructHelper.cc``` and ```src/InfoMCStructHelper.cc``` contain helper functions that take an Offline data product and an InfoStruct and fills the members of the InfoStruct with information from the Offline data product
 
 ## Adding a branch to EventNtuple
 ### Things to think about:
@@ -53,9 +53,11 @@ muse build -j4 --mu2eCompactPrint
 mu2e -c EventNtuple/fcl/from_mcs-mockdata.fcl -s test-art-file.art -n 10
 ```
 
-8. Add to validation and RooUtil and ntuplehelper
-   * instructions to be completed
-9. Run full validation
-10. Update documentation
-   * update ```doc/branches.md```
-   * add an example script somewhere
+8. Add to ```ntuplehelper```
+
+9. Add to validation, RooUtil, and PyUtil
+   * [instructions to be completed... for the time being contact Andy and Sophie for this]
+10. Run full validation
+11. Update documentation
+   * update ```doc/branches.md``` using ```ntuplehelper``` (see [here](./ntuplehelper.md#creating-branches.md))
+   * add an example script somewhere that uses the new branch
