@@ -94,6 +94,8 @@ MergeKKUmuP          : @local::MergeKK
 MergeKKUmuP.KalSeedCollections : [ "KKUmuP" ]
 MergeKKLine          : @local::MergeKK
 MergeKKLine.KalSeedCollections : [ "KKLine" ]
+MergeKKOff          : @local::MergeKK
+MergeKKOff.KalSeedCollections : [ "KKOffSpill" ]
 MergeKKAll          : @local::MergeKK
 MergeKKAll.KalSeedCollections : ["KKDeM", "KKDeP", "KKUeM", "KKUeP", "KKDmuM", "KKDmuP", "KKUmuM", "KKUmuP" ]
 
@@ -107,10 +109,12 @@ MergeKKProducers : {
   MergeKKUmuM : @local::MergeKKUmuM
   MergeKKUmuP : @local::MergeKKUmuP
   MergeKKLine : @local::MergeKKLine
+  MergeKKOff : @local::MergeKKOff
   MergeKKAll : @local::MergeKKAll
 }
 MergeKKProducersPath : [ MergeKKAll ]
 MergeKKNoFieldPath : [ MergeKKLine ]
+MergeKKOffSpillPath : [ MergeKKOff ]
 MergeKKSeparatePath : [ MergeKKDeM, MergeKKUeM, MergeKKDmuM, MergeKKDeP, MergeKKUeP, MergeKKDmuP, MergeKKUmuM, MergeKKUmuP ]
 
 
@@ -147,8 +151,12 @@ UmuP : { input : "MergeKKUmuP"
   options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
 }
 Ext : { input : "MergeKKLine"
-  branch : "kl"
-  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
+  branch : "trk"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 fillHits : true }
+}
+Off : { input : "MergeKKOff"
+  branch : "trk"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 fillHits : true }
 }
 All : { input : "MergeKKAll"
   branch : "trk"
@@ -217,6 +225,7 @@ EventNtuple : {
   Path : [ @sequence::MergeKKProducersPath, PBIWeight, MakeSS, TrkQualAll ]
   PathNoMakeSS : [ @sequence::MergeKKProducersPath, PBIWeight, TrkQualAll ]
   PathExt : [ @sequence::MergeKKNoFieldPath ]
+  PathOff : [ @sequence::MergeKKOffSpillPath ]
   PathSeparate : [ @sequence::MergeKKSeparatePath, PBIWeight, MakeSS, @sequence::TrkQualProducersPath]
   PathNoMC : [ @sequence::MergeKKProducersPath, TrkQualAll ]
   EndPath : [ EventNtuple, genCountLogger ]
