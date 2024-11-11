@@ -6,6 +6,7 @@ On this page:
 
 * [Structure of the Code](#Structure-of-the-Code)
 * [Setting up your Development Area](#Setting-up-your-Development-Area)
+* [Before making any changes](#Before-making-any-changes)
 * [Adding a branch to EventNtuple](#Adding-a-branch-to-EventNtuple)
 
 ## Structure of the Code
@@ -18,11 +19,13 @@ The code is structured in the following way:
 ## Setting up your Development Area
 We follow the general mu2e developer workflow given [here](https://mu2ewiki.fnal.gov/wiki/GitHubWorkflow#Developer_Workflow). Namely, create your own fork on GitHub, clone it, and set up the central Mu2e/EventNtuple repository as a remote.
 
-## Adding a branch to EventNtuple
-### Things to think about:
-* will the branch contain a single object, an array of objects, or an array of array of objects
+## Before making any changes
+Create an EventNtuple and validation file following [these instructions](../validation/README.md#Creating-a-Validation-File)
 
-### Changes to make to the code:
+## Adding a branch to EventNtuple
+Before adding a branch to the EventNtuple consider whether it will be a single-object branch (i.e. there will be one InfoStruct for a whole event), or whether it will be a vector branch or a vector-of-vector branch (i.e. there will be many InfoStructs per event). Examples are listed in [doc/branches.md](./branches.md).
+
+Here are the changes to make to the code:
 
 1. Create a new InfoStruct in ```inc/``` (or identify one that can be re-used)
    * make sure to add a comment line like ```// NameOfStruct: description``` for [```ntuplehelper```](./ntuplehelper.md) compatibility
@@ -62,6 +65,7 @@ mu2e -c EventNtuple/fcl/from_mcs-mockdata.fcl -s test-art-file.art -n 10
 9. Add to validation, RooUtil, and PyUtil
    * [instructions to be completed... for the time being contact Andy and Sophie for this]
 10. Run validation
+   * 
 11. Update documentation
    * update ```doc/branches.md``` using ```ntuplehelper``` (see [here](./ntuplehelper.md#creating-branchesmd))
    * add an example script somewhere that uses the new branch
