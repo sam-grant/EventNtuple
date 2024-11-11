@@ -40,13 +40,13 @@ To get a list of all branches you can do either:
 
 To get descriptions of certain leaves you can do either:
 
-* ```ntuplehelper dem.nhits demmcsim.*``` on the command line,
-* ```.! ntuplehelper dem.nhits demmcsim.*``` in a ROOT session, or
+* ```ntuplehelper trk.nhits trkmcsim.*``` on the command line,
+* ```.! ntuplehelper trk.nhits trkmcsim.*``` in a ROOT session, or
 * in a  python session:
 ```
 >>> import ntuplehelper
 >>> nthelper = ntuplehelper.nthelper()
->>> nthelper.whatis(['dem.hits', 'demmcsim.*'])
+>>> nthelper.whatis(['trk.hits', 'trkmcsim.*'])
 ```
 
 Notice that wildcarding (```*```) the leaf name prints descriptions of all leaves on the branch
