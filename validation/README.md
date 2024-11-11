@@ -1,6 +1,19 @@
 ## Validation
 
-We want to make sure that any changes we make to the code doesn't change the content of the TrkAna ntuple.
+We want to make sure that any changes we make to the code don't:
+* stop fcl files from working, or
+* change the content of the EventNtuple unexpectedly
+
+### Validating EventNtuple Runs
+From ```EventNtuple/``` directory:
+
+```
+. ./validation/test_fcls.sh
+```
+
+This script will run all the supported fcl files over relevant datasets. All tests should report ```OK```
+
+### Validating EventNtuple Contents
 
 Before making any changes, create a TrkAna file and run the validation script. This creates a new ROOT file with histograms created from the TrkAna ntuple:
 

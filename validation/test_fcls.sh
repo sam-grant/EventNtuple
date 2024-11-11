@@ -6,8 +6,31 @@
 log_file="test_fcls.log"
 rm ${log_file}
 
+mock_dataset="mcs.mu2e.ensembleMDS1aOnSpillTriggered.MDC2020ai_perfect_v1_3.art"
+primary_dataset="mcs.mu2e.CeEndpointOnSpillTriggered.MDC2020ae_best_v1_3.art"
+mixed_dataset="mcs.mu2e.CeEndpointMix2BBTriggered.MDC2020ae_best_v1_3.art"
+extracted_dataset="mcs.mu2e.CosmicCRYExtractedCatTriggered.MDC2020ae_best_v1_3.art"
+mock_digi_dataset="dig.mu2e.ensembleMDS1aOnSpillTriggered.MDC2020ai_perfect_v1_3.art"
+
+all_datasets=( $mock_dataset $primary_dataset $mixed_dataset $extracted_dataset $mock_digi_dataset )
+
+if [ ! -d ../filelists ]; then
+     echo "Making directory ../filelists/"
+     mkdir ../filelists/
+fi
+
+for dataset in "${all_datasets[@]}"
+do
+    if [ ! -f ../filelists/$dataset.list ]; then
+        echo "File list for $dataset doesn't exist. Creating..."
+        setup dhtools
+        samListLocations -d --defname $dataset > ../filelists/$dataset.list
+    fi
+done
+
+
 echo -n "from_mcs-mockdata.fcl... "
-mu2e -c fcl/from_mcs-mockdata.fcl -S ../filelists/mcs.mu2e.ensemble-1BB-CEDIOCRYCosmic-2400000s-p95MeVc-Triggered.MDC2020ae_perfect_v1_3.art.list --TFileName nts.ntuple.mock.root -n 100 > ${log_file} 2>&1
+mu2e -c fcl/from_mcs-mockdata.fcl -S ../filelists/$mock_dataset.list --TFileName nts.ntuple.mock.root -n 100 > ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
 else
@@ -47,6 +70,7 @@ else
 fi
 
 echo -n "from_mcs-ceSimReco.fcl... "
+mu2e -c Production/Validation/ceSimReco.fcl -n 10 >> ${log_file} 2>&1
 mu2e -c fcl/from_mcs-ceSimReco.fcl -s mcs.owner.val-ceSimReco.dsconf.seq.art --TFileName nts.ntuple.ceSimReco.root >> ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
