@@ -1,5 +1,5 @@
 //
-// EventInfoMC: branch to store MC event-level information
+// EventInfoMC: MC-truth event-level information
 // Dave Brown (LBNL)
 //
 #ifndef EventInfoMC_HH

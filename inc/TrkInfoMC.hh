@@ -1,5 +1,5 @@
 //
-// TrkInfoMC: array branch containing MC info about the particle which generated the majority of the hits used in this track. Example structure: [ particle1, particle2, ..., particleN ]
+// TrkInfoMC: MC-truth information about the track
 // All momenta are in units of MeV/c, time in nsec WRT when the proton bunch pulse peak hits the production target,
 // positions are in mm WRT the center of the tracker.
 // Dave Brown (LBNL)
