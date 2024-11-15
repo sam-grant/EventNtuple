@@ -6,6 +6,8 @@
 #ifndef common_cuts_hh_
 #define common_cuts_hh_
 
+#include "Offline/DataProducts/inc/PDGCode.hh"
+
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
@@ -51,24 +53,25 @@ bool has_mc_step(const TrackSegment& segment) { // track fit segment has an MC-t
 
 
 //+ Track Cuts - Particle Types
-bool is_e_minus(const Track& track) { // track fit used e-minus hypothesis
-  if (track.trk->pdg==11) { return true; }
+bool is_particle(const Track& track, mu2e::PDGCode::type particle) { // track fit used particle hypothesis
+  if (track.trk->pdg == particle) { return true; }
   else { return false; }
+}
+
+bool is_e_minus(const Track& track) { // track fit used e-minus hypothesis
+  return is_particle(track, mu2e::PDGCode::e_minus);
 }
 
 bool is_e_plus(const Track& track) { // track fit used e-plus hypothesis
-  if (track.trk->pdg==-11) { return true; }
-  else { return false; }
+  return is_particle(track, mu2e::PDGCode::e_plus);
 }
 
 bool is_mu_minus(const Track& track) { // track fit used mu-minus hypothesis
-  if (track.trk->pdg==13) { return true; }
-  else { return false; }
+  return is_particle(track, mu2e::PDGCode::mu_minus);
 }
 
 bool is_mu_plus(const Track& track) { // track fit used mu-plus hypothesis
-  if (track.trk->pdg==-13) { return true; }
-  else { return false; }
+  return is_particle(track, mu2e::PDGCode::mu_plus);
 }
 
 //+ Track Cuts - Other
