@@ -145,6 +145,29 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_crvcoincs_nLayers = new TH1F("h_crvcoincs_nLayers", "", 100,0,100);
   TH1F* h_crvcoincs_angle = new TH1F("h_crvcoincs_angle", "", 100,0,100);
 
+  TH1F* h_crvcoincsmc_valid = new TH1F("h_crvcoincsmc_valid", "", 100,0,100);
+  TH1F* h_crvcoincsmc_pdgId = new TH1F("h_crvcoincsmc_pdgId", "", 100,0,100);
+  TH1F* h_crvcoincsmc_primaryPdgId = new TH1F("h_crvcoincsmc_primaryPdgId", "", 100,0,100);
+  TH1F* h_crvcoincsmc_primaryE = new TH1F("h_crvcoincsmc_primaryE", "", 100,0,100);
+  TH1F* h_crvcoincsmc_primary_x = new TH1F("h_crvcoincsmc_primary_x", "", 100,0,100);
+  TH1F* h_crvcoincsmc_primary_y = new TH1F("h_crvcoincsmc_primary_y", "", 100,0,100);
+  TH1F* h_crvcoincsmc_primary_z = new TH1F("h_crvcoincsmc_primary_z", "", 100,0,100);
+  TH1F* h_crvcoincsmc_parentPdgId = new TH1F("h_crvcoincsmc_parentPdgId", "", 100,0,100);
+  TH1F* h_crvcoincsmc_parentE = new TH1F("h_crvcoincsmc_parentE", "", 100,0,100);
+  TH1F* h_crvcoincsmc_parent_x = new TH1F("h_crvcoincsmc_parent_x", "", 100,0,100);
+  TH1F* h_crvcoincsmc_parent_y = new TH1F("h_crvcoincsmc_parent_y", "", 100,0,100);
+  TH1F* h_crvcoincsmc_parent_z = new TH1F("h_crvcoincsmc_parent_z", "", 100,0,100);
+  TH1F* h_crvcoincsmc_gparentPdgId = new TH1F("h_crvcoincsmc_gparentPdgId", "", 100,0,100);
+  TH1F* h_crvcoincsmc_gparentE = new TH1F("h_crvcoincsmc_gparentE", "", 100,0,100);
+  TH1F* h_crvcoincsmc_gparent_x = new TH1F("h_crvcoincsmc_gparent_x", "", 100,0,100);
+  TH1F* h_crvcoincsmc_gparent_y = new TH1F("h_crvcoincsmc_gparent_y", "", 100,0,100);
+  TH1F* h_crvcoincsmc_gparent_z = new TH1F("h_crvcoincsmc_gparent_z", "", 100,0,100);
+  TH1F* h_crvcoincsmc_pos_x = new TH1F("h_crvcoincsmc_pos_x", "", 100,0,100);
+  TH1F* h_crvcoincsmc_pos_y = new TH1F("h_crvcoincsmc_pos_y", "", 100,0,100);
+  TH1F* h_crvcoincsmc_pos_z = new TH1F("h_crvcoincsmc_pos_z", "", 100,0,100);
+  TH1F* h_crvcoincsmc_time = new TH1F("h_crvcoincsmc_time", "", 100,0,100);
+  TH1F* h_crvcoincsmc_depositedEnergy = new TH1F("h_crvcoincsmc_depositedEnergy", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -295,6 +318,31 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_crvcoincs_nHits->Fill(crvcoinc.nHits);
       h_crvcoincs_nLayers->Fill(crvcoinc.nLayers);
       h_crvcoincs_angle->Fill(crvcoinc.angle);
+    }
+
+    for (const auto& crvcoincmc : *(event.crvcoincsmc)) {
+      h_crvcoincsmc_valid->Fill(crvcoincmc.valid);
+      h_crvcoincsmc_pdgId->Fill(crvcoincmc.pdgId);
+      h_crvcoincsmc_primaryPdgId->Fill(crvcoincmc.primaryPdgId);
+      h_crvcoincsmc_primaryE->Fill(crvcoincmc.primaryE);
+      h_crvcoincsmc_primary_x->Fill(crvcoincmc.primary.x());
+      h_crvcoincsmc_primary_y->Fill(crvcoincmc.primary.y());
+      h_crvcoincsmc_primary_z->Fill(crvcoincmc.primary.z());
+      h_crvcoincsmc_parentPdgId->Fill(crvcoincmc.parentPdgId);
+      h_crvcoincsmc_parentE->Fill(crvcoincmc.parentE);
+      h_crvcoincsmc_parent_x->Fill(crvcoincmc.parent.x());
+      h_crvcoincsmc_parent_y->Fill(crvcoincmc.parent.y());
+      h_crvcoincsmc_parent_z->Fill(crvcoincmc.parent.z());
+      h_crvcoincsmc_gparentPdgId->Fill(crvcoincmc.gparentPdgId);
+      h_crvcoincsmc_gparentE->Fill(crvcoincmc.gparentE);
+      h_crvcoincsmc_gparent_x->Fill(crvcoincmc.gparent.x());
+      h_crvcoincsmc_gparent_y->Fill(crvcoincmc.gparent.y());
+      h_crvcoincsmc_gparent_z->Fill(crvcoincmc.gparent.z());
+      h_crvcoincsmc_pos_x->Fill(crvcoincmc.pos.x());
+      h_crvcoincsmc_pos_y->Fill(crvcoincmc.pos.y());
+      h_crvcoincsmc_pos_z->Fill(crvcoincmc.pos.z());
+      h_crvcoincsmc_time->Fill(crvcoincmc.time);
+      h_crvcoincsmc_depositedEnergy->Fill(crvcoincmc.depositedEnergy);
     }
   }
 

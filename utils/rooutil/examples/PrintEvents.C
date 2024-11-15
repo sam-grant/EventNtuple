@@ -61,5 +61,12 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         std::cout << "crvcoinc layer PE: " << layer_PE << std::endl;
       }
     }
+
+    // crvcoincsmc branch
+    if (has_mc) {
+      for (const auto& crvcoincmc : *(event.crvcoincsmc)) {
+        std::cout << "crvcoincmc: " << crvcoincmc.valid << "," << crvcoincmc.pdgId << "," << crvcoincmc.depositedEnergy << std::endl;
+      }
+    }
   }
 }

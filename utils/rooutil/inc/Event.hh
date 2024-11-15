@@ -7,6 +7,7 @@
 #include "EventNtuple/inc/TrkCaloHitInfo.hh"
 
 #include "EventNtuple/inc/CrvHitInfoReco.hh"
+#include "EventNtuple/inc/CrvHitInfoMC.hh"
 
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
@@ -34,6 +35,9 @@ struct Event {
     if (ntuple->GetBranch("trksegsmc")) {
       ntuple->SetBranchAddress("trksegsmc", &this->trksegsmc);
     }
+    if (ntuple->GetBranch("crvcoincsmc")) {
+      ntuple->SetBranchAddress("crvcoincsmc", &this->crvcoincsmc);
+    }
   };
 
   void Update() {
@@ -53,6 +57,9 @@ struct Event {
     crv_coincs.clear();
     for (int i_crv_coinc = 0; i_crv_coinc < nCrvCoincs(); ++i_crv_coinc) {
       CrvCoinc crv_coinc(&(crvcoincs->at(i_crv_coinc)));
+      if (crvcoincsmc != nullptr) {
+        crv_coinc.mc = &(crvcoincsmc->at(i_crv_coinc));
+      }
       crv_coincs.emplace_back(crv_coinc);
     }
   }
@@ -108,6 +115,7 @@ struct Event {
   std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
+  std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;
 };
 
 #endif
