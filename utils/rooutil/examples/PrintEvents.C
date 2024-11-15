@@ -54,6 +54,14 @@ void PrintEvents(std::string filename, bool has_mc = false) {
       std::cout << "trkcalohit: " << trkcalohit.active << "," << trkcalohit.mom.R() << "," << trkcalohit.edep << "," << trkcalohit.edeperr << std::endl;
     }
 
+    // trkcalohitmc branch
+    if (has_mc) {
+      for (const auto& trkcalohitmc : *(event.trkcalohitmc)) {
+        std::cout << "trkcalohitmc: " << trkcalohitmc.nsim << "," << trkcalohitmc.etot << "," << trkcalohitmc.prel.relationship() << std::endl;
+      }
+    }
+
+
     // crvcoincs branch
     for (const auto& crvcoinc : *(event.crvcoincs)) {
       std::cout << "crvcoinc: " << crvcoinc.sectorType << "," << crvcoinc.PEs << "," << crvcoinc.angle << std::endl;

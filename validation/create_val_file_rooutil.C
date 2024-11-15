@@ -132,6 +132,13 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkcalohit_edep = new TH1F("h_trkcalohit_edep", "", 100,0,100);
   TH1F* h_trkcalohit_edeperr = new TH1F("h_trkcalohit_edeperr", "", 100,0,100);
 
+  TH1F* h_trkcalohitmc_nsim = new TH1F("h_trkcalohitmc_nsim", "", 100,0,100);
+  TH1F* h_trkcalohitmc_etot = new TH1F("h_trkcalohitmc_etot", "", 100,0,100);
+  TH1F* h_trkcalohitmc_tavg = new TH1F("h_trkcalohitmc_tavg", "", 100,0,100);
+  TH1F* h_trkcalohitmc_eprimary = new TH1F("h_trkcalohitmc_eprimary", "", 100,0,100);
+  TH1F* h_trkcalohitmc_tprimary = new TH1F("h_trkcalohitmc_tprimary", "", 100,0,100);
+  TH1F* h_trkcalohitmc_prel = new TH1F("h_trkcalohitmc_prel", "", 100,0,100);
+
   TH1F* h_crvcoincs_sectorType = new TH1F("h_crvcoincs_sectorType", "", 100,0,100);
   TH1F* h_crvcoincs_pos_x = new TH1F("h_crvcoincs_pos_x", "", 100,0,100);
   TH1F* h_crvcoincs_pos_y = new TH1F("h_crvcoincs_pos_y", "", 100,0,100);
@@ -302,6 +309,16 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkcalohit_edep->Fill(trkcalohit.edep);
       h_trkcalohit_edeperr->Fill(trkcalohit.edeperr);
     }
+
+    for (const auto& trkcalohitmc : *(event.trkcalohitmc)) {
+      h_trkcalohitmc_nsim->Fill(trkcalohitmc.nsim);
+      h_trkcalohitmc_etot->Fill(trkcalohitmc.etot);
+      h_trkcalohitmc_tavg->Fill(trkcalohitmc.tavg);
+      h_trkcalohitmc_eprimary->Fill(trkcalohitmc.eprimary);
+      h_trkcalohitmc_tprimary->Fill(trkcalohitmc.tprimary);
+      h_trkcalohitmc_prel->Fill(trkcalohitmc.prel.relationship());
+    }
+
 
     for (const auto& crvcoinc : *(event.crvcoincs)) {
       h_crvcoincs_sectorType->Fill(crvcoinc.sectorType);

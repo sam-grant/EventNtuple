@@ -5,6 +5,7 @@
 #include "EventNtuple/inc/EventInfoMC.hh"
 #include "EventNtuple/inc/TrkInfoMC.hh"
 #include "EventNtuple/inc/TrkCaloHitInfo.hh"
+#include "EventNtuple/inc/CaloClusterInfoMC.hh"
 
 #include "EventNtuple/inc/CrvHitInfoReco.hh"
 #include "EventNtuple/inc/CrvHitInfoMC.hh"
@@ -22,7 +23,6 @@ struct Event {
     ntuple->SetBranchAddress("trk", &this->trk);
     ntuple->SetBranchAddress("trksegs", &this->trksegs);
     ntuple->SetBranchAddress("trkcalohit", &this->trkcalohit);
-
     ntuple->SetBranchAddress("crvcoincs", &this->crvcoincs);
 
     // Check if the MC branches exist
@@ -34,6 +34,9 @@ struct Event {
     }
     if (ntuple->GetBranch("trksegsmc")) {
       ntuple->SetBranchAddress("trksegsmc", &this->trksegsmc);
+    }
+    if (ntuple->GetBranch("trkcalohitmc")) {
+      ntuple->SetBranchAddress("trkcalohitmc", &this->trkcalohitmc);
     }
     if (ntuple->GetBranch("crvcoincsmc")) {
       ntuple->SetBranchAddress("crvcoincsmc", &this->crvcoincsmc);
@@ -111,6 +114,7 @@ struct Event {
   std::vector<mu2e::TrkInfo>* trk = nullptr;
   std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;
   std::vector<mu2e::TrkCaloHitInfo>* trkcalohit = nullptr;
+  std::vector<mu2e::CaloClusterInfoMC>* trkcalohitmc = nullptr;
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
   std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
 

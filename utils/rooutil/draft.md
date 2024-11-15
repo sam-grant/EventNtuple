@@ -31,7 +31,7 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs``` |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs``` |
 | Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
@@ -41,7 +41,7 @@ The currently supported branches are:
 * evtinfo, evtinfomc
 * trk, trkmc
 * trksegs, trksegmcs
-* trkcalohit
+* trkcalohit, trkcalohitmc
 * crvcoincs, crvcoincsmc
 
 ## Cut Functions
