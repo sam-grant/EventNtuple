@@ -1,7 +1,7 @@
 #ifndef CrvSummaryReco_hh
 #define CrvSummaryReco_hh
 
-// CrvSummaryReco: branch that provides a summary of the CRV information
+// CrvSummaryReco: summary of the CRV information in the event
 
 namespace mu2e
 {

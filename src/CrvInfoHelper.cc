@@ -31,26 +31,37 @@ namespace mu2e
       CrvPlaneInfoMCCollection &MCInfoPlane, double crvPlaneY) {
     GeomHandle<CosmicRayShield> CRS;
     GeomHandle<DetectorSystem> tdet;
+
     if(!crvCoincidences.isValid()) return;
     size_t nClusters=crvCoincidences->size();
     for(size_t i=0; i<nClusters; i++)
     {
       const CrvCoincidenceCluster &cluster = crvCoincidences->at(i);
-
-      // Get the PEs per layer from the reco pulses
-      std::array<float, CRVId::nLayers> PEsPerLayer_ = {0.}; // PEs per layer array, each element initiliased to zero
       const std::vector<art::Ptr<CrvRecoPulse> > coincRecoPulses_ = cluster.GetCrvRecoPulses(); // Get the reco pulses from the coincidence 
+      // Initiliase PEs per layer
+      std::array<float, CRVId::nLayers> PEsPerLayer_ = {0.}; 
+      // Initiliase PEs per layer per side
+      std::array<float, CRVId::nLayers * CRVId::nSidesPerBar> sidePEsPerLayer_ = {0.};
       for(size_t j=0; j<coincRecoPulses_.size(); j++) // Loop through the pulses
       {
         // Skip duplicate pulses (those with multiple peaks)
         if(coincRecoPulses_.at(j)->GetRecoPulseFlags().test(CrvRecoPulseFlagEnums::duplicateNoFitPulse)) continue;
+        // Get PEs associated with this reco pulse
+        float PEs = coincRecoPulses_.at(j)->GetPEsNoFit();
         // Get layer number from the bar index associated with this reco pulse
         const CRSScintillatorBarIndex &crvBarIndex = coincRecoPulses_.at(j)->GetScintillatorBarIndex(); 
         const CRSScintillatorBar &crvCounter = CRS->getBar(crvBarIndex);
         const CRSScintillatorBarId &crvCounterId = crvCounter.id();
         int layerNumber = crvCounterId.getLayerNumber();
+        // Get the side number 
+        // The negative side has SiPM indices 0 and 2, the postive side has indices 1 and 3.
+        // zero/one index indicates negative/positive; negative/positive indicates direction wrt the axis in the coordinate system.
+        int side = coincRecoPulses_.at(j)->GetSiPMNumber() % CRVId::nSidesPerBar; 
         // Sum PEs for this coincidence, indexed by layer number
-        PEsPerLayer_[layerNumber] += coincRecoPulses_.at(j)->GetPEsNoFit(); // The coincidences were found using the NoFit option, so use that here as well  
+        PEsPerLayer_[layerNumber] += PEs; 
+        // Sum PEs for this coincidence, indexed by layer number and side number
+        int layerSideIndex = layerNumber * CRVId::nSidesPerBar + side; // Indices for a flattened 2D matrix: layers (rows), sides (columns)
+        sidePEsPerLayer_[layerSideIndex] += PEs;
       }
 
       //fill the Reco collection
@@ -59,7 +70,8 @@ namespace mu2e
           tdet->toDetector(cluster.GetAvgHitPos()),
           cluster.GetStartTime(), cluster.GetEndTime(), cluster.GetAvgHitTime(),
           cluster.GetPEs(),
-          PEsPerLayer_, // PEsPerLayer array is not a member of the mu2e::CrvCoincidenceCluster class...
+          PEsPerLayer_, // PEsPerLayer array is not a member of the mu2e::CrvCoincidenceCluster class
+          sidePEsPerLayer_, // ""
           cluster.GetCrvRecoPulses().size(),
           cluster.GetLayers().size(),
           cluster.GetSlope());

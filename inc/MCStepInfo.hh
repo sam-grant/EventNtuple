@@ -1,5 +1,5 @@
 //
-// MCStepInfo: branch to record StepPointMC information
+// MCStepInfo: information about StepPointMCs
 //
 #ifndef MCStepInfo_HH
 #define MCStepInfo_HH

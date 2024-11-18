@@ -33,7 +33,6 @@ outputs : {
   }
 }
 
-
 physics.EventNtuplePath : [
   MakeSS,
   @sequence::Reconstruction.RecoMCPath,
