@@ -281,7 +281,7 @@ namespace mu2e
     {
       mu2e::CrvDigi const& digi(crvDigis->at(j));
       int SiPMId = sipm_map.find(digi.GetScintillatorBarIndex().asInt()*4 + digi.GetSiPMNumber())->second;
-      for(size_t k=0; k<mu2e::CrvDigi::NSamples; k++)
+      for(size_t k=0; k<digi.GetADCs().size(); k++)
         digiInfo.emplace_back(digi.GetADCs()[k], (digi.GetStartTDC()+k)*CRVDigitizationPeriod, SiPMId);
     }
   } // FillCrvDigiInfoCollections
