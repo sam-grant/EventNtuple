@@ -1,6 +1,9 @@
 '''
 Samuel Grant 2024
 Demo for mu2epyutils Print() class
+
+Run this inside the Mu2e Python environment: 
+source /cvmfs/mu2e.opensciencegrid.org/env/ana/current/bin/activate
 '''
 
 # External libraries
