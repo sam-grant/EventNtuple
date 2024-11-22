@@ -1,6 +1,6 @@
 '''
 Samuel Grant 2024
-Demo for mu2epyutils class
+Demo for mu2epyutils Plot() class
 '''
 
 # External libraries
@@ -205,6 +205,37 @@ def Run():
         title="Add yerror bars", xlabel='x', ylabel='y', fout='gr_xerrors.png',
         show=show,
         xerr_=5e-4*len(x_) 
+    )
+
+    # Add a log scale
+    pl.PlotGraph(
+        x_=x_, y_=y_,
+        title="Add yerror bars", xlabel='x', ylabel='y', fout='gr_log_y.png',
+        show=show,
+        log_y=True 
+    )
+
+    """ Demo for Plot().PlotGraphOverlay() """
+
+    # Three oscillating functions with phase shifts
+    t_ = np.linspace(0, 10, 50)
+    lam = 0.2 # decay constant
+    f1_ = np.exp(-lam * t_) * np.sin(t_)  # sin(t)
+    f2_ = np.exp(-lam * t_) * np.sin(t_ + 2 * np.pi / 3)  # sin(t + 2pi/3)
+    f3_ = np.exp(-lam * t_) *  np.sin(t_ - 2 * np.pi / 3)  # sin(t - 2pi/3)
+
+    # Setup graphs_ dict
+    graphs_ = { 
+        r"$\phi=0$" : [ t_, f1_, None, None],
+        r"$\phi=2\pi/3$" : [ t_, f2_, None, None],
+        r"$\phi=-2\pi/3$" : [ t_, f3_, None, None]
+    } 
+
+    # Plot overlay
+    pl.PlotGraphOverlay(
+        graphs_=graphs_,
+        title="Overlay many graphs", xlabel='t', ylabel='f(t)', fout='gr_overlay.png',
+        show=show, include_black=True
     )
 
     return
