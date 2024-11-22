@@ -1,6 +1,10 @@
 '''
 Samuel Grant 2024
 Demo for mu2epyutils Plot() class
+
+Run this inside the Mu2e Python environment: 
+source /cvmfs/mu2e.opensciencegrid.org/env/ana/current/bin/activate
+
 '''
 
 # External libraries
@@ -202,7 +206,7 @@ def Run():
     # Add xerror bars
     pl.PlotGraph(
         x_=x_, y_=y_,
-        title="Add yerror bars", xlabel='x', ylabel='y', fout='gr_xerrors.png',
+        title="Add xerror bars", xlabel='x', ylabel='y', fout='gr_xerrors.png',
         show=show,
         xerr_=5e-4*len(x_) 
     )
