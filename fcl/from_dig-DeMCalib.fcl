@@ -56,8 +56,9 @@ physics.producers.KKDeM.ModuleSettings.HelixSeedCollections : [ "MHDeM" ]
 physics.producers.KKDeM.ModuleSettings.ComboHitCollection : "makeSH"
 physics.producers.KKDeM.ModuleSettings.CaloClusterCollection : "CaloClusterMaker"
 physics.producers.compressRecoMCs.surfaceStepTags: [ "MakeSS" ]
-# since this is a diagnostic test, save failed fits as well
-physics.producers.KKDeM.ModuleSettings.SaveAllFits : true
+# turn off unnecessary extrapolation
+physics.producers.KKDeM.Extrapolation.Upstream : false
+physics.producers.KKDeM.Extrapolation.ToOPA : false
 physics.end_paths : [ EndPath ]
 services.TimeTracker.printSummary: true
 services.TFileService.fileName: "nts.owner.EventNtupleDeMCalib.version.sequence.root"
