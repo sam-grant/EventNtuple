@@ -1,5 +1,5 @@
 //
-// SimInfo: branch to record SimParticles in genealogy
+// SimInfo: information about SimParticles in genealogy
 // All momenta are in units of MeV/c, time in nsec WRT when the proton bunch pulse peak hits the production target,
 // positions are in mm WRT the center of the tracker.
 // Andy Edmonds (March 2019)

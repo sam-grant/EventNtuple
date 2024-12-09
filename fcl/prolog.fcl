@@ -94,8 +94,23 @@ MergeKKUmuP          : @local::MergeKK
 MergeKKUmuP.KalSeedCollections : [ "KKUmuP" ]
 MergeKKLine          : @local::MergeKK
 MergeKKLine.KalSeedCollections : [ "KKLine" ]
+MergeKKOff          : @local::MergeKK
+MergeKKOff.KalSeedCollections : [ "KKOffSpill" ]
 MergeKKAll          : @local::MergeKK
 MergeKKAll.KalSeedCollections : ["KKDeM", "KKDeP", "KKUeM", "KKUeP", "KKDmuM", "KKDmuP", "KKUmuM", "KKUmuP" ]
+MergeKKDeMCalib : {
+  @table::MergeKK
+  KalSeedCollections : ["KKDeM"]
+  Selector : {
+    tool_type : SimpleKalSeedSelector
+    MinMomentum : 70.0 # MeV/c
+    MaxMomentum : 300.0 #MeV/c
+    MinFitConsistency : 1e-10
+    MinDeltaNHitFraction : 0.05 # Consider a 5% difference in active hit count to be 'significant', and call the track more hits 'better'.  Otherwise, use fit quality to determine 'better'
+    MinActiveHits : 15 # Require a reasonable # of active hits
+  }
+  SelectBest : true # use only the 'best' DeM in every event
+}
 
 MergeKKProducers : {
   MergeKKDeM : @local::MergeKKDeM
@@ -107,10 +122,13 @@ MergeKKProducers : {
   MergeKKUmuM : @local::MergeKKUmuM
   MergeKKUmuP : @local::MergeKKUmuP
   MergeKKLine : @local::MergeKKLine
+  MergeKKOff : @local::MergeKKOff
   MergeKKAll : @local::MergeKKAll
+  MergeKKDeMCalib : @local::MergeKKAll
 }
 MergeKKProducersPath : [ MergeKKAll ]
 MergeKKNoFieldPath : [ MergeKKLine ]
+MergeKKOffSpillPath : [ MergeKKOff ]
 MergeKKSeparatePath : [ MergeKKDeM, MergeKKUeM, MergeKKDmuM, MergeKKDeP, MergeKKUeP, MergeKKDmuP, MergeKKUmuM, MergeKKUmuP ]
 
 
@@ -147,15 +165,22 @@ UmuP : { input : "MergeKKUmuP"
   options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
 }
 Ext : { input : "MergeKKLine"
-  branch : "kl"
-  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
+  branch : "trk"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 fillHits : true }
+}
+Off : { input : "MergeKKOff"
+  branch : "trk"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 fillHits : true }
 }
 All : { input : "MergeKKAll"
   branch : "trk"
   options : { fillHits : true fillMC : true   genealogyDepth : -1 matchDepth : -1 }
   trkQualTag : "TrkQualAll"
 }
-
+DeMCalib : { input : "MergeKKDeMCalib"
+  branch : "trk"
+  options : { fillMC : true fillHits : true  genealogyDepth : -1 matchDepth : -1 }
+}
 
 EventNtupleMaker : {
   module_type : EventNtupleMaker
@@ -217,6 +242,7 @@ EventNtuple : {
   Path : [ @sequence::MergeKKProducersPath, PBIWeight, MakeSS, TrkQualAll ]
   PathNoMakeSS : [ @sequence::MergeKKProducersPath, PBIWeight, TrkQualAll ]
   PathExt : [ @sequence::MergeKKNoFieldPath ]
+  PathOff : [ @sequence::MergeKKOffSpillPath ]
   PathSeparate : [ @sequence::MergeKKSeparatePath, PBIWeight, MakeSS, @sequence::TrkQualProducersPath]
   PathNoMC : [ @sequence::MergeKKProducersPath, TrkQualAll ]
   EndPath : [ EventNtuple, genCountLogger ]

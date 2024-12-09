@@ -1,5 +1,5 @@
 //
-// TrkCaloHitInfo: an array branch with information on the calorimeter cluster assigned to a track. Example structure: [ trk1_caloHit, trk2_caloHit, ..., trkN_caloHit ]
+// TrkCaloHitInfo: the calorimeter cluster assigned to a track
 // original author: Dave Brown (LBNL), Jan 2019
 //
 #ifndef TrkCaloHitInfo_HH

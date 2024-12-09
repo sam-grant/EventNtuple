@@ -1,7 +1,7 @@
 #ifndef CrvSummaryMC_hh
 #define CrvSummaryMC_hh
 
-// CrvSummaryMC: branch that provides a summary of the CRV MC true information
+// CrvSummaryMC: summary of the MC-truth CRV information in the event
 
 #include "EventNtuple/inc/RootVectors.hh"
 namespace CLHEP {class Hep3Vector; }
