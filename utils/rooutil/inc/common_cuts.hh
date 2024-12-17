@@ -8,6 +8,8 @@
 
 #include "Offline/DataProducts/inc/PDGCode.hh"
 #include "Offline/MCDataProducts/inc/ProcessCode.hh"
+#include "Offline/MCDataProducts/inc/GenId.hh"
+#include "Offline/MCDataProducts/inc/MCRelationship.hh"
 
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
@@ -169,4 +171,36 @@ bool is_CeMinusLeadingLog(const MCParticle& particle) { // true of the MCParticl
 bool is_DIO(const MCParticle& particle) { // true of the MCParticle is DIO or mu2eDIOLeadingLof
   return (start_process(particle, mu2e::ProcessCode::mu2eMuonDecayAtRest) || start_process(particle, mu2e::ProcessCode::DIO));
 }
+
+//+ MCParticle Cuts - Stop Process Code
+bool end_process(const MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this stop code
+  if (particle.mcsim->stopCode == proc) { return true; }
+  else { return false; }
+}
+
+//+ MCParticle Cuts - Generator ID
+bool end_process(const MCParticle& particle, mu2e::GenId::enum_type genid) { // MCParticle has this generator ID
+  if (particle.mcsim->gen == genid) { return true; }
+  else { return false; }
+}
+
+//+ MCParticle Cuts - Genealogy
+bool has_track_relationship(const MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to track primary
+  if (particle.mcsim->trkrel == rel) { return true; }
+  else { return false; }
+}
+bool is_track_parent(const MCParticle& particle) { // MCParticle is the parent of the track
+  return has_track_relationship(particle, mu2e::MCRelationship::mother);
+}
+bool has_primary_relationship(const MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to event primary
+  if (particle.mcsim->prirel == rel) { return true; }
+  else { return false; }
+}
+
+//+ MCParticle Cuts - Other
+bool made_track_hit(const MCParticle& particle) { // MCParticle made a hit in the tracker
+  if (particle.mcsim->nhits > 0) { return true; }
+  else { return false; }
+}
+
 #endif
