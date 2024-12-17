@@ -7,6 +7,7 @@
 #define common_cuts_hh_
 
 #include "Offline/DataProducts/inc/PDGCode.hh"
+#include "Offline/MCDataProducts/inc/ProcessCode.hh"
 
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
@@ -146,12 +147,26 @@ bool track_crv_coincidence(const TrackSegment& segment, const CrvCoinc& crv_coin
 }
 
 //+ MCParticle Cuts - Particle Types
-bool is_particle(const MCParticle& particle, mu2e::PDGCode::type pdg) { // track fit used particle hypothesis
+bool is_particle(const MCParticle& particle, mu2e::PDGCode::type pdg) { // MCParticle has pdg
   if (particle.mcsim->pdg == pdg) { return true; }
   else { return false; }
 }
-bool is_muon(const MCParticle& sim) { // true if the SimParticle is a muon
+bool is_muon(const MCParticle& sim) { // true if the MCParticle is a muon
   return is_particle(sim, mu2e::PDGCode::mu_minus);
 }
 
+//+ MCParticle Cuts - Start Process Code
+bool start_process(const MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this creation code
+  if (particle.mcsim->startCode == proc) { return true; }
+  else { return false; }
+}
+bool is_CeMinusEndpoint(const MCParticle& particle) { // true of the MCParticle is CeMinusEndpoint
+  return start_process(particle, mu2e::ProcessCode::mu2eCeMinusEndpoint);
+}
+bool is_CeMinusLeadingLog(const MCParticle& particle) { // true of the MCParticle is CeMinusLeadingLog
+  return start_process(particle, mu2e::ProcessCode::mu2eCeMinusLeadingLog);
+}
+bool is_DIO(const MCParticle& particle) { // true of the MCParticle is DIO or mu2eDIOLeadingLof
+  return (start_process(particle, mu2e::ProcessCode::mu2eMuonDecayAtRest) || start_process(particle, mu2e::ProcessCode::DIO));
+}
 #endif
