@@ -28,7 +28,7 @@ void PlotEntranceMomentumResolution(std::string filename) {
     for (const auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance and has an MC step
-      const auto& trk_ent_segments = track.GetSegments([](const TrackSegment& segment){ return tracker_entrance(segment) && has_mc_step(segment); });
+      const auto& trk_ent_segments = track.GetSegments([](const TrackSegment& segment){ return tracker_entrance(segment) && has_mc_step(segment) && has_reco_step(segment); });
 
       // Loop through the tracker entrance track segments
       for (const auto& segment : trk_ent_segments) {
