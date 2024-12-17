@@ -37,14 +37,16 @@ void PrintEvents(std::string filename, bool has_mc = false) {
 
     // trksegs branch
     for (const auto& trksegs : *(event.trksegs)) {
+      std::cout << "New Track!" << std::endl;
       for (const auto& trkseg : trksegs) {
-        std::cout << "trksegs: " << trkseg.mom.R() << "," << trkseg.sid << "," << trkseg.sindex << std::endl;
+        std::cout << "trksegs: time = " << trkseg.time << " ns, p_mag = " << trkseg.mom.R() << " MeV/c, sid = " << trkseg.sid << ", p_z = " << trkseg.mom.z() << " MeV/c, z = " << trkseg.pos.z() << " mm" << std::endl;
       }
     }
     if (has_mc) {
       for (const auto& trksegsmc : *(event.trksegsmc)) {
+        std::cout << "New Track!" << std::endl;
         for (const auto& trksegmc : trksegsmc) {
-          std::cout << "trksegsmc: " << trksegmc.mom.R() << "," << trksegmc.sid << "," << trksegmc.sindex << std::endl;
+          std::cout << "trksegsmc: t = " << trksegmc.time << " ns, p_mag = " << trksegmc.mom.R() << " MeV/c, sid = " << trksegmc.sid << ", p_z = " << trksegmc.mom.z() << " MeV/c, z = " << trksegmc.pos.z() << " mm" <<std::endl;
         }
       }
     }
