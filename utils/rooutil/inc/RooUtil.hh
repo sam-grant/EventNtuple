@@ -54,11 +54,23 @@ public:
     TurnOnBranch("*");
   }
 
+  void CreateOutputEventNtuple(TFile* outfile) {
+    output_ntuple = new TTree("ntuple", "reduced ntuple");
+
+    output_ntuple->Branch("evtinfo", event->evtinfo);
+    output_ntuple->Branch("trk", event->trk);
+  }
+
+  void FillOutputEventNtuple() {
+    output_ntuple->Fill();
+  }
 
 private:
   TTree* ntuple;
   Event* event; // holds all the variables for SetBranchAddress
   bool debug;
+
+  TTree* output_ntuple; // for output
 };
 
 #endif
