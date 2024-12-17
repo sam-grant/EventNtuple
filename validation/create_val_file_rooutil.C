@@ -175,9 +175,37 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_crvcoincsmc_time = new TH1F("h_crvcoincsmc_time", "", 100,0,100);
   TH1F* h_crvcoincsmc_depositedEnergy = new TH1F("h_crvcoincsmc_depositedEnergy", "", 100,0,100);
 
+  TH1F* h_trkmcsim_valid = new TH1F("h_trkmcsim_valid", "", 100,0,100);
+  TH1F* h_trkmcsim_nhits = new TH1F("h_trkmcsim_nhits", "", 100,0,100);
+  TH1F* h_trkmcsim_nactive = new TH1F("h_trkmcsim_nactive", "", 100,0,100);
+  TH1F* h_trkmcsim_rank = new TH1F("h_trkmcsim_rank", "", 100,0,100);
+  TH1F* h_trkmcsim_pdg = new TH1F("h_trkmcsim_pdg", "", 100,0,100);
+  TH1F* h_trkmcsim_startCode = new TH1F("h_trkmcsim_startCode", "", 100,0,100);
+  TH1F* h_trkmcsim_stopCode = new TH1F("h_trkmcsim_stopCode", "", 100,0,100);
+  TH1F* h_trkmcsim_gen = new TH1F("h_trkmcsim_gen", "", 100,0,100);
+  TH1F* h_trkmcsim_time = new TH1F("h_trkmcsim_time", "", 100,0,100);
+  TH1F* h_trkmcsim_index = new TH1F("h_trkmcsim_index", "", 100,0,100);
+  TH1F* h_trkmcsim_mom_x = new TH1F("h_trkmcsim_mom_x", "", 100,0,100);
+  TH1F* h_trkmcsim_mom_y = new TH1F("h_trkmcsim_mom_y", "", 100,0,100);
+  TH1F* h_trkmcsim_mom_z = new TH1F("h_trkmcsim_mom_z", "", 100,0,100);
+  TH1F* h_trkmcsim_pos_x = new TH1F("h_trkmcsim_pos_x", "", 100,0,100);
+  TH1F* h_trkmcsim_pos_y = new TH1F("h_trkmcsim_pos_y", "", 100,0,100);
+  TH1F* h_trkmcsim_pos_z = new TH1F("h_trkmcsim_pos_z", "", 100,0,100);
+  TH1F* h_trkmcsim_endmom_x = new TH1F("h_trkmcsim_endmom_x", "", 100,0,100);
+  TH1F* h_trkmcsim_endmom_y = new TH1F("h_trkmcsim_endmom_y", "", 100,0,100);
+  TH1F* h_trkmcsim_endmom_z = new TH1F("h_trkmcsim_endmom_z", "", 100,0,100);
+  TH1F* h_trkmcsim_endpos_x = new TH1F("h_trkmcsim_endpos_x", "", 100,0,100);
+  TH1F* h_trkmcsim_endpos_y = new TH1F("h_trkmcsim_endpos_y", "", 100,0,100);
+  TH1F* h_trkmcsim_endpos_z = new TH1F("h_trkmcsim_endpos_z", "", 100,0,100);
+  TH1F* h_trkmcsim_prirel_rel = new TH1F("h_trkmcsim_prirel_rel", "", 100,0,100);
+  TH1F* h_trkmcsim_prirel_rem = new TH1F("h_trkmcsim_prirel_rem", "", 100,0,100);
+  TH1F* h_trkmcsim_trkrel_rel = new TH1F("h_trkmcsim_trkrel_rel", "", 100,0,100);
+  TH1F* h_trkmcsim_trkrel_rem = new TH1F("h_trkmcsim_trkrel_rem", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
+    std::cout << "Creating evtinfo histograms..." << std::endl;
     h_evtinfo_event->Fill(event.evtinfo->event);
     h_evtinfo_subrun->Fill(event.evtinfo->subrun);
     h_evtinfo_run->Fill(event.evtinfo->run);
@@ -188,6 +216,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
     h_evtinfomc_nprotons->Fill(event.evtinfomc->nprotons);
     h_evtinfomc_pbtime->Fill(event.evtinfomc->pbtime);
 
+    std::cout << "Creating trk histograms..." << std::endl;
     for (const auto& trk : *(event.trk)) {
       h_trk_status->Fill(trk.status);
       h_trk_goodfit->Fill(trk.goodfit);
@@ -227,6 +256,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trk_avgedep->Fill(trk.avgedep);
     }
 
+    std::cout << "Creating trkseg histograms..." << std::endl;
     for (const auto& trksegs : *(event.trksegs)) {
       for (const auto& trkseg : trksegs) {
         h_trksegs_mom_x->Fill(trkseg.mom.x());
@@ -248,6 +278,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       }
     }
 
+    std::cout << "Creating trkmc histograms..." << std::endl;
     for (const auto& trkmc : *(event.trkmc)) {
       h_trkmc_valid->Fill(trkmc.valid);
       h_trkmc_ndigi->Fill(trkmc.ndigi);
@@ -268,6 +299,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkmc_t0->Fill(trkmc.t0);
     }
 
+    std::cout << "Creating trksegsmc histograms..." << std::endl;
     for (const auto& trksegsmc : *(event.trksegsmc)) {
       for (const auto& trksegmc : trksegsmc) {
         h_trksegsmc_sid->Fill(trksegmc.sid);
@@ -284,6 +316,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       }
     }
 
+    std::cout << "Creating trkcalohit histograms..." << std::endl;
     for (const auto& trkcalohit : *(event.trkcalohit)) {
       h_trkcalohit_active->Fill(trkcalohit.active);
       h_trkcalohit_did->Fill(trkcalohit.did);
@@ -310,6 +343,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkcalohit_edeperr->Fill(trkcalohit.edeperr);
     }
 
+    std::cout << "Creating trkcalohitmc histograms..." << std::endl;
     for (const auto& trkcalohitmc : *(event.trkcalohitmc)) {
       h_trkcalohitmc_nsim->Fill(trkcalohitmc.nsim);
       h_trkcalohitmc_etot->Fill(trkcalohitmc.etot);
@@ -319,7 +353,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_trkcalohitmc_prel->Fill(trkcalohitmc.prel.relationship());
     }
 
-
+    std::cout << "Creating crvcoinc histograms..." << std::endl;
     for (const auto& crvcoinc : *(event.crvcoincs)) {
       h_crvcoincs_sectorType->Fill(crvcoinc.sectorType);
       h_crvcoincs_pos_x->Fill(crvcoinc.pos.x());
@@ -337,6 +371,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_crvcoincs_angle->Fill(crvcoinc.angle);
     }
 
+    std::cout << "Creating crvcoincmc histograms..." << std::endl;
     for (const auto& crvcoincmc : *(event.crvcoincsmc)) {
       h_crvcoincsmc_valid->Fill(crvcoincmc.valid);
       h_crvcoincsmc_pdgId->Fill(crvcoincmc.pdgId);
@@ -360,6 +395,38 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
       h_crvcoincsmc_pos_z->Fill(crvcoincmc.pos.z());
       h_crvcoincsmc_time->Fill(crvcoincmc.time);
       h_crvcoincsmc_depositedEnergy->Fill(crvcoincmc.depositedEnergy);
+    }
+
+    std::cout << "Creating trkmcsim histograms..." << std::endl;
+    for (const auto& trkmcsims : *(event.trkmcsim)) {
+      for (const auto& trkmcsim : trkmcsims) {
+        h_trkmcsim_valid->Fill(trkmcsim.valid);
+        h_trkmcsim_nhits->Fill(trkmcsim.nhits);
+        h_trkmcsim_nactive->Fill(trkmcsim.nactive);
+        h_trkmcsim_rank->Fill(trkmcsim.rank);
+        h_trkmcsim_pdg->Fill(trkmcsim.pdg);
+        h_trkmcsim_startCode->Fill(trkmcsim.startCode);
+        h_trkmcsim_stopCode->Fill(trkmcsim.stopCode);
+        h_trkmcsim_gen->Fill(trkmcsim.gen);
+        h_trkmcsim_time->Fill(trkmcsim.time);
+        h_trkmcsim_index->Fill(trkmcsim.index);
+        h_trkmcsim_mom_x->Fill(trkmcsim.mom.x());
+        h_trkmcsim_mom_y->Fill(trkmcsim.mom.y());
+        h_trkmcsim_mom_z->Fill(trkmcsim.mom.z());
+        h_trkmcsim_pos_x->Fill(trkmcsim.pos.x());
+        h_trkmcsim_pos_y->Fill(trkmcsim.pos.y());
+        h_trkmcsim_pos_z->Fill(trkmcsim.pos.z());
+        h_trkmcsim_endmom_x->Fill(trkmcsim.endmom.x());
+        h_trkmcsim_endmom_y->Fill(trkmcsim.endmom.y());
+        h_trkmcsim_endmom_z->Fill(trkmcsim.endmom.z());
+        h_trkmcsim_endpos_x->Fill(trkmcsim.endpos.x());
+        h_trkmcsim_endpos_y->Fill(trkmcsim.endpos.y());
+        h_trkmcsim_endpos_z->Fill(trkmcsim.endpos.z());
+        h_trkmcsim_prirel_rel->Fill(trkmcsim.prirel.relationship());
+        h_trkmcsim_prirel_rem->Fill(trkmcsim.prirel.removal());
+        h_trkmcsim_trkrel_rel->Fill(trkmcsim.trkrel.relationship());
+        h_trkmcsim_trkrel_rem->Fill(trkmcsim.trkrel.removal());
+      }
     }
   }
 

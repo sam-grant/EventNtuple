@@ -145,4 +145,13 @@ bool track_crv_coincidence(const TrackSegment& segment, const CrvCoinc& crv_coin
   else { return false; }
 }
 
+//+ MCParticle Cuts - Particle Types
+bool is_particle(const MCParticle& particle, mu2e::PDGCode::type pdg) { // track fit used particle hypothesis
+  if (particle.mcsim->pdg == pdg) { return true; }
+  else { return false; }
+}
+bool is_muon(const MCParticle& sim) { // true if the SimParticle is a muon
+  return is_particle(sim, mu2e::PDGCode::mu_minus);
+}
+
 #endif

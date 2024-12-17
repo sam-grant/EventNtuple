@@ -78,5 +78,14 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         std::cout << "crvcoincmc: " << crvcoincmc.valid << "," << crvcoincmc.pdgId << "," << crvcoincmc.depositedEnergy << std::endl;
       }
     }
+
+    if (has_mc) {
+      for (const auto& trkmcsim : *(event.trkmcsim)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& sim : trkmcsim) {
+          std::cout << "trkmcsim: valid = " << sim.valid << ", nhits = " << sim.nhits << ", pdg = " << sim.pdg << ", p = " << sim.mom.R() << ", prirel = " << (int)sim.prirel.relationship() << ", trkrel = " << (int)sim.trkrel.relationship() << std::endl;
+        }
+      }
+    }
   }
 }

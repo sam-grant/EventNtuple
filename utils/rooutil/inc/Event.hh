@@ -61,6 +61,10 @@ struct Event {
       if (trksegsmc != nullptr) {
         track.trksegsmc = &(trksegsmc->at(i_track));
       }
+      if (trkmcsim != nullptr) {
+        track.trkmcsim = &(trkmcsim->at(i_track));
+      }
+
       if (debug) { std::cout << "Event::Update(): Updating Track " << i_track << "... " << std::endl; }
       track.Update(debug);
       if (debug) { std::cout << "Event::Update(): Adding Track " << i_track << " to Tracks... " << std::endl; }

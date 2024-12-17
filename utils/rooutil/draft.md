@@ -31,10 +31,11 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs``` |
-| Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs``` | none |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` |
+| Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
+| MCParticle | ```mcsim``` | none | none |
 
 ## Supported Branches
 The currently supported branches are:
@@ -43,6 +44,7 @@ The currently supported branches are:
 * trksegs, trksegmcs
 * trkcalohit, trkcalohitmc
 * crvcoincs, crvcoincsmc
+* trkmcsim
 
 ## Cut Functions
 
@@ -117,4 +119,4 @@ Checklist:
      - update histogram ranges
 5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
    - be sure to test it with an example script
-6. Add to documentation
+6. Add to this documentation

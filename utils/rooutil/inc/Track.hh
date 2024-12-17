@@ -7,6 +7,7 @@
 #include "EventNtuple/inc/TrkCaloHitInfo.hh"
 
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
+#include "EventNtuple/utils/rooutil/inc/MCParticle.hh"
 
 struct Track {
   Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs, mu2e::TrkCaloHitInfo* trkcalohit)
@@ -17,7 +18,6 @@ struct Track {
       TrackSegment segment(&(trksegs->at(i_segment))); // passing the addresses of the underlying structs
       segments.emplace_back(segment);
     }
-
     // Time order the segments
     std::sort(segments.begin(), segments.end(), TrackSegment::earliest);
   }
@@ -49,10 +49,17 @@ struct Track {
         }
       }
     }
+
+    if (trkmcsim != nullptr) {
+      // Create the underlying MCParticles if possible
+      for (int i_mc_particle = 0; i_mc_particle < nMCParticles(); ++i_mc_particle) {
+        MCParticle mc_particle(&(trkmcsim->at(i_mc_particle))); // passing the addresses of the underlying structs
+        mc_particles.emplace_back(mc_particle);
+      }
+    }
   }
 
   int nSegments() const { return trksegs->size(); }
-
   TrackSegments GetSegments() const { return segments; }
   TrackSegments GetSegments(TrackSegmentCut cut) const {
     TrackSegments select_segments;
@@ -63,8 +70,23 @@ struct Track {
     }
     return select_segments;
   }
-
   TrackSegments segments;
+
+  int nMCParticles() const {
+    if (trkmcsim == nullptr) { return 0; }
+    else { return trkmcsim->size(); }
+  }
+  MCParticles GetMCParticles() const { return mc_particles; }
+  MCParticles GetMCParticles(MCParticleCut cut) const {
+    MCParticles select_mc_particles;
+    for (const auto& mc_particle : mc_particles) {
+      if (cut(mc_particle)) {
+        select_mc_particles.emplace_back(mc_particle);
+      }
+    }
+    return select_mc_particles;
+  }
+  MCParticles mc_particles;
 
   // Pointers to the data
   mu2e::TrkInfo* trk = nullptr;
@@ -72,6 +94,7 @@ struct Track {
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
   std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
+  std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
 };
 
 typedef std::function<bool(const Track&)> TrackCut;
