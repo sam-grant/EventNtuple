@@ -67,7 +67,7 @@ bool tracker_exit(const TrackSegment& segment) { // track fit segment is at the 
   else { return false; }
 }
 
-bool stopping_target_foils(const TrackSegment& segment) {
+bool stopping_target_foils(const TrackSegment& segment) { // track fit segment is in the stopping target
   if (segment.trkseg != nullptr) {
     if (segment.trkseg->sid==mu2e::SurfaceIdDetail::ST_Foils) { return true; }
     else { return false; }
