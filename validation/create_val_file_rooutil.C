@@ -202,6 +202,9 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkmcsim_trkrel_rel = new TH1F("h_trkmcsim_trkrel_rel", "", 100,0,100);
   TH1F* h_trkmcsim_trkrel_rem = new TH1F("h_trkmcsim_trkrel_rem", "", 100,0,100);
 
+  TH1F* h_trkqual_valid = new TH1F("h_trkqual_valid", "", 100,0,100);
+  TH1F* h_trkqual_result = new TH1F("h_trkqual_result", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -427,6 +430,12 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
         h_trkmcsim_trkrel_rel->Fill(trkmcsim.trkrel.relationship());
         h_trkmcsim_trkrel_rem->Fill(trkmcsim.trkrel.removal());
       }
+    }
+
+    std::cout << "Creating trkqual histograms..." << std::endl;
+    for (const auto& trkqual : *(event.trkqual)) {
+      h_trkqual_valid->Fill(trkqual.valid);
+      h_trkqual_result->Fill(trkqual.result);
     }
   }
 

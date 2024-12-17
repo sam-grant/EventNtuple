@@ -31,8 +31,8 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` |
-| Track | ```trk```, ```trkmc```, ```trkcalohit``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` | none |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ``trkqual```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` |
+| Track | ```trk```, ```trkmc```, ```trkcalohit```, ```trkqual``` | ```trksegs```, ```trksegmcs```, ```trkmcsim``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
 | MCParticle | ```mcsim``` | none | none |
@@ -45,6 +45,7 @@ The currently supported branches are:
 * trkcalohit, trkcalohitmc
 * crvcoincs, crvcoincsmc
 * trkmcsim
+* trkqual
 
 ## Cut Functions
 

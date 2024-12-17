@@ -87,5 +87,10 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         }
       }
     }
+
+    // trkqual branch
+    for (const auto& trkqual : *(event.trkqual)) {
+      std::cout << "trkqual: " << trkqual.valid << ", " << trkqual.result << std::endl;
+    }
   }
 }

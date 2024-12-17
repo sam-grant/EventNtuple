@@ -95,6 +95,7 @@ struct Track {
   std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
+  mu2e::MVAResultInfo* trkqual = nullptr;
 };
 
 typedef std::function<bool(const Track&)> TrackCut;

@@ -12,6 +12,8 @@
 
 #include "EventNtuple/inc/SimInfo.hh"
 
+#include "EventNtuple/inc/MVAResultInfo.hh"
+
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
 
@@ -25,6 +27,8 @@ struct Event {
     ntuple->SetBranchAddress("trk", &this->trk);
     ntuple->SetBranchAddress("trksegs", &this->trksegs);
     ntuple->SetBranchAddress("trkcalohit", &this->trkcalohit);
+    ntuple->SetBranchAddress("trkqual", &this->trkqual);
+
     ntuple->SetBranchAddress("crvcoincs", &this->crvcoincs);
 
     // Check if the MC branches exist
@@ -64,6 +68,7 @@ struct Event {
       if (trkmcsim != nullptr) {
         track.trkmcsim = &(trkmcsim->at(i_track));
       }
+      track.trkqual = &(trkqual->at(i_track));
 
       if (debug) { std::cout << "Event::Update(): Updating Track " << i_track << "... " << std::endl; }
       track.Update(debug);
@@ -130,6 +135,7 @@ struct Event {
   std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;
   std::vector<mu2e::TrkCaloHitInfo>* trkcalohit = nullptr;
   std::vector<mu2e::CaloClusterInfoMC>* trkcalohitmc = nullptr;
+  std::vector<mu2e::MVAResultInfo>* trkqual = nullptr;
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
   std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
 
