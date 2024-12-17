@@ -136,6 +136,11 @@ bool is_reflected(const Track& track) { // track is refelected (i.e. has both an
   }
 }
 
+bool passes_trkqual(const Track& track, double cut_val) { // true if trkqual > cut_val
+  if (track.trkqual->result > cut_val) { return true; }
+  else { return false; }
+}
+
 //+ CrvCoinc Cuts
 bool three_of_four_coinc(const CrvCoinc& crv_coinc) { // CRV coincidence has exactly three layers hit
   if (crv_coinc.reco->nLayers == 3) { return true; }

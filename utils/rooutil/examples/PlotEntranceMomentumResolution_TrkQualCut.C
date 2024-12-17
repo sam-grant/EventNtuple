@@ -37,7 +37,7 @@ void PlotEntranceMomentumResolution_TrkQualCut(std::string filename) {
 
         hRecoMomRes->Fill(segment.trkseg->mom.R() - segment.trksegmc->mom.R());
 
-        if (track.trkqual->result > 0.2) {
+        if (passes_trkqual(track, 0.2)) {
           // Fill the histogram
           hRecoMomRes_TrkQualCut->Fill(segment.trkseg->mom.R() - segment.trksegmc->mom.R());
         }
