@@ -6,6 +6,7 @@
 #include "EventNtuple/inc/SurfaceStepInfo.hh"
 
 struct TrackSegment {
+  TrackSegment() { }
   TrackSegment(mu2e::TrkSegInfo* trkseg) : trkseg(trkseg) { }
 
   // Pointers to the data

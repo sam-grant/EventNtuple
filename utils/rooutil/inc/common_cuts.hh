@@ -32,22 +32,59 @@ bool is_upstream(const TrackSegment& segment) { // track fit segment is going in
 
 //+ Track Segment Cuts - Locations
 bool tracker_entrance(const TrackSegment& segment) { // track fit segment is at the tracker entrance
-  if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Front) { return true; }
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Front) { return true; }
+    else { return false; }
+  }
+  if (segment.trksegmc != nullptr) {
+    if (segment.trksegmc->sid==mu2e::SurfaceIdDetail::TT_Front) { return true; }
+    else { return false; }
+  }
   else { return false; }
 }
 
 bool tracker_middle(const TrackSegment& segment) {  // track fit segment is at the middle of the tracker
-  if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Mid) { return true; }
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Mid) { return true; }
+    else { return false; }
+  }
+  if (segment.trksegmc != nullptr) {
+    if (segment.trksegmc->sid==mu2e::SurfaceIdDetail::TT_Mid) { return true; }
+    else { return false; }
+  }
   else { return false; }
 }
 
 bool tracker_exit(const TrackSegment& segment) { // track fit segment is at the tracker exit
-  if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Back) { return true; }
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Back) { return true; }
+    else { return false; }
+  }
+  if (segment.trksegmc != nullptr) {
+    if (segment.trksegmc->sid==mu2e::SurfaceIdDetail::TT_Back) { return true; }
+    else { return false; }
+  }
+  else { return false; }
+}
+
+bool stopping_target_foils(const TrackSegment& segment) {
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->sid==mu2e::SurfaceIdDetail::ST_Foils) { return true; }
+    else { return false; }
+  }
+  else if (segment.trksegmc != nullptr) {
+    if (segment.trksegmc->sid==mu2e::SurfaceIdDetail::ST_Foils) { return true; }
+    else { return false; }
+  }
   else { return false; }
 }
 //+ Track Segment Cuts - Other
 bool has_mc_step(const TrackSegment& segment) { // track fit segment has an MC-truth SurfaceStep
   if (segment.trksegmc != nullptr) { return true; }
+  else { return false; }
+}
+bool has_reco_step(const TrackSegment& segment) { // track fit segment has an reco SurfaceStep
+  if (segment.trkseg != nullptr) { return true; }
   else { return false; }
 }
 
@@ -104,7 +141,7 @@ bool three_of_four_coinc(const CrvCoinc& crv_coinc) { // CRV coincidence has exa
 
 //+ Combined Track & CrvCoinc Cuts
 bool track_crv_coincidence(const TrackSegment& segment, const CrvCoinc& crv_coinc) { // time difference between track segment and crv_coinc is less than 250 ns
-  if ( std::fabs(segment.trkseg->time - crv_coinc.reco->time) < 250) { return true; }
+  if ( segment.trkseg->time - crv_coinc.reco->time > 200 && segment.trkseg->time - crv_coinc.reco->time < 450) { return true; }
   else { return false; }
 }
 

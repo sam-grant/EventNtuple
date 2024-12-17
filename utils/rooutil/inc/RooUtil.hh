@@ -8,7 +8,7 @@
 
 class RooUtil {
 public:
-  RooUtil(std::string filename, std::string treename = "EventNtuple/ntuple") {
+  RooUtil(std::string filename, std::string treename = "EventNtuple/ntuple") : debug(false) {
     TFile* file = new TFile(filename.c_str(), "READ");
 
     ntuple = (TTree*) file->Get(treename.c_str());
@@ -16,13 +16,18 @@ public:
     event = new Event(ntuple);
   }
 
+  void Debug(bool dbg) { debug = dbg; }
+
   int GetNEvents() { return ntuple->GetEntries(); }
 
   const Event& GetEvent(int i_event) {
+    if (debug) { std::cout << "RooUtil::GetEvent(): Getting event " << i_event << std::endl; }
     ntuple->GetEntry(i_event);
 
-    event->Update();
+    if (debug) { std::cout << "RooUtil::GetEvent(): Updating event " << i_event << std::endl; }
+    event->Update(debug);
 
+    if (debug) { std::cout << "RooUtil::GetEvent(): Returning event " << i_event << std::endl; }
     return *event;
   }
 
@@ -53,6 +58,7 @@ public:
 private:
   TTree* ntuple;
   Event* event; // holds all the variables for SetBranchAddress
+  bool debug;
 };
 
 #endif

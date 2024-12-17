@@ -22,17 +22,30 @@ struct Track {
     std::sort(segments.begin(), segments.end(), TrackSegment::earliest);
   }
 
-  void Update() {
-    for (auto& segment : segments) {
-      if (trksegsmc != nullptr) { // if we have MC information
-        // search for corresponding SurfaceStepInfo (it will have the same sid and sindex)
-        // also, trksegs and trksegms may not be the same length...
-        for (size_t i_segment_mc = 0; i_segment_mc < trksegsmc->size(); ++i_segment_mc) {
-          if (segment.trkseg->sid == trksegsmc->at(i_segment_mc).sid
-              && segment.trkseg->sindex == trksegsmc->at(i_segment_mc).sindex) {
+  void Update(bool debug = false) {
+    if (trksegsmc != nullptr) { // if we have MC information
+      // search for corresponding SurfaceStepInfo (it will have the same sid and sindex)
+      // also, trksegs and trksegms may not be the same length...
+      for (size_t i_segment_mc = 0; i_segment_mc < trksegsmc->size(); ++i_segment_mc) {
+        if (debug) { std::cout << "Track::Update(): Looking for trkseg to match trksegmc " << i_segment_mc << ".(of " << trksegsmc->size() << ").. "; }
+        bool reco_step_found = false;
+        for (auto& segment : segments) {
+          if (segment.trkseg != nullptr) { // we might have added MC-only segments...
+            if (segment.trkseg->sid == trksegsmc->at(i_segment_mc).sid
+                && segment.trkseg->sindex == trksegsmc->at(i_segment_mc).sindex) {
 
-            segment.trksegmc = &(trksegsmc->at(i_segment_mc));
+              segment.trksegmc = &(trksegsmc->at(i_segment_mc));
+              reco_step_found = true;
+              if (debug) { std::cout << "FOUND" << std::endl; }
+              break;
+            }
           }
+        }
+        if (!reco_step_found) {
+          if (debug) { std::cout << "NOT FOUND. Adding MC-only TrackSegment..." << std::endl; }
+          TrackSegment segment_mc;
+          segment_mc.trksegmc = &(trksegsmc->at(i_segment_mc));
+          segments.emplace_back(segment_mc);
         }
       }
     }

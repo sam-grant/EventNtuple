@@ -10,6 +10,8 @@
 #include "EventNtuple/inc/CrvHitInfoReco.hh"
 #include "EventNtuple/inc/CrvHitInfoMC.hh"
 
+#include "EventNtuple/inc/SimInfo.hh"
+
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
 
@@ -41,11 +43,17 @@ struct Event {
     if (ntuple->GetBranch("crvcoincsmc")) {
       ntuple->SetBranchAddress("crvcoincsmc", &this->crvcoincsmc);
     }
+
+    if (ntuple->GetBranch("trkmcsim")) {
+      ntuple->SetBranchAddress("trkmcsim", &this->trkmcsim);
+    }
   };
 
-  void Update() {
+  void Update(bool debug = false) {
+    if (debug) { std::cout << "Event::pdate(): Clearing previous Tracks... " << std::endl; }
     tracks.clear();
     for (int i_track = 0; i_track < nTracks(); ++i_track) {
+      if (debug) { std::cout << "Event::Update(): Creating Track " << i_track << "... " << std::endl; }
       Track track(&(trk->at(i_track)), &(trksegs->at(i_track)), &(trkcalohit->at(i_track))); // passing the addresses of the underlying structs
       if (trkmc != nullptr) {
         track.trkmc = &(trkmc->at(i_track));
@@ -53,10 +61,13 @@ struct Event {
       if (trksegsmc != nullptr) {
         track.trksegsmc = &(trksegsmc->at(i_track));
       }
-      track.Update();
+      if (debug) { std::cout << "Event::Update(): Updating Track " << i_track << "... " << std::endl; }
+      track.Update(debug);
+      if (debug) { std::cout << "Event::Update(): Adding Track " << i_track << " to Tracks... " << std::endl; }
       tracks.emplace_back(track);
     }
 
+    if (debug) { std::cout << "Event::Update(): Clearing previous CrvCoincs... " << std::endl; }
     crv_coincs.clear();
     for (int i_crv_coinc = 0; i_crv_coinc < nCrvCoincs(); ++i_crv_coinc) {
       CrvCoinc crv_coinc(&(crvcoincs->at(i_crv_coinc)));
@@ -120,6 +131,8 @@ struct Event {
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;
+
+  std::vector<std::vector<mu2e::SimInfo>>* trkmcsim = nullptr;
 };
 
 #endif
