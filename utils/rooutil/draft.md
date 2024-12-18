@@ -54,7 +54,7 @@ The currently supported branches are:
 There are the common cut functions defined in ```EventNtuple/utils/rooutil/inc/common_cuts.hh```, They can be listed (with explanations) using:
 
 ```
-rootuilhelper --list-available-cuts
+rooutilhelper --list-available-cuts
 ```
 
 ### Combining Cut Functions
