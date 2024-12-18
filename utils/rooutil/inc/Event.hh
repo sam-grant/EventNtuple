@@ -11,6 +11,7 @@
 #include "EventNtuple/inc/CrvHitInfoMC.hh"
 
 #include "EventNtuple/inc/SimInfo.hh"
+#include "EventNtuple/inc/LoopHelixInfo.hh"
 
 #include "EventNtuple/inc/MVAResultInfo.hh"
 
@@ -41,6 +42,9 @@ struct Event {
     if (ntuple->GetBranch("trksegsmc")) {
       ntuple->SetBranchAddress("trksegsmc", &this->trksegsmc);
     }
+    if (ntuple->GetBranch("trksegpars_lh")) {
+      ntuple->SetBranchAddress("trksegpars_lh", &this->trksegpars_lh);
+    }
     if (ntuple->GetBranch("trkcalohitmc")) {
       ntuple->SetBranchAddress("trkcalohitmc", &this->trkcalohitmc);
     }
@@ -64,6 +68,9 @@ struct Event {
       }
       if (trksegsmc != nullptr) {
         track.trksegsmc = &(trksegsmc->at(i_track));
+      }
+      if (trksegpars_lh != nullptr) {
+        track.trksegpars_lh = &(trksegpars_lh->at(i_track));
       }
       if (trkmcsim != nullptr) {
         track.trkmcsim = &(trkmcsim->at(i_track));
@@ -138,6 +145,7 @@ struct Event {
   std::vector<mu2e::MVAResultInfo>* trkqual = nullptr;
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
   std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
+  std::vector<std::vector<mu2e::LoopHelixInfo>>* trksegpars_lh = nullptr;
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;

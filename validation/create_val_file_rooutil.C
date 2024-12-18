@@ -205,6 +205,22 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkqual_valid = new TH1F("h_trkqual_valid", "", 100,0,100);
   TH1F* h_trkqual_result = new TH1F("h_trkqual_result", "", 100,0,100);
 
+  TH1F* h_trksegpars_lh_maxr = new TH1F("h_trksegpars_lh_maxr", "", 100,0,100);
+  TH1F* h_trksegpars_lh_d0 = new TH1F("h_trksegpars_lh_d0", "", 100,0,100);
+  TH1F* h_trksegpars_lh_tanDip = new TH1F("h_trksegpars_lh_tanDip", "", 100,0,100);
+  TH1F* h_trksegpars_lh_rad = new TH1F("h_trksegpars_lh_rad", "", 100,0,100);
+  TH1F* h_trksegpars_lh_lam = new TH1F("h_trksegpars_lh_lam", "", 100,0,100);
+  TH1F* h_trksegpars_lh_cx = new TH1F("h_trksegpars_lh_cx", "", 100,0,100);
+  TH1F* h_trksegpars_lh_cy = new TH1F("h_trksegpars_lh_cy", "", 100,0,100);
+  TH1F* h_trksegpars_lh_phi0 = new TH1F("h_trksegpars_lh_phi0", "", 100,0,100);
+  TH1F* h_trksegpars_lh_t0 = new TH1F("h_trksegpars_lh_t0", "", 100,0,100);
+  TH1F* h_trksegpars_lh_raderr = new TH1F("h_trksegpars_lh_raderr", "", 100,0,100);
+  TH1F* h_trksegpars_lh_lamerr = new TH1F("h_trksegpars_lh_lamerr", "", 100,0,100);
+  TH1F* h_trksegpars_lh_cxerr = new TH1F("h_trksegpars_lh_cxerr", "", 100,0,100);
+  TH1F* h_trksegpars_lh_cyerr = new TH1F("h_trksegpars_lh_cyerr", "", 100,0,100);
+  TH1F* h_trksegpars_lh_phi0err = new TH1F("h_trksegpars_lh_phi0err", "", 100,0,100);
+  TH1F* h_trksegpars_lh_t0err = new TH1F("h_trksegpars_lh_t0err", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -436,6 +452,29 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
     for (const auto& trkqual : *(event.trkqual)) {
       h_trkqual_valid->Fill(trkqual.valid);
       h_trkqual_result->Fill(trkqual.result);
+    }
+
+    if (event.trksegpars_lh != nullptr) { // might not have this branch
+      std::cout << "Creating trksegpars_lh histograms..." << std::endl;
+      for (const auto& track : *(event.trksegpars_lh)) {
+        for (const auto& trksegpars_lh : track) {
+          h_trksegpars_lh_maxr->Fill(trksegpars_lh.maxr);
+          h_trksegpars_lh_d0->Fill(trksegpars_lh.d0);
+          h_trksegpars_lh_tanDip->Fill(trksegpars_lh.tanDip);
+          h_trksegpars_lh_rad->Fill(trksegpars_lh.rad);
+          h_trksegpars_lh_lam->Fill(trksegpars_lh.lam);
+          h_trksegpars_lh_cx->Fill(trksegpars_lh.cx);
+          h_trksegpars_lh_cy->Fill(trksegpars_lh.cy);
+          h_trksegpars_lh_phi0->Fill(trksegpars_lh.phi0);
+          h_trksegpars_lh_t0->Fill(trksegpars_lh.t0);
+          h_trksegpars_lh_raderr->Fill(trksegpars_lh.raderr);
+          h_trksegpars_lh_lamerr->Fill(trksegpars_lh.lamerr);
+          h_trksegpars_lh_cxerr->Fill(trksegpars_lh.cxerr);
+          h_trksegpars_lh_cyerr->Fill(trksegpars_lh.cyerr);
+          h_trksegpars_lh_phi0err->Fill(trksegpars_lh.phi0err);
+          h_trksegpars_lh_t0err->Fill(trksegpars_lh.t0err);
+        }
+      }
     }
   }
 

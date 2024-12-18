@@ -4,6 +4,7 @@
 #include <functional>
 #include "EventNtuple/inc/TrkSegInfo.hh"
 #include "EventNtuple/inc/SurfaceStepInfo.hh"
+#include "EventNtuple/inc/LoopHelixInfo.hh"
 
 struct TrackSegment {
   TrackSegment() { }
@@ -12,6 +13,7 @@ struct TrackSegment {
   // Pointers to the data
   mu2e::TrkSegInfo* trkseg = nullptr;
   mu2e::SurfaceStepInfo* trksegmc = nullptr;
+  mu2e::LoopHelixInfo* trksegpars_lh = nullptr;
 
   static bool earliest(const TrackSegment& seg1, const TrackSegment& seg2) {
     return seg1.trkseg->time < seg2.trkseg->time;

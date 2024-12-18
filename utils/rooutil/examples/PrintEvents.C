@@ -92,5 +92,15 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     for (const auto& trkqual : *(event.trkqual)) {
       std::cout << "trkqual: " << trkqual.valid << ", " << trkqual.result << std::endl;
     }
+
+    // trksegpars_lh
+    if (event.trksegpars_lh != nullptr) { // might not have this branch
+      for (const auto& track : *(event.trksegpars_lh)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& trksegpars : track) {
+          std::cout << "trksegpars_lh: " << trksegpars.maxr << ", " << trksegpars.t0 << ", " << trksegpars.t0err << std::endl;
+        }
+      }
+    }
   }
 }

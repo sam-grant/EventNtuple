@@ -57,6 +57,12 @@ struct Track {
         mc_particles.emplace_back(mc_particle);
       }
     }
+
+    if (trksegpars_lh != nullptr) { // if we LoopHelix info
+      for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
+        segments[i_segment].trksegpars_lh = &(trksegpars_lh->at(i_segment));
+      }
+    }
   }
 
   int nSegments() const { return trksegs->size(); }
@@ -93,6 +99,7 @@ struct Track {
   mu2e::TrkInfoMC* trkmc = nullptr;
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
   std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
+  std::vector<mu2e::LoopHelixInfo>* trksegpars_lh = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
   mu2e::MVAResultInfo* trkqual = nullptr;
