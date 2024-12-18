@@ -20,7 +20,7 @@ public:
 
   int GetNEvents() { return ntuple->GetEntries(); }
 
-  const Event& GetEvent(int i_event) {
+  Event& GetEvent(int i_event) {
     if (debug) { std::cout << "RooUtil::GetEvent(): Getting event " << i_event << std::endl; }
     ntuple->GetEntry(i_event);
 

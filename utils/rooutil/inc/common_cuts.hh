@@ -93,29 +93,29 @@ bool has_reco_step(const TrackSegment& segment) { // track fit segment has an re
 
 
 //+ Track Cuts - Particle Types
-bool is_particle(const Track& track, mu2e::PDGCode::type particle) { // track fit used particle hypothesis
+bool is_particle(Track& track, mu2e::PDGCode::type particle) { // track fit used particle hypothesis
   if (track.trk->pdg == particle) { return true; }
   else { return false; }
 }
 
-bool is_e_minus(const Track& track) { // track fit used e-minus hypothesis
+bool is_e_minus(Track& track) { // track fit used e-minus hypothesis
   return is_particle(track, mu2e::PDGCode::e_minus);
 }
 
-bool is_e_plus(const Track& track) { // track fit used e-plus hypothesis
+bool is_e_plus(Track& track) { // track fit used e-plus hypothesis
   return is_particle(track, mu2e::PDGCode::e_plus);
 }
 
-bool is_mu_minus(const Track& track) { // track fit used mu-minus hypothesis
+bool is_mu_minus(Track& track) { // track fit used mu-minus hypothesis
   return is_particle(track, mu2e::PDGCode::mu_minus);
 }
 
-bool is_mu_plus(const Track& track) { // track fit used mu-plus hypothesis
+bool is_mu_plus(Track& track) { // track fit used mu-plus hypothesis
   return is_particle(track, mu2e::PDGCode::mu_plus);
 }
 
 //+ Track Cuts - Other
-bool is_reflected(const Track& track) { // track is refelected (i.e. has both an upstream and downstream fit segment at the tracker entrance)
+bool is_reflected(Track& track) { // track is refelected (i.e. has both an upstream and downstream fit segment at the tracker entrance)
   bool have_upstream = false;
   bool have_downstream = false;
   for (const auto& segment : track.segments) {
@@ -136,7 +136,7 @@ bool is_reflected(const Track& track) { // track is refelected (i.e. has both an
   }
 }
 
-bool passes_trkqual(const Track& track, double cut_val) { // true if trkqual > cut_val
+bool passes_trkqual(Track& track, double cut_val) { // true if trkqual > cut_val
   if (track.trkqual->result > cut_val) { return true; }
   else { return false; }
 }

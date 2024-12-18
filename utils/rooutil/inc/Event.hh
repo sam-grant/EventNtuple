@@ -1,6 +1,8 @@
 #ifndef Event_hh_
 #define Event_hh_
 
+#include <algorithm>
+
 #include "EventNtuple/inc/EventInfo.hh"
 #include "EventNtuple/inc/EventInfoMC.hh"
 #include "EventNtuple/inc/TrkInfoMC.hh"
@@ -118,15 +120,36 @@ struct Event {
   int nTracks() const { return trk->size(); }
   int nCrvCoincs() const { return crvcoincs->size(); }
 
-  Tracks GetTracks() const { return tracks; }
-  Tracks GetTracks(TrackCut cut) const {
-    Tracks select_tracks;
-    for (const auto& track : tracks) {
-      if (cut(track)) {
-        select_tracks.emplace_back(track);
+  Tracks GetTracks() { return tracks; }
+  Tracks GetTracks(TrackCut cut, bool inplace = false) {
+    if (!inplace) { // if we are not changing inplace, then just create a new vector to return
+      Tracks select_tracks;
+      for (auto& track : tracks) {
+        if (cut(track)) {
+          select_tracks.emplace_back(track);
+        }
       }
+      return select_tracks;
     }
-    return select_tracks;
+    else {
+      auto newEnd = std::remove_if(tracks.begin(), tracks.end(), [cut](Track& track) { return !cut(track); });
+
+      std::vector<size_t> trks_to_remove;
+      for (std::vector<Track>::iterator i_track = newEnd; i_track != tracks.end(); ++i_track) { // now need to remove from event
+        for (size_t i_trk = 0; i_trk < trk->size(); ++i_trk) {
+          if (&(trk->at(i_trk))  == i_track->trk) {
+            trks_to_remove.emplace_back(i_trk);
+            // flag i_trk for remoavel
+          }
+        }
+      }
+      for (int i_trk = trks_to_remove.size()-1; i_trk >= 0; --i_trk) {
+        trk->erase(trk->begin()+trks_to_remove[i_trk]);
+      }
+
+      tracks.erase(newEnd, tracks.end()); // remove only rearranges and returns the new end
+      return tracks;
+    }
   }
 
   CrvCoincs GetCrvCoincs() const { return crv_coincs; }
@@ -140,10 +163,14 @@ struct Event {
     return select_crv_coincs;
   }
 
-  int CountTracks() const { return tracks.size(); }
-  int CountTracks(TrackCut cut) const {
+  int CountTracks() { return tracks.size(); }
+  int CountTracks(TrackCut cut) {
     Tracks select_tracks = GetTracks(cut);
     return select_tracks.size();
+  }
+
+  void SelectTracks(TrackCut cut) { // will reduce the tracks stored in the event
+    GetTracks(cut, true); // change in place
   }
 
   int CountCrvCoincs() const { return crv_coincs.size(); }

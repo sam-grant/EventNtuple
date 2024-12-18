@@ -140,7 +140,7 @@ struct Track {
   mu2e::MVAResultInfo* trkqual = nullptr;
 };
 
-typedef std::function<bool(const Track&)> TrackCut;
+typedef std::function<bool(Track&)> TrackCut;
 typedef std::vector<Track> Tracks;
 
 #endif
