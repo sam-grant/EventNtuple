@@ -12,6 +12,8 @@
 
 #include "EventNtuple/inc/SimInfo.hh"
 #include "EventNtuple/inc/LoopHelixInfo.hh"
+#include "EventNtuple/inc/CentralHelixInfo.hh"
+#include "EventNtuple/inc/KinematicLineInfo.hh"
 
 #include "EventNtuple/inc/MVAResultInfo.hh"
 
@@ -45,6 +47,12 @@ struct Event {
     if (ntuple->GetBranch("trksegpars_lh")) {
       ntuple->SetBranchAddress("trksegpars_lh", &this->trksegpars_lh);
     }
+    if (ntuple->GetBranch("trksegpars_ch")) {
+      ntuple->SetBranchAddress("trksegpars_ch", &this->trksegpars_ch);
+    }
+    if (ntuple->GetBranch("trksegpars_kl")) {
+      ntuple->SetBranchAddress("trksegpars_kl", &this->trksegpars_kl);
+    }
     if (ntuple->GetBranch("trkcalohitmc")) {
       ntuple->SetBranchAddress("trkcalohitmc", &this->trkcalohitmc);
     }
@@ -71,6 +79,12 @@ struct Event {
       }
       if (trksegpars_lh != nullptr) {
         track.trksegpars_lh = &(trksegpars_lh->at(i_track));
+      }
+      if (trksegpars_ch != nullptr) {
+        track.trksegpars_ch = &(trksegpars_ch->at(i_track));
+      }
+      if (trksegpars_kl != nullptr) {
+        track.trksegpars_kl = &(trksegpars_kl->at(i_track));
       }
       if (trkmcsim != nullptr) {
         track.trkmcsim = &(trkmcsim->at(i_track));
@@ -146,6 +160,8 @@ struct Event {
   std::vector<std::vector<mu2e::TrkSegInfo>>* trksegs = nullptr;
   std::vector<std::vector<mu2e::SurfaceStepInfo>>* trksegsmc = nullptr;
   std::vector<std::vector<mu2e::LoopHelixInfo>>* trksegpars_lh = nullptr;
+  std::vector<std::vector<mu2e::CentralHelixInfo>>* trksegpars_ch = nullptr;
+  std::vector<std::vector<mu2e::KinematicLineInfo>>* trksegpars_kl = nullptr;
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;

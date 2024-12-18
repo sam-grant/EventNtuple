@@ -102,5 +102,24 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         }
       }
     }
+
+    // trksegpars_ch
+    if (event.trksegpars_ch != nullptr) { // might not have this branch
+      for (const auto& track : *(event.trksegpars_ch)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& trksegpars : track) {
+          std::cout << "trksegpars_ch: " << trksegpars.d0 << ", " << trksegpars.t0 << ", " << trksegpars.t0err << ", " << trksegpars.maxr << std::endl;
+        }
+      }
+    }
+    // trksegpars_kl
+    if (event.trksegpars_kl != nullptr) { // might not have this branch
+      for (const auto& track : *(event.trksegpars_kl)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& trksegpars : track) {
+          std::cout << "trksegpars_kl: " << trksegpars.d0 << ", " << trksegpars.t0 << ", " << trksegpars.t0err << std::endl;
+        }
+      }
+    }
   }
 }

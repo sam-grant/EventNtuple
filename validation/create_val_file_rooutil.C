@@ -221,6 +221,33 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trksegpars_lh_phi0err = new TH1F("h_trksegpars_lh_phi0err", "", 100,0,100);
   TH1F* h_trksegpars_lh_t0err = new TH1F("h_trksegpars_lh_t0err", "", 100,0,100);
 
+  TH1F* h_trksegpars_ch_d0 = new TH1F("h_trksegpars_ch_d0", "", 100,0,100);
+  TH1F* h_trksegpars_ch_phi0 = new TH1F("h_trksegpars_ch_phi0", "", 100,0,100);
+  TH1F* h_trksegpars_ch_omega = new TH1F("h_trksegpars_ch_omega", "", 100,0,100);
+  TH1F* h_trksegpars_ch_z0 = new TH1F("h_trksegpars_ch_z0", "", 100,0,100);
+  TH1F* h_trksegpars_ch_tanDip = new TH1F("h_trksegpars_ch_tanDip", "", 100,0,100);
+  TH1F* h_trksegpars_ch_t0 = new TH1F("h_trksegpars_ch_t0", "", 100,0,100);
+  TH1F* h_trksegpars_ch_d0err = new TH1F("h_trksegpars_ch_d0err", "", 100,0,100);
+  TH1F* h_trksegpars_ch_phi0err = new TH1F("h_trksegpars_ch_phi0err", "", 100,0,100);
+  TH1F* h_trksegpars_ch_omegaerr = new TH1F("h_trksegpars_ch_omegaerr", "", 100,0,100);
+  TH1F* h_trksegpars_ch_z0err = new TH1F("h_trksegpars_ch_z0err", "", 100,0,100);
+  TH1F* h_trksegpars_ch_tanDiperr = new TH1F("h_trksegpars_ch_tanDiperr", "", 100,0,100);
+  TH1F* h_trksegpars_ch_t0err = new TH1F("h_trksegpars_ch_t0err", "", 100,0,100);
+  TH1F* h_trksegpars_ch_maxr = new TH1F("h_trksegpars_ch_maxr", "", 100,0,100);
+
+  TH1F* h_trksegpars_kl_d0 = new TH1F("h_trksegpars_kl_d0", "", 100,0,100);
+  TH1F* h_trksegpars_kl_phi0 = new TH1F("h_trksegpars_kl_phi0", "", 100,0,100);
+  TH1F* h_trksegpars_kl_z0 = new TH1F("h_trksegpars_kl_z0", "", 100,0,100);
+  TH1F* h_trksegpars_kl_theta = new TH1F("h_trksegpars_kl_theta", "", 100,0,100);
+  TH1F* h_trksegpars_kl_mom = new TH1F("h_trksegpars_kl_mom", "", 100,0,100);
+  TH1F* h_trksegpars_kl_t0 = new TH1F("h_trksegpars_kl_t0", "", 100,0,100);
+  TH1F* h_trksegpars_kl_d0err = new TH1F("h_trksegpars_kl_d0err", "", 100,0,100);
+  TH1F* h_trksegpars_kl_phi0err = new TH1F("h_trksegpars_kl_phi0err", "", 100,0,100);
+  TH1F* h_trksegpars_kl_z0err = new TH1F("h_trksegpars_kl_z0err", "", 100,0,100);
+  TH1F* h_trksegpars_kl_thetaerr = new TH1F("h_trksegpars_kl_thetaerr", "", 100,0,100);
+  TH1F* h_trksegpars_kl_momerr = new TH1F("h_trksegpars_kl_momerr", "", 100,0,100);
+  TH1F* h_trksegpars_kl_t0err = new TH1F("h_trksegpars_kl_t0err", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -473,6 +500,47 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
           h_trksegpars_lh_cyerr->Fill(trksegpars_lh.cyerr);
           h_trksegpars_lh_phi0err->Fill(trksegpars_lh.phi0err);
           h_trksegpars_lh_t0err->Fill(trksegpars_lh.t0err);
+        }
+      }
+    }
+
+    if (event.trksegpars_ch != nullptr) { // might not have this branch
+      std::cout << "Creating trksegpars_ch histograms..." << std::endl;
+      for (const auto& track : *(event.trksegpars_ch)) {
+        for (const auto& trksegpars_ch : track) {
+          h_trksegpars_ch_d0->Fill(trksegpars_ch.d0);
+          h_trksegpars_ch_phi0->Fill(trksegpars_ch.phi0);
+          h_trksegpars_ch_omega->Fill(trksegpars_ch.omega);
+          h_trksegpars_ch_z0->Fill(trksegpars_ch.z0);
+          h_trksegpars_ch_tanDip->Fill(trksegpars_ch.tanDip);
+          h_trksegpars_ch_t0->Fill(trksegpars_ch.t0);
+          h_trksegpars_ch_d0err->Fill(trksegpars_ch.d0err);
+          h_trksegpars_ch_phi0err->Fill(trksegpars_ch.phi0err);
+          h_trksegpars_ch_omegaerr->Fill(trksegpars_ch.omegaerr);
+          h_trksegpars_ch_z0err->Fill(trksegpars_ch.z0err);
+          h_trksegpars_ch_tanDiperr->Fill(trksegpars_ch.tanDiperr);
+          h_trksegpars_ch_t0err->Fill(trksegpars_ch.t0err);
+          h_trksegpars_ch_maxr->Fill(trksegpars_ch.maxr);
+        }
+      }
+    }
+
+    if (event.trksegpars_kl != nullptr) { // might not have this branch
+      std::cout << "Creating trksegpars_kl histograms..." << std::endl;
+      for (const auto& track : *(event.trksegpars_kl)) {
+        for (const auto& trksegpars_kl : track) {
+          h_trksegpars_kl_d0->Fill(trksegpars_kl.d0);
+          h_trksegpars_kl_phi0->Fill(trksegpars_kl.phi0);
+          h_trksegpars_kl_z0->Fill(trksegpars_kl.z0);
+          h_trksegpars_kl_theta->Fill(trksegpars_kl.theta);
+          h_trksegpars_kl_mom->Fill(trksegpars_kl.mom);
+          h_trksegpars_kl_t0->Fill(trksegpars_kl.t0);
+          h_trksegpars_kl_d0err->Fill(trksegpars_kl.d0err);
+          h_trksegpars_kl_phi0err->Fill(trksegpars_kl.phi0err);
+          h_trksegpars_kl_z0err->Fill(trksegpars_kl.z0err);
+          h_trksegpars_kl_thetaerr->Fill(trksegpars_kl.thetaerr);
+          h_trksegpars_kl_momerr->Fill(trksegpars_kl.momerr);
+          h_trksegpars_kl_t0err->Fill(trksegpars_kl.t0err);
         }
       }
     }

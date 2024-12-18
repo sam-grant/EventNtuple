@@ -63,6 +63,16 @@ struct Track {
         segments[i_segment].trksegpars_lh = &(trksegpars_lh->at(i_segment));
       }
     }
+    if (trksegpars_ch != nullptr) { // if we CentralHelix info
+      for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
+        segments[i_segment].trksegpars_ch = &(trksegpars_ch->at(i_segment));
+      }
+    }
+    if (trksegpars_kl != nullptr) { // if we CentralHelix info
+      for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
+        segments[i_segment].trksegpars_kl = &(trksegpars_kl->at(i_segment));
+      }
+    }
   }
 
   int nSegments() const { return trksegs->size(); }
@@ -100,6 +110,8 @@ struct Track {
   std::vector<mu2e::TrkSegInfo>* trksegs = nullptr;
   std::vector<mu2e::SurfaceStepInfo>* trksegsmc = nullptr;
   std::vector<mu2e::LoopHelixInfo>* trksegpars_lh = nullptr;
+  std::vector<mu2e::CentralHelixInfo>* trksegpars_ch = nullptr;
+  std::vector<mu2e::KinematicLineInfo>* trksegpars_kl = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
   mu2e::MVAResultInfo* trkqual = nullptr;
