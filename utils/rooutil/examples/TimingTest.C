@@ -24,7 +24,7 @@ void TimingTest(std::string filename, bool log_output = false) {
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     auto const t0 = system_clock::now();
 
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     times.push_back(duration_cast<nanoseconds>(system_clock::now() - t0));
   }

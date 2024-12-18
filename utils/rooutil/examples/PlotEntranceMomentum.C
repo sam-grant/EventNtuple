@@ -19,19 +19,19 @@ void PlotEntranceMomentum(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance
-      const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
+      auto trk_ent_segments = track.GetSegments([](TrackSegment& segment){ return tracker_entrance(segment) && has_reco_step(segment); });
 
       // Loop through the tracker entrance track segments
-      for (const auto& segment : trk_ent_segments) {
+      for (auto& segment : trk_ent_segments) {
 
         // Fill the histogram
         hRecoMom->Fill(segment.trkseg->mom.R());

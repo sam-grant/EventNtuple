@@ -20,19 +20,19 @@ void PlotStoppingTargetFoilSegments(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance
-      const auto& st_foil_segments = track.GetSegments(stopping_target_foils);
+      auto st_foil_segments = track.GetSegments(stopping_target_foils);
 
       // Loop through the tracker entrance track segments
-      for (const auto& segment : st_foil_segments) {
+      for (auto& segment : st_foil_segments) {
         if (has_mc_step(segment)) {
           hZ_MC->Fill(segment.trksegmc->sindex);
         }

@@ -19,10 +19,10 @@ void PlotCRVPEsVsMCEDep(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
-    const auto& crv_coincs = event.GetCrvCoincs();
-    for (const auto& crv_coinc : crv_coincs) {
+    auto crv_coincs = event.GetCrvCoincs();
+    for (auto& crv_coinc : crv_coincs) {
       // Fill the histogram
       hPEs_MCEDep->Fill(crv_coinc.reco->PEs, crv_coinc.mc->depositedEnergy);
     }

@@ -19,13 +19,13 @@ void PlotTrkCaloHitEnergy(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Fill the histogram
       if (track.trkcalohit->active) {

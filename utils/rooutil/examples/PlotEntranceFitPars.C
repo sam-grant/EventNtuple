@@ -39,19 +39,19 @@ void PlotEntranceFitPars(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < 1; ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance
-      const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
+      auto trk_ent_segments = track.GetSegments(tracker_entrance);
 
       // Loop through the tracker entrance track segments
-      for (const auto& segment : trk_ent_segments) {
+      for (auto& segment : trk_ent_segments) {
 
         TEllipse* helix = new TEllipse(segment.trksegpars_lh->cx, segment.trksegpars_lh->cy, segment.trksegpars_lh->rad, segment.trksegpars_lh->rad);
         helix->SetLineColor(kRed);

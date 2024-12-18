@@ -20,16 +20,16 @@ void PlotCRVPEs(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
-    const auto& crv_coincs = event.GetCrvCoincs();
-    for (const auto& crv_coinc : crv_coincs) {
+    auto crv_coincs = event.GetCrvCoincs();
+    for (auto& crv_coinc : crv_coincs) {
       // Fill the histogram
       hPEs->Fill(crv_coinc.reco->PEs);
     }
 
-    const auto& crv_selected_coincs = event.GetCrvCoincs(three_of_four_coinc);
-    for (const auto& crv_coinc : crv_selected_coincs) {
+    auto crv_selected_coincs = event.GetCrvCoincs(three_of_four_coinc);
+    for (auto& crv_coinc : crv_selected_coincs) {
       // Fill the histogram
       hPEs_3of4->Fill(crv_coinc.reco->PEs);
     }

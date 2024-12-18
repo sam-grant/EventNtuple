@@ -20,26 +20,26 @@ void PlotMCParticleMom(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance and has an MC step
-      const auto& ce_particles = track.GetMCParticles(is_CeMinusLeadingLog);
+      auto ce_particles = track.GetMCParticles(is_CeMinusLeadingLog);
       // Loop through the tracker entrance track segments
-      for (const auto& particle : ce_particles) {
+      for (auto& particle : ce_particles) {
         // Fill the histogram
         hCeMinusMom->Fill(particle.mcsim->mom.R());
       }
 
       // Get the track segments at the tracker entrance and has an MC step
-      const auto& dio_particles = track.GetMCParticles(is_DIO);
+      auto dio_particles = track.GetMCParticles(is_DIO);
       // Loop through the tracker entrance track segments
-      for (const auto& particle : dio_particles) {
+      for (auto& particle : dio_particles) {
         // Fill the histogram
         hDIOMom->Fill(particle.mcsim->mom.R());
       }

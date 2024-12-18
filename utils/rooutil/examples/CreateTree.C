@@ -21,25 +21,28 @@ void CreateTree(std::string filename) {
   // Set up RooUtil
   RooUtil util(filename);
 
+  //  util.PrepareEventTree(tree);
+  //  util.PrepareTrackTree(tree);
+
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
-
+    auto& event = util.GetEvent(i_event);
+    std::cout << "Event #" << i_event << std::endl;
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
-
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
+    std::cout << "e_minus_tracks.size() = " << e_minus_tracks.size() << std::endl;
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
       trk = *(track.trk); // we will fill this data into the tree
+      std::cout << trk.nactive << std::endl;
+      // // Get the track segments at the tracker entrance
+      // const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
 
-      // Get the track segments at the tracker entrance
-      const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
-
-      // Loop through the tracker entrance track segments
-      for (const auto& segment : trk_ent_segments) {
-        trk_ent = *(segment.trkseg); // we will fill this data into the tree
-      }
+      // // Loop through the tracker entrance track segments
+      // for (const auto& segment : trk_ent_segments) {
+      //   trk_ent = *(segment.trkseg); // we will fill this data into the tree
+      // }
 
       // Fill the tree once per track
       tree->Fill();

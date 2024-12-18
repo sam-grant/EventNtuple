@@ -19,19 +19,19 @@ void PlotMuonPosZ(std::string filename) {
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
 
     // Get the e_minus tracks from the event
-    const auto& e_minus_tracks = event.GetTracks(is_e_minus);
+    auto e_minus_tracks = event.GetTracks(is_e_minus);
 
     // Loop through the e_minus tracks
-    for (const auto& track : e_minus_tracks) {
+    for (auto& track : e_minus_tracks) {
 
       // Get the track segments at the tracker entrance and has an MC step
-      const auto& mu_particles = track.GetMCParticles(is_muon);
+      auto mu_particles = track.GetMCParticles(is_muon);
 
       // Loop through the tracker entrance track segments
-      for (const auto& particle : mu_particles) {
+      for (auto& particle : mu_particles) {
 
         // Fill the histogram
         hMuonPosZ->Fill(particle.mcsim->pos.z());
