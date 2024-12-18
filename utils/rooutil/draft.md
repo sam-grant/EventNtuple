@@ -31,7 +31,7 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ``trkqual```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits``` |
+| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```trkqual```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits``` |
 | Track | ```trk```, ```trkmc```, ```trkcalohit```, ```trkqual``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc```, ```trksegpars_{lh,ch,kl}``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
