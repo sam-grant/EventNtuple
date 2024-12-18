@@ -121,5 +121,16 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         }
       }
     }
+
+    // trkhits
+    if (event.trkhits != nullptr) { // might not have this branch
+      for (const auto& trkhits : *(event.trkhits)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& hit : trkhits) {
+          std::cout << "trkhits: " << hit.plane << ", " << hit.panel << ", " << hit.layer << ", " << hit.straw << ", " << hit.dactive << std::endl;
+        }
+      }
+    }
+
   }
 }

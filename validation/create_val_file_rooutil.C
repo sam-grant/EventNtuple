@@ -248,6 +248,70 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trksegpars_kl_momerr = new TH1F("h_trksegpars_kl_momerr", "", 100,0,100);
   TH1F* h_trksegpars_kl_t0err = new TH1F("h_trksegpars_kl_t0err", "", 100,0,100);
 
+  TH1F* h_trkhits_plane = new TH1F("h_trkhits_plane", "", 100,0,100);
+  TH1F* h_trkhits_panel = new TH1F("h_trkhits_panel", "", 100,0,100);
+  TH1F* h_trkhits_layer = new TH1F("h_trkhits_layer", "", 100,0,100);
+  TH1F* h_trkhits_straw = new TH1F("h_trkhits_straw", "", 100,0,100);
+  TH1F* h_trkhits_state = new TH1F("h_trkhits_state", "", 100,0,100);
+  TH1F* h_trkhits_algo = new TH1F("h_trkhits_algo", "", 100,0,100);
+  TH1F* h_trkhits_frozen = new TH1F("h_trkhits_frozen", "", 100,0,100);
+  TH1F* h_trkhits_usetot = new TH1F("h_trkhits_usetot", "", 100,0,100);
+  TH1F* h_trkhits_usedriftdt = new TH1F("h_trkhits_usedriftdt", "", 100,0,100);
+  TH1F* h_trkhits_useabsdt = new TH1F("h_trkhits_useabsdt", "", 100,0,100);
+  TH1F* h_trkhits_usendvar = new TH1F("h_trkhits_usendvar", "", 100,0,100);
+  TH1F* h_trkhits_bkgqual = new TH1F("h_trkhits_bkgqual", "", 100,0,100);
+  TH1F* h_trkhits_signqual = new TH1F("h_trkhits_signqual", "", 100,0,100);
+  TH1F* h_trkhits_driftqual = new TH1F("h_trkhits_driftqual", "", 100,0,100);
+  TH1F* h_trkhits_chi2qual = new TH1F("h_trkhits_chi2qual", "", 100,0,100);
+  TH1F* h_trkhits_earlyend = new TH1F("h_trkhits_earlyend", "", 100,0,100);
+  TH1F* h_trkhits_edep = new TH1F("h_trkhits_edep", "", 100,0,100);
+  TH1F* h_trkhits_wdist = new TH1F("h_trkhits_wdist", "", 100,0,100);
+  TH1F* h_trkhits_werr = new TH1F("h_trkhits_werr", "", 100,0,100);
+  TH1F* h_trkhits_tottdrift = new TH1F("h_trkhits_tottdrift", "", 100,0,100);
+  TH1F* h_trkhits_etime_0 = new TH1F("h_trkhits_etime_0", "", 100,0,100);
+  TH1F* h_trkhits_etime_1 = new TH1F("h_trkhits_etime_1", "", 100,0,100);
+  TH1F* h_trkhits_tot_0 = new TH1F("h_trkhits_tot_0", "", 100,0,100);
+  TH1F* h_trkhits_tot_1 = new TH1F("h_trkhits_tot_1", "", 100,0,100);
+  TH1F* h_trkhits_ptoca = new TH1F("h_trkhits_ptoca", "", 100,0,100);
+  TH1F* h_trkhits_stoca = new TH1F("h_trkhits_stoca", "", 100,0,100);
+  TH1F* h_trkhits_rdoca = new TH1F("h_trkhits_rdoca", "", 100,0,100);
+  TH1F* h_trkhits_rdocavar = new TH1F("h_trkhits_rdocavar", "", 100,0,100);
+  TH1F* h_trkhits_rdt = new TH1F("h_trkhits_rdt", "", 100,0,100);
+  TH1F* h_trkhits_rtocavar = new TH1F("h_trkhits_rtocavar", "", 100,0,100);
+  TH1F* h_trkhits_udoca = new TH1F("h_trkhits_udoca", "", 100,0,100);
+  TH1F* h_trkhits_udocavar = new TH1F("h_trkhits_udocavar", "", 100,0,100);
+  TH1F* h_trkhits_udt = new TH1F("h_trkhits_udt", "", 100,0,100);
+  TH1F* h_trkhits_utocavar = new TH1F("h_trkhits_utocavar", "", 100,0,100);
+  TH1F* h_trkhits_rupos = new TH1F("h_trkhits_rupos", "", 100,0,100);
+  TH1F* h_trkhits_uupos = new TH1F("h_trkhits_uupos", "", 100,0,100);
+  TH1F* h_trkhits_rdrift = new TH1F("h_trkhits_rdrift", "", 100,0,100);
+  TH1F* h_trkhits_cdrift = new TH1F("h_trkhits_cdrift", "", 100,0,100);
+  TH1F* h_trkhits_sderr = new TH1F("h_trkhits_sderr", "", 100,0,100);
+  TH1F* h_trkhits_uderr = new TH1F("h_trkhits_uderr", "", 100,0,100);
+  TH1F* h_trkhits_dvel = new TH1F("h_trkhits_dvel", "", 100,0,100);
+  TH1F* h_trkhits_lang = new TH1F("h_trkhits_lang", "", 100,0,100);
+  TH1F* h_trkhits_utresid = new TH1F("h_trkhits_utresid", "", 100,0,100);
+  TH1F* h_trkhits_utresidmvar = new TH1F("h_trkhits_utresidmvar", "", 100,0,100);
+  TH1F* h_trkhits_utresidpvar = new TH1F("h_trkhits_utresidpvar", "", 100,0,100);
+  TH1F* h_trkhits_udresid = new TH1F("h_trkhits_udresid", "", 100,0,100);
+  TH1F* h_trkhits_udresidmvar = new TH1F("h_trkhits_udresidmvar", "", 100,0,100);
+  TH1F* h_trkhits_udresidpvar = new TH1F("h_trkhits_udresidpvar", "", 100,0,100);
+  TH1F* h_trkhits_rtresid = new TH1F("h_trkhits_rtresid", "", 100,0,100);
+  TH1F* h_trkhits_rtresidmvar = new TH1F("h_trkhits_rtresidmvar", "", 100,0,100);
+  TH1F* h_trkhits_rtresidpvar = new TH1F("h_trkhits_rtresidpvar", "", 100,0,100);
+  TH1F* h_trkhits_rdresid = new TH1F("h_trkhits_rdresid", "", 100,0,100);
+  TH1F* h_trkhits_rdresidmvar = new TH1F("h_trkhits_rdresidmvar", "", 100,0,100);
+  TH1F* h_trkhits_rdresidpvar = new TH1F("h_trkhits_rdresidpvar", "", 100,0,100);
+  TH1F* h_trkhits_wdot = new TH1F("h_trkhits_wdot", "", 100,0,100);
+  TH1F* h_trkhits_poca_x = new TH1F("h_trkhits_poca_x", "", 100,0,100);
+  TH1F* h_trkhits_poca_y = new TH1F("h_trkhits_poca_y", "", 100,0,100);
+  TH1F* h_trkhits_poca_z = new TH1F("h_trkhits_poca_z", "", 100,0,100);
+  TH1F* h_trkhits_uwirephi = new TH1F("h_trkhits_uwirephi", "", 100,0,100);
+  TH1F* h_trkhits_ustrawdist = new TH1F("h_trkhits_ustrawdist", "", 100,0,100);
+  TH1F* h_trkhits_ustrawphi = new TH1F("h_trkhits_ustrawphi", "", 100,0,100);
+  TH1F* h_trkhits_dhit = new TH1F("h_trkhits_dhit", "", 100,0,100);
+  TH1F* h_trkhits_dactive = new TH1F("h_trkhits_dactive", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -541,6 +605,77 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
           h_trksegpars_kl_thetaerr->Fill(trksegpars_kl.thetaerr);
           h_trksegpars_kl_momerr->Fill(trksegpars_kl.momerr);
           h_trksegpars_kl_t0err->Fill(trksegpars_kl.t0err);
+        }
+      }
+    }
+
+    if (event.trkhits != nullptr) { // might not have this branch
+      std::cout << "Creating trkhits histograms..." << std::endl;
+      for (const auto& trkhits : *(event.trkhits)) {
+        for (const auto& trkhit : trkhits) {
+          h_trkhits_plane->Fill(trkhit.plane);
+          h_trkhits_panel->Fill(trkhit.panel);
+          h_trkhits_layer->Fill(trkhit.layer);
+          h_trkhits_straw->Fill(trkhit.straw);
+          h_trkhits_state->Fill(trkhit.state);
+          h_trkhits_algo->Fill(trkhit.algo);
+          h_trkhits_frozen->Fill(trkhit.frozen);
+          h_trkhits_usetot->Fill(trkhit.usetot);
+          h_trkhits_usedriftdt->Fill(trkhit.usedriftdt);
+          h_trkhits_useabsdt->Fill(trkhit.useabsdt);
+          h_trkhits_usendvar->Fill(trkhit.usendvar);
+          h_trkhits_bkgqual->Fill(trkhit.bkgqual);
+          h_trkhits_signqual->Fill(trkhit.signqual);
+          h_trkhits_driftqual->Fill(trkhit.driftqual);
+          h_trkhits_chi2qual->Fill(trkhit.chi2qual);
+          h_trkhits_earlyend->Fill(trkhit.earlyend);
+          h_trkhits_edep->Fill(trkhit.edep);
+          h_trkhits_wdist->Fill(trkhit.wdist);
+          h_trkhits_werr->Fill(trkhit.werr);
+          h_trkhits_tottdrift->Fill(trkhit.tottdrift);
+          h_trkhits_etime_0->Fill(trkhit.etime[0]);
+          h_trkhits_etime_1->Fill(trkhit.etime[1]);
+          h_trkhits_tot_0->Fill(trkhit.tot[0]);
+          h_trkhits_tot_1->Fill(trkhit.tot[1]);
+          h_trkhits_ptoca->Fill(trkhit.ptoca);
+          h_trkhits_stoca->Fill(trkhit.stoca);
+          h_trkhits_rdoca->Fill(trkhit.rdoca);
+          h_trkhits_rdocavar->Fill(trkhit.rdocavar);
+          h_trkhits_rdt->Fill(trkhit.rdt);
+          h_trkhits_rtocavar->Fill(trkhit.rtocavar);
+          h_trkhits_udoca->Fill(trkhit.udoca);
+          h_trkhits_udocavar->Fill(trkhit.udocavar);
+          h_trkhits_udt->Fill(trkhit.udt);
+          h_trkhits_utocavar->Fill(trkhit.utocavar);
+          h_trkhits_rupos->Fill(trkhit.rupos);
+          h_trkhits_uupos->Fill(trkhit.uupos);
+          h_trkhits_rdrift->Fill(trkhit.rdrift);
+          h_trkhits_cdrift->Fill(trkhit.cdrift);
+          h_trkhits_sderr->Fill(trkhit.sderr);
+          h_trkhits_uderr->Fill(trkhit.uderr);
+          h_trkhits_dvel->Fill(trkhit.dvel);
+          h_trkhits_lang->Fill(trkhit.lang);
+          h_trkhits_utresid->Fill(trkhit.utresid);
+          h_trkhits_utresidmvar->Fill(trkhit.utresidmvar);
+          h_trkhits_utresidpvar->Fill(trkhit.utresidpvar);
+          h_trkhits_udresid->Fill(trkhit.udresid);
+          h_trkhits_udresidmvar->Fill(trkhit.udresidmvar);
+          h_trkhits_udresidpvar->Fill(trkhit.udresidpvar);
+          h_trkhits_rtresid->Fill(trkhit.rtresid);
+          h_trkhits_rtresidmvar->Fill(trkhit.rtresidmvar);
+          h_trkhits_rtresidpvar->Fill(trkhit.rtresidpvar);
+          h_trkhits_rdresid->Fill(trkhit.rdresid);
+          h_trkhits_rdresidmvar->Fill(trkhit.rdresidmvar);
+          h_trkhits_rdresidpvar->Fill(trkhit.rdresidpvar);
+          h_trkhits_wdot->Fill(trkhit.wdot);
+          h_trkhits_poca_x->Fill(trkhit.poca.x());
+          h_trkhits_poca_y->Fill(trkhit.poca.y());
+          h_trkhits_poca_z->Fill(trkhit.poca.z());
+          h_trkhits_uwirephi->Fill(trkhit.uwirephi);
+          h_trkhits_ustrawdist->Fill(trkhit.ustrawdist);
+          h_trkhits_ustrawphi->Fill(trkhit.ustrawphi);
+          h_trkhits_dhit->Fill(trkhit.dhit);
+          h_trkhits_dactive->Fill(trkhit.dactive);
         }
       }
     }
