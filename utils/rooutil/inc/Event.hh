@@ -93,6 +93,9 @@ struct Event {
       if (trkmcsim != nullptr) {
         track.trkmcsim = &(trkmcsim->at(i_track));
       }
+      if (trkhits != nullptr) {
+        track.trkhits = &(trkhits->at(i_track));
+      }
       track.trkqual = &(trkqual->at(i_track));
 
       if (debug) { std::cout << "Event::Update(): Updating Track " << i_track << "... " << std::endl; }

@@ -8,6 +8,7 @@
 
 #include "EventNtuple/utils/rooutil/inc/TrackSegment.hh"
 #include "EventNtuple/utils/rooutil/inc/MCParticle.hh"
+#include "EventNtuple/utils/rooutil/inc/TrackHit.hh"
 
 struct Track {
   Track(mu2e::TrkInfo* trk, std::vector<mu2e::TrkSegInfo>* trksegs, mu2e::TrkCaloHitInfo* trkcalohit)
@@ -73,6 +74,14 @@ struct Track {
         segments[i_segment].trksegpars_kl = &(trksegpars_kl->at(i_segment));
       }
     }
+
+    if (trkhits != nullptr) {
+      // Create the underlying TrackHits
+      for (int i_trkhit = 0; i_trkhit < nHits(); ++i_trkhit) {
+        TrackHit trkhit(&(trkhits->at(i_trkhit))); // passing the addresses of the underlying structs
+        hits.emplace_back(trkhit);
+      }
+    }
   }
 
   int nSegments() const { return trksegs->size(); }
@@ -104,6 +113,19 @@ struct Track {
   }
   MCParticles mc_particles;
 
+  int nHits() const { return trkhits->size(); }
+  TrackHits GetHits() const { return hits; }
+  TrackHits GetHits(TrackHitCut cut) const {
+    TrackHits select_hits;
+    for (const auto& hit : hits) {
+      if (cut(hit)) {
+        select_hits.emplace_back(hit);
+      }
+    }
+    return select_hits;
+  }
+  TrackHits hits;
+
   // Pointers to the data
   mu2e::TrkInfo* trk = nullptr;
   mu2e::TrkInfoMC* trkmc = nullptr;
@@ -112,6 +134,7 @@ struct Track {
   std::vector<mu2e::LoopHelixInfo>* trksegpars_lh = nullptr;
   std::vector<mu2e::CentralHelixInfo>* trksegpars_ch = nullptr;
   std::vector<mu2e::KinematicLineInfo>* trksegpars_kl = nullptr;
+  std::vector<mu2e::TrkStrawHitInfo>* trkhits = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
   mu2e::MVAResultInfo* trkqual = nullptr;
