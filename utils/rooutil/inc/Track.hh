@@ -85,10 +85,10 @@ struct Track {
   }
 
   int nSegments() const { return trksegs->size(); }
-  TrackSegments GetSegments() const { return segments; }
-  TrackSegments GetSegments(TrackSegmentCut cut) const {
+  TrackSegments GetSegments() { return segments; }
+  TrackSegments GetSegments(TrackSegmentCut cut) {
     TrackSegments select_segments;
-    for (const auto& segment : segments) {
+    for (auto& segment : segments) {
       if (cut(segment)) {
         select_segments.emplace_back(segment);
       }
@@ -101,10 +101,10 @@ struct Track {
     if (trkmcsim == nullptr) { return 0; }
     else { return trkmcsim->size(); }
   }
-  MCParticles GetMCParticles() const { return mc_particles; }
-  MCParticles GetMCParticles(MCParticleCut cut) const {
+  MCParticles GetMCParticles() { return mc_particles; }
+  MCParticles GetMCParticles(MCParticleCut cut) {
     MCParticles select_mc_particles;
-    for (const auto& mc_particle : mc_particles) {
+    for (auto& mc_particle : mc_particles) {
       if (cut(mc_particle)) {
         select_mc_particles.emplace_back(mc_particle);
       }
@@ -114,10 +114,10 @@ struct Track {
   MCParticles mc_particles;
 
   int nHits() const { return trkhits->size(); }
-  TrackHits GetHits() const { return hits; }
-  TrackHits GetHits(TrackHitCut cut) const {
+  TrackHits GetHits() { return hits; }
+  TrackHits GetHits(TrackHitCut cut) {
     TrackHits select_hits;
-    for (const auto& hit : hits) {
+    for (auto& hit : hits) {
       if (cut(hit)) {
         select_hits.emplace_back(hit);
       }

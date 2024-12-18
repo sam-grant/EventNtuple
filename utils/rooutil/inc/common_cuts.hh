@@ -118,7 +118,7 @@ bool is_mu_plus(Track& track) { // track fit used mu-plus hypothesis
 bool is_reflected(Track& track) { // track is refelected (i.e. has both an upstream and downstream fit segment at the tracker entrance)
   bool have_upstream = false;
   bool have_downstream = false;
-  for (const auto& segment : track.segments) {
+  for (auto& segment : track.segments) {
     if (tracker_entrance(segment)) {
       if (is_upstream(segment)) {
         have_upstream = true;
