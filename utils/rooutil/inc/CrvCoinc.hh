@@ -16,7 +16,7 @@ struct CrvCoinc {
   mu2e::CrvHitInfoMC* mc = nullptr;
 };
 
-typedef std::function<bool(const CrvCoinc&)> CrvCoincCut;
+typedef std::function<bool(CrvCoinc&)> CrvCoincCut;
 typedef std::vector<CrvCoinc> CrvCoincs;
 
 #endif

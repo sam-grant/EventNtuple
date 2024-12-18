@@ -12,7 +12,7 @@ struct MCParticle {
   mu2e::SimInfo* mcsim = nullptr;
 };
 
-typedef std::function<bool(const MCParticle&)> MCParticleCut;
+typedef std::function<bool(MCParticle&)> MCParticleCut;
 typedef std::vector<MCParticle> MCParticles;
 
 #endif

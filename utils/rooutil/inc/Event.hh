@@ -152,10 +152,10 @@ struct Event {
     }
   }
 
-  CrvCoincs GetCrvCoincs() const { return crv_coincs; }
-  CrvCoincs GetCrvCoincs(CrvCoincCut cut) const {
+  CrvCoincs GetCrvCoincs() { return crv_coincs; }
+  CrvCoincs GetCrvCoincs(CrvCoincCut cut) {
     CrvCoincs select_crv_coincs;
-    for (const auto& crv_coinc : crv_coincs) {
+    for (auto& crv_coinc : crv_coincs) {
       if (cut(crv_coinc)) {
         select_crv_coincs.emplace_back(crv_coinc);
       }
@@ -173,8 +173,8 @@ struct Event {
     GetTracks(cut, true); // change in place
   }
 
-  int CountCrvCoincs() const { return crv_coincs.size(); }
-  int CountCrvCoincs(CrvCoincCut cut) const {
+  int CountCrvCoincs() { return crv_coincs.size(); }
+  int CountCrvCoincs(CrvCoincCut cut) {
     CrvCoincs select_crv_coincs = GetCrvCoincs(cut);
     return select_crv_coincs.size();
   }

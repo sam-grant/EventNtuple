@@ -16,7 +16,7 @@
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
 
 //+ Track Segment Cuts - Directions
-bool is_downstream(const TrackSegment& segment) { // track fit segment is going in +z direction
+bool is_downstream(TrackSegment& segment) { // track fit segment is going in +z direction
   // the sign of p_z tells us whether this segment is going upstream or downstream
   if (segment.trkseg->mom.z() > 0) {
       return true;
@@ -24,7 +24,7 @@ bool is_downstream(const TrackSegment& segment) { // track fit segment is going 
   else { return false; }
 }
 
-bool is_upstream(const TrackSegment& segment) { // track fit segment is going in -z direction
+bool is_upstream(TrackSegment& segment) { // track fit segment is going in -z direction
   // the sign of p_z tells us whether this segment is going upstream or downstream
   if (segment.trkseg->mom.z() < 0) {
     return true;
@@ -34,7 +34,7 @@ bool is_upstream(const TrackSegment& segment) { // track fit segment is going in
 
 
 //+ Track Segment Cuts - Locations
-bool tracker_entrance(const TrackSegment& segment) { // track fit segment is at the tracker entrance
+bool tracker_entrance(TrackSegment& segment) { // track fit segment is at the tracker entrance
   if (segment.trkseg != nullptr) {
     if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Front) { return true; }
     else { return false; }
@@ -46,7 +46,7 @@ bool tracker_entrance(const TrackSegment& segment) { // track fit segment is at 
   else { return false; }
 }
 
-bool tracker_middle(const TrackSegment& segment) {  // track fit segment is at the middle of the tracker
+bool tracker_middle(TrackSegment& segment) {  // track fit segment is at the middle of the tracker
   if (segment.trkseg != nullptr) {
     if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Mid) { return true; }
     else { return false; }
@@ -58,7 +58,7 @@ bool tracker_middle(const TrackSegment& segment) {  // track fit segment is at t
   else { return false; }
 }
 
-bool tracker_exit(const TrackSegment& segment) { // track fit segment is at the tracker exit
+bool tracker_exit(TrackSegment& segment) { // track fit segment is at the tracker exit
   if (segment.trkseg != nullptr) {
     if (segment.trkseg->sid==mu2e::SurfaceIdDetail::TT_Back) { return true; }
     else { return false; }
@@ -70,7 +70,7 @@ bool tracker_exit(const TrackSegment& segment) { // track fit segment is at the 
   else { return false; }
 }
 
-bool stopping_target_foils(const TrackSegment& segment) { // track fit segment is in the stopping target
+bool stopping_target_foils(TrackSegment& segment) { // track fit segment is in the stopping target
   if (segment.trkseg != nullptr) {
     if (segment.trkseg->sid==mu2e::SurfaceIdDetail::ST_Foils) { return true; }
     else { return false; }
@@ -82,11 +82,11 @@ bool stopping_target_foils(const TrackSegment& segment) { // track fit segment i
   else { return false; }
 }
 //+ Track Segment Cuts - Other
-bool has_mc_step(const TrackSegment& segment) { // track fit segment has an MC-truth SurfaceStep
+bool has_mc_step(TrackSegment& segment) { // track fit segment has an MC-truth SurfaceStep
   if (segment.trksegmc != nullptr) { return true; }
   else { return false; }
 }
-bool has_reco_step(const TrackSegment& segment) { // track fit segment has an reco SurfaceStep
+bool has_reco_step(TrackSegment& segment) { // track fit segment has an reco SurfaceStep
   if (segment.trkseg != nullptr) { return true; }
   else { return false; }
 }
@@ -142,68 +142,68 @@ bool passes_trkqual(Track& track, double cut_val) { // true if trkqual > cut_val
 }
 
 //+ CrvCoinc Cuts
-bool three_of_four_coinc(const CrvCoinc& crv_coinc) { // CRV coincidence has exactly three layers hit
+bool three_of_four_coinc(CrvCoinc& crv_coinc) { // CRV coincidence has exactly three layers hit
   if (crv_coinc.reco->nLayers == 3) { return true; }
   else { return false; }
 }
 
 //+ Combined Track & CrvCoinc Cuts
-bool track_crv_coincidence(const TrackSegment& segment, const CrvCoinc& crv_coinc) { // time difference between track segment and crv_coinc is less than 250 ns
+bool track_crv_coincidence(TrackSegment& segment, CrvCoinc& crv_coinc) { // time difference between track segment and crv_coinc is less than 250 ns
   if ( segment.trkseg->time - crv_coinc.reco->time > 200 && segment.trkseg->time - crv_coinc.reco->time < 450) { return true; }
   else { return false; }
 }
 
 //+ MCParticle Cuts - Particle Types
-bool is_particle(const MCParticle& particle, mu2e::PDGCode::type pdg) { // MCParticle has pdg
+bool is_particle(MCParticle& particle, mu2e::PDGCode::type pdg) { // MCParticle has pdg
   if (particle.mcsim->pdg == pdg) { return true; }
   else { return false; }
 }
-bool is_muon(const MCParticle& sim) { // true if the MCParticle is a muon
+bool is_muon(MCParticle& sim) { // true if the MCParticle is a muon
   return is_particle(sim, mu2e::PDGCode::mu_minus);
 }
 
 //+ MCParticle Cuts - Start Process Code
-bool start_process(const MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this creation code
+bool start_process(MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this creation code
   if (particle.mcsim->startCode == proc) { return true; }
   else { return false; }
 }
-bool is_CeMinusEndpoint(const MCParticle& particle) { // true of the MCParticle is CeMinusEndpoint
+bool is_CeMinusEndpoint(MCParticle& particle) { // true of the MCParticle is CeMinusEndpoint
   return start_process(particle, mu2e::ProcessCode::mu2eCeMinusEndpoint);
 }
-bool is_CeMinusLeadingLog(const MCParticle& particle) { // true of the MCParticle is CeMinusLeadingLog
+bool is_CeMinusLeadingLog(MCParticle& particle) { // true of the MCParticle is CeMinusLeadingLog
   return start_process(particle, mu2e::ProcessCode::mu2eCeMinusLeadingLog);
 }
-bool is_DIO(const MCParticle& particle) { // true of the MCParticle is DIO or mu2eDIOLeadingLof
+bool is_DIO(MCParticle& particle) { // true of the MCParticle is DIO or mu2eDIOLeadingLof
   return (start_process(particle, mu2e::ProcessCode::mu2eMuonDecayAtRest) || start_process(particle, mu2e::ProcessCode::DIO));
 }
 
 //+ MCParticle Cuts - Stop Process Code
-bool end_process(const MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this stop code
+bool end_process(MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // MCParticle has this stop code
   if (particle.mcsim->stopCode == proc) { return true; }
   else { return false; }
 }
 
 //+ MCParticle Cuts - Generator ID
-bool end_process(const MCParticle& particle, mu2e::GenId::enum_type genid) { // MCParticle has this generator ID
+bool end_process(MCParticle& particle, mu2e::GenId::enum_type genid) { // MCParticle has this generator ID
   if (particle.mcsim->gen == genid) { return true; }
   else { return false; }
 }
 
 //+ MCParticle Cuts - Genealogy
-bool has_track_relationship(const MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to track primary
+bool has_track_relationship(MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to track primary
   if (particle.mcsim->trkrel == rel) { return true; }
   else { return false; }
 }
-bool is_track_parent(const MCParticle& particle) { // MCParticle is the parent of the track
+bool is_track_parent(MCParticle& particle) { // MCParticle is the parent of the track
   return has_track_relationship(particle, mu2e::MCRelationship::mother);
 }
-bool has_primary_relationship(const MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to event primary
+bool has_primary_relationship(MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to event primary
   if (particle.mcsim->prirel == rel) { return true; }
   else { return false; }
 }
 
 //+ MCParticle Cuts - Other
-bool made_track_hit(const MCParticle& particle) { // MCParticle made a hit in the tracker
+bool made_track_hit(MCParticle& particle) { // MCParticle made a hit in the tracker
   if (particle.mcsim->nhits > 0) { return true; }
   else { return false; }
 }

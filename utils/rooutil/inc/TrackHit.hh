@@ -12,7 +12,7 @@ struct TrackHit {
   mu2e::TrkStrawHitInfo* reco = nullptr;
 };
 
-typedef std::function<bool(const TrackHit&)> TrackHitCut;
+typedef std::function<bool(TrackHit&)> TrackHitCut;
 typedef std::vector<TrackHit> TrackHits;
 
 #endif

@@ -24,7 +24,7 @@ struct TrackSegment {
   }
 };
 
-typedef std::function<bool(const TrackSegment&)> TrackSegmentCut;
+typedef std::function<bool(TrackSegment&)> TrackSegmentCut;
 typedef std::vector<TrackSegment> TrackSegments;
 
 #endif
