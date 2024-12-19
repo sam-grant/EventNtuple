@@ -18,16 +18,22 @@
 //+ Track Segment Cuts - Directions
 bool is_downstream(TrackSegment& segment) { // track fit segment is going in +z direction
   // the sign of p_z tells us whether this segment is going upstream or downstream
-  if (segment.trkseg->mom.z() > 0) {
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->mom.z() > 0) {
       return true;
+    }
+    else { return false; }
   }
   else { return false; }
 }
 
 bool is_upstream(TrackSegment& segment) { // track fit segment is going in -z direction
   // the sign of p_z tells us whether this segment is going upstream or downstream
-  if (segment.trkseg->mom.z() < 0) {
-    return true;
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->mom.z() < 0) {
+      return true;
+    }
+    else { return false; }
   }
   else { return false; }
 }
@@ -194,7 +200,13 @@ bool has_track_relationship(MCParticle& particle, mu2e::MCRelationship::relation
   if (particle.mcsim->trkrel == rel) { return true; }
   else { return false; }
 }
-bool is_track_parent(MCParticle& particle) { // MCParticle is the parent of the track
+bool is_track_particle(MCParticle& particle) { // MCParticle with the most hits on the track
+  return has_track_relationship(particle, mu2e::MCRelationship::same) && particle.mcsim->rank ==0;
+}
+bool has_hit_on_track(MCParticle& particle) { // MCParticle has a hit on the track
+  return has_track_relationship(particle, mu2e::MCRelationship::same);
+}
+bool is_track_parent(MCParticle& particle) { // MCParticle is the parent of a particle with a hit on thw track
   return has_track_relationship(particle, mu2e::MCRelationship::mother);
 }
 bool has_primary_relationship(MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to event primary
