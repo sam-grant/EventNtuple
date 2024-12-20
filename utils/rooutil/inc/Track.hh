@@ -19,8 +19,6 @@ struct Track {
       TrackSegment segment(&(trksegs->at(i_segment))); // passing the addresses of the underlying structs
       segments.emplace_back(segment);
     }
-    // Time order the segments
-    std::sort(segments.begin(), segments.end(), TrackSegment::earliest);
   }
 
   void Update(bool debug = false) {
