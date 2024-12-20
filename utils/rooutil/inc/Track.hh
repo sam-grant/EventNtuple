@@ -30,15 +30,24 @@ struct Track {
       for (size_t i_segment_mc = 0; i_segment_mc < trksegsmc->size(); ++i_segment_mc) {
         if (debug) { std::cout << "Track::Update(): Looking for trkseg to match trksegmc " << i_segment_mc << ".(of " << trksegsmc->size() << ").. "; }
         bool reco_step_found = false;
+        double min_dt = 999999;
+        double max_dt = 5; // want to be at least this close
         for (auto& segment : segments) {
           if (segment.trkseg != nullptr) { // we might have added MC-only segments...
-            if (segment.trkseg->sid == trksegsmc->at(i_segment_mc).sid
-                && segment.trkseg->sindex == trksegsmc->at(i_segment_mc).sindex) {
 
-              segment.trksegmc = &(trksegsmc->at(i_segment_mc));
-              reco_step_found = true;
-              if (debug) { std::cout << "FOUND" << std::endl; }
-              break;
+            // Want to to match segments that are at the same surface (+ index) travelling in the same direction and closest in time
+            double dt = std::fabs(segment.trkseg->time - trksegsmc->at(i_segment_mc).time);
+            if (segment.trkseg->sid == trksegsmc->at(i_segment_mc).sid
+                && segment.trkseg->sindex == trksegsmc->at(i_segment_mc).sindex
+                && segment.trkseg->mom.Dot(trksegsmc->at(i_segment_mc).mom)>0
+                && dt < max_dt) {
+
+              if (dt < min_dt) {
+                min_dt = dt;
+                segment.trksegmc = &(trksegsmc->at(i_segment_mc));
+                reco_step_found = true;
+                if (debug) { std::cout << "FOUND (reco step mom = " << segment.trkseg->mom.R() << ", MC step mom = " << segment.trksegmc->mom.R() << ", dt = " << dt << ")" << std::endl; }
+              }
             }
           }
         }
