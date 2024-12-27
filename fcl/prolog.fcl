@@ -29,6 +29,8 @@ TrkQualUmuP          : @local::TrkQual
 TrkQualUmuP.KalSeedPtrCollection : "MergeKKUmuP"
 TrkQualAll          : @local::TrkQual
 TrkQualAll.KalSeedPtrCollection : "MergeKKAll"
+TrkQualDe           : @local::TrkQual
+TrkQualDe.KalSeedPtrCollection : "MergeKKDe"
 
 
 TrkQualProducers : {
@@ -41,6 +43,7 @@ TrkQualProducers : {
   TrkQualUmuM : @local::TrkQualUmuM
   TrkQualUmuP : @local::TrkQualUmuP
   TrkQualAll : @local::TrkQualAll
+  TrkQualDe : @local::TrkQualDe
 }
 TrkQualProducersPath : [ TrkQualDeM, TrkQualUeM, TrkQualDmuM, TrkQualDeP, TrkQualUeP, TrkQualDmuP, TrkQualUmuM, TrkQualUmuP ]
 
@@ -57,9 +60,12 @@ TrkPIDDeM          : @local::TrkPID
 TrkPIDDeM.KalSeedCollection : "KKDeM"
 TrkPIDDeP          : @local::TrkPID
 TrkPIDDeP.KalSeedCollection : "KKDeP"
+TrkPIDDe          : @local::TrkPID
+TrkPIDDe.KalSeedCollection : "KKDe"
 TrkPIDProducers : {
   TrkPIDDeM : @local::TrkPIDDeM
   TrkPIDDeP : @local::TrkPIDDeP
+  TrkPIDDe : @local::TrkPIDDe
 }
 TrkPIDProducersPath : [ TrkPIDDeM, TrkPIDDeP ]
 
@@ -99,6 +105,9 @@ MergeKKOff.KalSeedCollections : [ "KKOffSpill" ]
 MergeKKAll          : @local::MergeKK
 MergeKKAll.KalSeedCollections : ["KKDeM", "KKDeP", "KKUeM", "KKUeP", "KKDmuM", "KKDmuP", "KKUmuM", "KKUmuP", # will go when all new datasets are added
   "KKDe", "KKUe", "KKDmu", "KKUmu" ] # these are the new APR outputs
+MergeKKDe           : @local::MergeKK
+MergeKKDe.KalSeedCollections : [ "KKDe" ]
+
 
 MergeKKDeMCalib : {
   @table::MergeKK
@@ -127,6 +136,7 @@ MergeKKProducers : {
   MergeKKOff : @local::MergeKKOff
   MergeKKAll : @local::MergeKKAll
   MergeKKDeMCalib : @local::MergeKKAll
+  MergeKKDe : @local::MergeKKDe
 }
 MergeKKProducersPath : [ MergeKKAll ]
 MergeKKNoFieldPath : [ MergeKKLine ]
@@ -182,6 +192,11 @@ All : { input : "MergeKKAll"
 DeMCalib : { input : "MergeKKDeMCalib"
   branch : "trk"
   options : { fillMC : true fillHits : true  genealogyDepth : -1 matchDepth : -1 }
+}
+De : { input : "MergeKKDe"
+  branch : "de"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
+  trkQualTag : "TrkQualDe"
 }
 
 EventNtupleMaker : {
