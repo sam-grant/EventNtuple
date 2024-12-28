@@ -87,6 +87,20 @@ bool stopping_target_foils(TrackSegment& segment) { // track fit segment is in t
   }
   else { return false; }
 }
+
+bool inner_proton_absorber(TrackSegment& segment) { // track fit segment is in the stopping target
+  if (segment.trkseg != nullptr) {
+    if (segment.trkseg->sid==mu2e::SurfaceIdDetail::IPA) { return true; }
+    else { return false; }
+  }
+  else if (segment.trksegmc != nullptr) {
+    if (segment.trksegmc->sid==mu2e::SurfaceIdDetail::IPA) { return true; }
+    else { return false; }
+  }
+  else { return false; }
+}
+
+
 //+ Track Segment Cuts - Other
 bool has_mc_step(TrackSegment& segment) { // track fit segment has an MC-truth SurfaceStep
   if (segment.trksegmc != nullptr) { return true; }
@@ -190,7 +204,7 @@ bool end_process(MCParticle& particle, mu2e::ProcessCode::enum_type proc) { // M
 }
 
 //+ MCParticle Cuts - Generator ID
-bool end_process(MCParticle& particle, mu2e::GenId::enum_type genid) { // MCParticle has this generator ID
+bool from_gen_id(MCParticle& particle, mu2e::GenId::enum_type genid) { // MCParticle has this generator ID
   if (particle.mcsim->gen == genid) { return true; }
   else { return false; }
 }
@@ -201,7 +215,7 @@ bool has_track_relationship(MCParticle& particle, mu2e::MCRelationship::relation
   else { return false; }
 }
 bool is_track_particle(MCParticle& particle) { // MCParticle with the most hits on the track
-  return has_track_relationship(particle, mu2e::MCRelationship::same) && particle.mcsim->rank ==0;
+  return has_track_relationship(particle, mu2e::MCRelationship::same) && particle.mcsim->rank == 0;
 }
 bool has_hit_on_track(MCParticle& particle) { // MCParticle has a hit on the track
   return has_track_relationship(particle, mu2e::MCRelationship::same);
@@ -217,6 +231,16 @@ bool has_primary_relationship(MCParticle& particle, mu2e::MCRelationship::relati
 //+ MCParticle Cuts - Other
 bool made_track_hit(MCParticle& particle) { // MCParticle made a hit in the tracker
   if (particle.mcsim->nhits > 0) { return true; }
+  else { return false; }
+}
+
+bool from_gen_id(Track& track, mu2e::GenId::enum_type genid) { // Track's MCParticle has this generator ID
+  if (track.GetMCParticles(is_track_particle).at(0).mcsim->gen == genid) { return true; }
+  else { return false; }
+}
+
+bool from_start_process(Track& track, mu2e::ProcessCode::enum_type proc) { // Track's MCParticle has this starting ProcessCode
+  if (track.GetMCParticles(is_track_particle).at(0).mcsim->startCode == proc) { return true; }
   else { return false; }
 }
 
