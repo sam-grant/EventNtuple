@@ -478,7 +478,7 @@ namespace mu2e {
     // general CRV info
     if(_fillcrvcoincs) {
       // coincidence branches should be here FIXME
-      _ntuple->Branch("crvsummary.",&_crvsummary,_buffsize,_splitlevel);
+      _ntuple->Branch("crvsummary",&_crvsummary,_buffsize,_splitlevel);
       _ntuple->Branch("crvcoincs.",&_crvcoincs,_buffsize,_splitlevel);
       if(_fillcrvpulses) {
         _ntuple->Branch("crvpulses.",&_crvpulses,_buffsize,_splitlevel);
@@ -487,7 +487,7 @@ namespace mu2e {
         _ntuple->Branch("crvdigis.",&_crvdigis,_buffsize,_splitlevel);
       }
       if(_fillmc){
-        _ntuple->Branch("crvsummarymc.",&_crvsummarymc,_buffsize,_splitlevel);
+        _ntuple->Branch("crvsummarymc",&_crvsummarymc,_buffsize,_splitlevel);
         _ntuple->Branch("crvcoincsmc.",&_crvcoincsmc,_buffsize,_splitlevel);
         _ntuple->Branch("crvcoincsmcplane.",&_crvcoincsmcplane,_buffsize,_splitlevel);
         if(_fillcrvpulses) {
