@@ -157,6 +157,7 @@ struct Track {
   std::vector<mu2e::KinematicLineInfo>* trksegpars_kl = nullptr;
   std::vector<mu2e::TrkStrawHitInfo>* trkhits = nullptr;
   std::vector<mu2e::TrkStrawHitInfoMC>* trkhitsmc = nullptr;
+  std::vector<mu2e::TrkStrawMatInfo>* trkmats = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
   mu2e::MVAResultInfo* trkqual = nullptr;

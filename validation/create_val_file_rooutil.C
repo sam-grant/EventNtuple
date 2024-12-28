@@ -339,6 +339,16 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkhitsmc_cpos_y = new TH1F("h_trkhitsmc_cpos_y", "", 100,0,100);
   TH1F* h_trkhitsmc_cpos_z = new TH1F("h_trkhitsmc_cpos_z", "", 100,0,100);
 
+  TH1F* h_trkmats_active = new TH1F("h_trkmats_active", "", 100,0,100);
+  TH1F* h_trkmats_plane = new TH1F("h_trkmats_plane", "", 100,0,100);
+  TH1F* h_trkmats_panel = new TH1F("h_trkmats_panel", "", 100,0,100);
+  TH1F* h_trkmats_layer = new TH1F("h_trkmats_layer", "", 100,0,100);
+  TH1F* h_trkmats_straw = new TH1F("h_trkmats_straw", "", 100,0,100);
+  TH1F* h_trkmats_doca = new TH1F("h_trkmats_doca", "", 100,0,100);
+  TH1F* h_trkmats_tlen = new TH1F("h_trkmats_tlen", "", 100,0,100);
+  TH1F* h_trkmats_dp  = new TH1F("h_trkmats_dp", "", 100,0,100);
+  TH1F* h_trkmats_radlen = new TH1F("h_trkmats_radlen", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -737,6 +747,23 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
           h_trkhitsmc_cpos_x->Fill(trkhitmc.cpos.x());
           h_trkhitsmc_cpos_y->Fill(trkhitmc.cpos.y());
           h_trkhitsmc_cpos_z->Fill(trkhitmc.cpos.z());
+        }
+      }
+    }
+
+    if (event.trkmats != nullptr) { // might not have this branch
+      std::cout << "Creating trkmats histograms..." << std::endl;
+      for (const auto& trkmats : *(event.trkmats)) {
+        for (const auto& trkmat : trkmats) {
+          h_trkmats_active->Fill(trkmat.active);
+          h_trkmats_plane->Fill(trkmat.plane);
+          h_trkmats_panel->Fill(trkmat.panel);
+          h_trkmats_layer->Fill(trkmat.layer);
+          h_trkmats_straw->Fill(trkmat.straw);
+          h_trkmats_doca->Fill(trkmat.doca);
+          h_trkmats_tlen->Fill(trkmat.tlen);
+          h_trkmats_dp->Fill(trkmat.dp);
+          h_trkmats_radlen->Fill(trkmat.radlen);
         }
       }
     }

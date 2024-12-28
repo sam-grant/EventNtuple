@@ -141,5 +141,15 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         }
       }
     }
+
+    // trkmats
+    if (event.trkmats != nullptr) { // might not have this branch
+      for (const auto& trkmats : *(event.trkmats)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& mat : trkmats) {
+          std::cout << "trkmats: " << mat.active << ", " << mat.plane << ", " << mat.panel << ", " << mat.layer << ", " << mat.straw << ", " << mat.radlen << std::endl;
+        }
+      }
+    }
   }
 }
