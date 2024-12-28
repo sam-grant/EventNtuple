@@ -43,7 +43,8 @@ The currently supported branches are:
 * evtinfo, evtinfomc
 * trk, trkmc
 * trksegs, trksegmcs, trksegpars_{lh,ch,kl}
-* trkcalohit, trkcalohitmc
+* trkcalohit
+* trkcalohitmc (only at Event class)
 * crvcoincs, crvcoincsmc
 * trkmcsim
 * trkqual
