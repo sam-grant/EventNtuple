@@ -155,5 +155,13 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     // hitcount
     auto hitcount = *(event.hitcount);
     std::cout << "hitcount: " << hitcount.nsd << ", " << hitcount.nesel << ", " << hitcount.nrsel << ", " << hitcount.ntsel << ", " << hitcount.nbkg << std::endl;
+
+    // crvsummary
+    auto crvsummary = *(event.crvsummary);
+    std::cout << "crvsummary: " << crvsummary.totalPEs << ", " << crvsummary.nHitCounters << std::endl;
+
+    // crvsummarymc
+    auto crvsummarymc = *(event.crvsummarymc);
+    std::cout << "crvsummarymc: " << crvsummarymc.totalEnergyDeposited << ", " << crvsummarymc.minPathLayer << ", " << crvsummarymc.pdgId << std::endl;
   }
 }

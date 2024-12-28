@@ -6,6 +6,8 @@
 #include "EventNtuple/inc/EventInfo.hh"
 #include "EventNtuple/inc/EventInfoMC.hh"
 #include "EventNtuple/inc/HitCount.hh"
+#include "EventNtuple/inc/CrvSummaryReco.hh"
+#include "EventNtuple/inc/CrvSummaryMC.hh"
 
 #include "EventNtuple/inc/TrkInfoMC.hh"
 #include "EventNtuple/inc/TrkCaloHitInfo.hh"
@@ -34,6 +36,7 @@ struct Event {
 
     ntuple->SetBranchAddress("evtinfo", &this->evtinfo);
     ntuple->SetBranchAddress("hitcount", &this->hitcount);
+    ntuple->SetBranchAddress("crvsummary", &this->crvsummary);
 
     ntuple->SetBranchAddress("trk", &this->trk);
     ntuple->SetBranchAddress("trksegs", &this->trksegs);
@@ -45,6 +48,9 @@ struct Event {
     // Check if the MC branches exist
     if (ntuple->GetBranch("evtinfomc")) {
       ntuple->SetBranchAddress("evtinfomc", &this->evtinfomc);
+    }
+    if (ntuple->GetBranch("crvsummarymc")) {
+      ntuple->SetBranchAddress("crvsummarymc", &this->crvsummarymc);
     }
     if (ntuple->GetBranch("trkmc")) {
       ntuple->SetBranchAddress("trkmc", &this->trkmc);
@@ -203,6 +209,8 @@ struct Event {
   mu2e::EventInfo* evtinfo = nullptr;
   mu2e::EventInfoMC* evtinfomc = nullptr;
   mu2e::HitCount* hitcount = nullptr;
+  mu2e::CrvSummaryReco* crvsummary = nullptr;
+  mu2e::CrvSummaryMC* crvsummarymc = nullptr;
 
   std::vector<mu2e::TrkInfo>* trk = nullptr;
   std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;

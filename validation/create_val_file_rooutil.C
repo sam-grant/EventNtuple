@@ -355,6 +355,20 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_hitcount_ntsel = new TH1F("h_hitcount_ntsel", "", 100,0,100);
   TH1F* h_hitcount_nbkg = new TH1F("h_hitcount_nbkg", "", 100,0,100);
 
+  TH1F* h_crvsummary_totalPEs = new TH1F("h_crvsummary_totalPEs", "", 100,0,100);
+  TH1F* h_crvsummary_nHitCounters = new TH1F("h_crvsummary_nHitCounters", "", 100,0,100);
+
+  TH1F* h_crvsummarymc_totalEnergyDeposited = new TH1F("h_crvsummarymc_totalEnergyDeposited", "", 100,0,100);
+  TH1F* h_crvsummarymc_minPathLayer = new TH1F("h_crvsummarymc_minPathLayer", "", 100,0,100);
+  TH1F* h_crvsummarymc_maxPathLayer = new TH1F("h_crvsummarymc_maxPathLayer", "", 100,0,100);
+  TH1F* h_crvsummarymc_nHitCounters = new TH1F("h_crvsummarymc_nHitCounters", "", 100,0,100);
+  TH1F* h_crvsummarymc_pos_x = new TH1F("h_crvsummarymc_pos_x", "", 100,0,100);
+  TH1F* h_crvsummarymc_pos_y = new TH1F("h_crvsummarymc_pos_y", "", 100,0,100);
+  TH1F* h_crvsummarymc_pos_z = new TH1F("h_crvsummarymc_pos_z", "", 100,0,100);
+  TH1F* h_crvsummarymc_sectorNumber = new TH1F("h_crvsummarymc_sectorNumber", "", 100,0,100);
+  TH1F* h_crvsummarymc_sectorType = new TH1F("h_crvsummarymc_sectorType", "", 100,0,100);
+  TH1F* h_crvsummarymc_pdgId = new TH1F("h_crvsummarymc_pdgId", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -781,6 +795,25 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
     h_hitcount_nrsel->Fill(hitcount.nrsel);
     h_hitcount_ntsel->Fill(hitcount.ntsel);
     h_hitcount_nbkg->Fill(hitcount.nbkg);
+
+    std::cout << "Creating crvsummary histograms..." << std::endl;
+    auto crvsummary = *(event.crvsummary);
+    h_crvsummary_totalPEs->Fill(crvsummary.totalPEs);
+    h_crvsummary_nHitCounters->Fill(crvsummary.nHitCounters);
+
+    std::cout << "Creating crvsummarymc histograms..." << std::endl;
+    auto crvsummarymc = *(event.crvsummarymc);
+    h_crvsummarymc_totalEnergyDeposited->Fill(crvsummarymc.totalEnergyDeposited);
+    h_crvsummarymc_minPathLayer->Fill(crvsummarymc.minPathLayer);
+    h_crvsummarymc_maxPathLayer->Fill(crvsummarymc.maxPathLayer);
+    h_crvsummarymc_nHitCounters->Fill(crvsummarymc.nHitCounters);
+    h_crvsummarymc_pos_x->Fill(crvsummarymc.pos.x());
+    h_crvsummarymc_pos_y->Fill(crvsummarymc.pos.y());
+    h_crvsummarymc_pos_z->Fill(crvsummarymc.pos.z());
+    h_crvsummarymc_sectorNumber->Fill(crvsummarymc.sectorNumber);
+    h_crvsummarymc_sectorType->Fill(crvsummarymc.sectorType);
+    h_crvsummarymc_pdgId->Fill(crvsummarymc.pdgId);
+
   }
 
   // // resolution histograms
