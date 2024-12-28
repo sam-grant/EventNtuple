@@ -31,7 +31,7 @@ There are various classes that combine together branches at different dimensions
 
 | Class | Single Objects | Vectors | Vector-of-Vectors |
 |-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```trkqual```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ``trkhitsmc```, ```trkmats``` |
+| Event | ```evtinfo```, ```evtinfomc```, ```hitcount``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```trkqual```, ```crvcoincs```, ```crvcoincsmc``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ``trkhitsmc```, ```trkmats``` |
 | Track | ```trk```, ```trkmc```, ```trkcalohit```, ```trkqual``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ```trkhitsmc```, ```trkmats``` | none |
 | TrackSegment | ```trkseg```, ```trksegmc```, ```trksegpars_{lh,ch,kl}``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
@@ -40,7 +40,7 @@ There are various classes that combine together branches at different dimensions
 
 ## Supported Branches
 The currently supported branches are:
-* evtinfo, evtinfomc
+* evtinfo, evtinfomc, hitcount
 * trk, trkmc
 * trksegs, trksegmcs, trksegpars_{lh,ch,kl}
 * trkcalohit

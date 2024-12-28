@@ -5,6 +5,8 @@
 
 #include "EventNtuple/inc/EventInfo.hh"
 #include "EventNtuple/inc/EventInfoMC.hh"
+#include "EventNtuple/inc/HitCount.hh"
+
 #include "EventNtuple/inc/TrkInfoMC.hh"
 #include "EventNtuple/inc/TrkCaloHitInfo.hh"
 #include "EventNtuple/inc/CaloClusterInfoMC.hh"
@@ -31,6 +33,7 @@ struct Event {
   Event(TTree* ntuple) {
 
     ntuple->SetBranchAddress("evtinfo", &this->evtinfo);
+    ntuple->SetBranchAddress("hitcount", &this->hitcount);
 
     ntuple->SetBranchAddress("trk", &this->trk);
     ntuple->SetBranchAddress("trksegs", &this->trksegs);
@@ -199,6 +202,7 @@ struct Event {
   // Pointers to the data
   mu2e::EventInfo* evtinfo = nullptr;
   mu2e::EventInfoMC* evtinfomc = nullptr;
+  mu2e::HitCount* hitcount = nullptr;
 
   std::vector<mu2e::TrkInfo>* trk = nullptr;
   std::vector<mu2e::TrkInfoMC>* trkmc = nullptr;

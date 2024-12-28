@@ -349,6 +349,12 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkmats_dp  = new TH1F("h_trkmats_dp", "", 100,0,100);
   TH1F* h_trkmats_radlen = new TH1F("h_trkmats_radlen", "", 100,0,100);
 
+  TH1F* h_hitcount_nsd = new TH1F("h_hitcount_nsd", "", 100,0,100);
+  TH1F* h_hitcount_nesel = new TH1F("h_hitcount_nesel", "", 100,0,100);
+  TH1F* h_hitcount_nrsel = new TH1F("h_hitcount_nrsel", "", 100,0,100);
+  TH1F* h_hitcount_ntsel = new TH1F("h_hitcount_ntsel", "", 100,0,100);
+  TH1F* h_hitcount_nbkg = new TH1F("h_hitcount_nbkg", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -767,6 +773,14 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
         }
       }
     }
+
+    std::cout << "Creating hitcount histograms..." << std::endl;
+    auto hitcount = *(event.hitcount);
+    h_hitcount_nsd->Fill(hitcount.nsd);
+    h_hitcount_nesel->Fill(hitcount.nesel);
+    h_hitcount_nrsel->Fill(hitcount.nrsel);
+    h_hitcount_ntsel->Fill(hitcount.ntsel);
+    h_hitcount_nbkg->Fill(hitcount.nbkg);
   }
 
   // // resolution histograms

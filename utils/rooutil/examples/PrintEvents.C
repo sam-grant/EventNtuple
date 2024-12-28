@@ -151,5 +151,9 @@ void PrintEvents(std::string filename, bool has_mc = false) {
         }
       }
     }
+
+    // hitcount
+    auto hitcount = *(event.hitcount);
+    std::cout << "hitcount: " << hitcount.nsd << ", " << hitcount.nesel << ", " << hitcount.nrsel << ", " << hitcount.ntsel << ", " << hitcount.nbkg << std::endl;
   }
 }
