@@ -132,5 +132,14 @@ void PrintEvents(std::string filename, bool has_mc = false) {
       }
     }
 
+    // trkhitsmc
+    if (event.trkhitsmc != nullptr) { // might not have this branch
+      for (const auto& trkhitsmc : *(event.trkhitsmc)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& hitmc : trkhitsmc) {
+          std::cout << "trkhitsmc: " << hitmc.pdg << ", " << hitmc.startCode << ", " << hitmc.t0 << ", " << hitmc.cpos.z() << std::endl;
+        }
+      }
+    }
   }
 }

@@ -312,6 +312,33 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_trkhits_dhit = new TH1F("h_trkhits_dhit", "", 100,0,100);
   TH1F* h_trkhits_dactive = new TH1F("h_trkhits_dactive", "", 100,0,100);
 
+  TH1F* h_trkhitsmc_pdg = new TH1F("h_trkhitsmc_pdg", "", 100,0,100);
+  TH1F* h_trkhitsmc_gen = new TH1F("h_trkhitsmc_gen", "", 100,0,100);
+  TH1F* h_trkhitsmc_startCode = new TH1F("h_trkhitsmc_startCode", "", 100,0,100);
+  TH1F* h_trkhitsmc_ambig = new TH1F("h_trkhitsmc_ambig", "", 100,0,100);
+  TH1F* h_trkhitsmc_earlyend = new TH1F("h_trkhitsmc_earlyend", "", 100,0,100);
+  TH1F* h_trkhitsmc_rel_rel = new TH1F("h_trkhitsmc_rel_rel", "", 100,0,100);
+  TH1F* h_trkhitsmc_rel_rem = new TH1F("h_trkhitsmc_rel_rem", "", 100,0,100);
+  TH1F* h_trkhitsmc_t0 = new TH1F("h_trkhitsmc_t0", "", 100,0,100);
+  TH1F* h_trkhitsmc_tdrift = new TH1F("h_trkhitsmc_tdrift", "", 100,0,100);
+  TH1F* h_trkhitsmc_rdrift = new TH1F("h_trkhitsmc_rdrift", "", 100,0,100);
+  TH1F* h_trkhitsmc_tprop = new TH1F("h_trkhitsmc_tprop", "", 100,0,100);
+  TH1F* h_trkhitsmc_dist = new TH1F("h_trkhitsmc_dist", "", 100,0,100);
+  TH1F* h_trkhitsmc_doca = new TH1F("h_trkhitsmc_doca", "", 100,0,100);
+  TH1F* h_trkhitsmc_len = new TH1F("h_trkhitsmc_len", "", 100,0,100);
+  TH1F* h_trkhitsmc_edep = new TH1F("h_trkhitsmc_edep", "", 100,0,100);
+  TH1F* h_trkhitsmc_mom = new TH1F("h_trkhitsmc_mom", "", 100,0,100);
+  TH1F* h_trkhitsmc_twdot = new TH1F("h_trkhitsmc_twdot", "", 100,0,100);
+  TH1F* h_trkhitsmc_tau = new TH1F("h_trkhitsmc_tau", "", 100,0,100);
+  TH1F* h_trkhitsmc_cdist = new TH1F("h_trkhitsmc_cdist", "", 100,0,100);
+  TH1F* h_trkhitsmc_phi = new TH1F("h_trkhitsmc_phi", "", 100,0,100);
+  TH1F* h_trkhitsmc_lang = new TH1F("h_trkhitsmc_lang", "", 100,0,100);
+  TH1F* h_trkhitsmc_strawdoca = new TH1F("h_trkhitsmc_strawdoca", "", 100,0,100);
+  TH1F* h_trkhitsmc_strawphi = new TH1F("h_trkhitsmc_strawphi", "", 100,0,100);
+  TH1F* h_trkhitsmc_cpos_x = new TH1F("h_trkhitsmc_cpos_x", "", 100,0,100);
+  TH1F* h_trkhitsmc_cpos_y = new TH1F("h_trkhitsmc_cpos_y", "", 100,0,100);
+  TH1F* h_trkhitsmc_cpos_z = new TH1F("h_trkhitsmc_cpos_z", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
@@ -676,6 +703,40 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
           h_trkhits_ustrawphi->Fill(trkhit.ustrawphi);
           h_trkhits_dhit->Fill(trkhit.dhit);
           h_trkhits_dactive->Fill(trkhit.dactive);
+        }
+      }
+    }
+
+    if (event.trkhitsmc != nullptr) { // might not have this branch
+      std::cout << "Creating trkhitsmc histograms..." << std::endl;
+      for (const auto& trkhitsmc : *(event.trkhitsmc)) {
+        for (const auto& trkhitmc : trkhitsmc) {
+          h_trkhitsmc_pdg->Fill(trkhitmc.pdg);
+          h_trkhitsmc_gen->Fill(trkhitmc.gen);
+          h_trkhitsmc_startCode->Fill(trkhitmc.startCode);
+          h_trkhitsmc_ambig->Fill(trkhitmc.ambig);
+          h_trkhitsmc_earlyend->Fill(trkhitmc.earlyend);
+          h_trkhitsmc_rel_rel->Fill(trkhitmc.rel.relationship());
+          h_trkhitsmc_rel_rem->Fill(trkhitmc.rel.removal());
+          h_trkhitsmc_t0->Fill(trkhitmc.t0);
+          h_trkhitsmc_tdrift->Fill(trkhitmc.tdrift);
+          h_trkhitsmc_rdrift->Fill(trkhitmc.rdrift);
+          h_trkhitsmc_tprop->Fill(trkhitmc.tprop);
+          h_trkhitsmc_dist->Fill(trkhitmc.dist);
+          h_trkhitsmc_doca->Fill(trkhitmc.doca);
+          h_trkhitsmc_len->Fill(trkhitmc.len);
+          h_trkhitsmc_edep->Fill(trkhitmc.edep);
+          h_trkhitsmc_mom->Fill(trkhitmc.mom);
+          h_trkhitsmc_twdot->Fill(trkhitmc.twdot);
+          h_trkhitsmc_tau->Fill(trkhitmc.tau);
+          h_trkhitsmc_cdist->Fill(trkhitmc.cdist);
+          h_trkhitsmc_phi->Fill(trkhitmc.phi);
+          h_trkhitsmc_lang->Fill(trkhitmc.lang);
+          h_trkhitsmc_strawdoca->Fill(trkhitmc.strawdoca);
+          h_trkhitsmc_strawphi->Fill(trkhitmc.strawphi);
+          h_trkhitsmc_cpos_x->Fill(trkhitmc.cpos.x());
+          h_trkhitsmc_cpos_y->Fill(trkhitmc.cpos.y());
+          h_trkhitsmc_cpos_z->Fill(trkhitmc.cpos.z());
         }
       }
     }

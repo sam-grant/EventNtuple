@@ -36,7 +36,7 @@ There are various classes that combine together branches at different dimensions
 | TrackSegment | ```trkseg```, ```trksegmc```, ```trksegpars_{lh,ch,kl}``` | none | none |
 | CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
 | MCParticle | ```mcsim``` | none | none |
-| TrackHit | ```trkhit``` | none | none |
+| TrackHit | ```trkhit```, ```trkhitmc``` | none | none |
 
 ## Supported Branches
 The currently supported branches are:
@@ -47,7 +47,7 @@ The currently supported branches are:
 * crvcoincs, crvcoincsmc
 * trkmcsim
 * trkqual
-* trkhits
+* trkhits, trkhitsmc
 
 ## Cut Functions
 

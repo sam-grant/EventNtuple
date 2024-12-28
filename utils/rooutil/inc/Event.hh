@@ -17,6 +17,7 @@
 #include "EventNtuple/inc/CentralHelixInfo.hh"
 #include "EventNtuple/inc/KinematicLineInfo.hh"
 #include "EventNtuple/inc/TrkStrawHitInfo.hh"
+#include "EventNtuple/inc/TrkStrawHitInfoMC.hh"
 
 #include "EventNtuple/inc/MVAResultInfo.hh"
 
@@ -69,6 +70,9 @@ struct Event {
     if (ntuple->GetBranch("trkhits")) {
       ntuple->SetBranchAddress("trkhits", &this->trkhits);
     }
+    if (ntuple->GetBranch("trkhitsmc")) {
+      ntuple->SetBranchAddress("trkhitsmc", &this->trkhitsmc);
+    }
   };
 
   void Update(bool debug = false) {
@@ -97,6 +101,9 @@ struct Event {
       }
       if (trkhits != nullptr) {
         track.trkhits = &(trkhits->at(i_track));
+      }
+      if (trkhitsmc != nullptr) {
+        track.trkhitsmc = &(trkhitsmc->at(i_track));
       }
       track.trkqual = &(trkqual->at(i_track));
 
@@ -197,6 +204,7 @@ struct Event {
   std::vector<std::vector<mu2e::CentralHelixInfo>>* trksegpars_ch = nullptr;
   std::vector<std::vector<mu2e::KinematicLineInfo>>* trksegpars_kl = nullptr;
   std::vector<std::vector<mu2e::TrkStrawHitInfo>>* trkhits = nullptr;
+  std::vector<std::vector<mu2e::TrkStrawHitInfoMC>>* trkhitsmc = nullptr;
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;

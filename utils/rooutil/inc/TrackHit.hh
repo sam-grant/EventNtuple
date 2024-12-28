@@ -3,13 +3,14 @@
 
 #include <functional>
 #include "EventNtuple/inc/TrkStrawHitInfo.hh"
+#include "EventNtuple/inc/TrkStrawHitInfoMC.hh"
 
 struct TrackHit {
   TrackHit() { }
-  TrackHit(mu2e::TrkStrawHitInfo* reco) : reco(reco) { }
 
   // Pointers to the data
   mu2e::TrkStrawHitInfo* reco = nullptr;
+  mu2e::TrkStrawHitInfoMC* mc = nullptr;
 };
 
 typedef std::function<bool(TrackHit&)> TrackHitCut;

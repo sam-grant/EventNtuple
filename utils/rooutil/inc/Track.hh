@@ -85,8 +85,22 @@ struct Track {
     if (trkhits != nullptr) {
       // Create the underlying TrackHits
       for (int i_trkhit = 0; i_trkhit < nHits(); ++i_trkhit) {
-        TrackHit trkhit(&(trkhits->at(i_trkhit))); // passing the addresses of the underlying structs
+        TrackHit trkhit;
+        trkhit.reco = &(trkhits->at(i_trkhit)); // passing the addresses of the underlying structs
+
+        // the first trkhitsmc correspond 1:1 with the reco hits, the remaining trkhitsmc also go with the truth
+        if (trkhitsmc != nullptr) {
+          trkhit.mc = &(trkhitsmc->at(i_trkhit));
+        }
         hits.emplace_back(trkhit);
+      }
+      if (trkhitsmc != nullptr) {
+        // Fill in the remainder of the track hits
+        for (size_t i_trkhitmc = nHits(); i_trkhitmc < trkhitsmc->size(); ++i_trkhitmc) {
+          TrackHit trkhit;
+          trkhit.mc = &(trkhitsmc->at(i_trkhitmc));
+          hits.emplace_back(trkhit);
+        }
       }
     }
   }
@@ -142,6 +156,7 @@ struct Track {
   std::vector<mu2e::CentralHelixInfo>* trksegpars_ch = nullptr;
   std::vector<mu2e::KinematicLineInfo>* trksegpars_kl = nullptr;
   std::vector<mu2e::TrkStrawHitInfo>* trkhits = nullptr;
+  std::vector<mu2e::TrkStrawHitInfoMC>* trkhitsmc = nullptr;
   mu2e::TrkCaloHitInfo* trkcalohit = nullptr;
   std::vector<mu2e::SimInfo>* trkmcsim = nullptr;
   mu2e::MVAResultInfo* trkqual = nullptr;
