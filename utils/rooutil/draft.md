@@ -18,6 +18,8 @@ void PrintEvents(std::string filename) {
 }
 ```
 
+The ```filename``` can be either the name of a single EventNtuple ROOT file (ending in ".root") or a list of EventNtuple files.
+
 Branches can be directly accessed from this ```event```. However to aid in the complex structure of the ntuple, we also provide helper classes that combine certain branches together.
 
 This is currently under development and the available branches are listed [below](#Supported-Branches)

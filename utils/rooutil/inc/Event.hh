@@ -29,10 +29,10 @@
 #include "EventNtuple/utils/rooutil/inc/Track.hh"
 #include "EventNtuple/utils/rooutil/inc/CrvCoinc.hh"
 
-#include "TTree.h"
+#include "TChain.h"
 
 struct Event {
-  Event(TTree* ntuple) {
+  Event(TChain* ntuple) {
 
     ntuple->SetBranchAddress("evtinfo", &this->evtinfo);
     ntuple->SetBranchAddress("hitcount", &this->hitcount);

@@ -1,6 +1,8 @@
 #ifndef RooUtil_hh_
 #define RooUtil_hh_
 
+#include <fstream>
+
 #include "TFile.h"
 #include "TTree.h"
 
@@ -9,9 +11,26 @@
 class RooUtil {
 public:
   RooUtil(std::string filename, std::string treename = "EventNtuple/ntuple") : debug(false) {
-    TFile* file = new TFile(filename.c_str(), "READ");
+    ntuple = new TChain(treename.c_str());
 
-    ntuple = (TTree*) file->Get(treename.c_str());
+    // Check if the given filename contains .root at the end
+    std::string root_suffix = ".root";
+    if (filename.compare(filename.size() - root_suffix.size(), root_suffix.size(), root_suffix) == 0) {
+      ntuple->Add(filename.c_str());
+    }
+    else { //  assume its a file list
+      std::ifstream filelist(filename);
+
+      if (filelist.is_open()) {
+        std::string line;
+        while (std::getline(filelist, line)) {
+          ntuple->Add(line.c_str());
+        }
+        filelist.close();
+      } else {
+        std::cout << "Error opening filelist." << std::endl;
+      }
+    }
 
     event = new Event(ntuple);
   }
@@ -66,7 +85,7 @@ public:
   }
 
 private:
-  TTree* ntuple;
+  TChain* ntuple;
   Event* event; // holds all the variables for SetBranchAddress
   bool debug;
 
