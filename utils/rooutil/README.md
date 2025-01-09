@@ -9,7 +9,7 @@
 6. [Cut Functions](#Cut-Functions)
 7. [Common Cut Functions](#Common-Cut-Functions)
 8. [Combining Cut Function](#Combining-Cut-Functions)
-9. [Creating Reduced EventNtuple](#Creating-Reduced-EventNtuple)
+9. [Creating Ntuples From EventNtuple](#Creating-Ntuples-From-EventNtuple)
 10. [Speed Optimizations](#Speed-Optimizations)
 11. [Debugging](#Debugging)
 12. [For Developers](#For-Developers)
@@ -176,10 +176,14 @@ int n_e_minus_good_tracks = event.CountTracks(my_cut);
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
 ```
 
-## Creating Reduced EventNtuple
+## Creating Ntuple from EventNtuple
+### Reduced EventNtuple
 RooUtil can also be used to create reduced EventNtuples. You create the output ntuple with ```RooUtil::CreateOutputEventNtuple()``` and fill it in your event loop with ```RooUtil::FillOutputEventNtuple()```. The created reduced EventNtuple is compatible with RooUtil again. See example here: [CreateNtuple.C](./examples/CreateNtuple.C)
 
 If you want to also remove tracks from the event, you should use ```SelectTracks(cut)``` instead of ```GetTracks(cut)```. Note that this changes the ```Event``` so if you want to get the whole event again, you should use ```RooUtil::GetEvent()``` again.
+
+### Non event-based ntuples
+It's also possible to use RooUtil to create a new ntuple with a different structure (e.g. one entry per track). See an example in [CreateTrackNtuple.C](./examples/CreateTrackNtuple.C) for how this can be done
 
 ## Speed Optimizations
 By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you will be reading. This can increase the speed by as much as a factor of 10.

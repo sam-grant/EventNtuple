@@ -8,10 +8,11 @@
 
 #include "TH1F.h"
 
-void CreateTree(std::string filename) {
+void CreateTrackNtuple(std::string filename) {
 
   // Create the TTree
   TTree* tree = new TTree("example_tree", "An example tree");
+
   // Here we will write out one track per row along with its track segment at the tracker entrance
   mu2e::TrkInfo trk;
   mu2e::TrkSegInfo trk_ent;
@@ -21,28 +22,26 @@ void CreateTree(std::string filename) {
   // Set up RooUtil
   RooUtil util(filename);
 
-  //  util.PrepareEventTree(tree);
-  //  util.PrepareTrackTree(tree);
 
   // Loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     // Get the next event
     auto& event = util.GetEvent(i_event);
-    std::cout << "Event #" << i_event << std::endl;
+
     // Get the e_minus tracks from the event
     auto e_minus_tracks = event.GetTracks(is_e_minus);
-    std::cout << "e_minus_tracks.size() = " << e_minus_tracks.size() << std::endl;
+
     // Loop through the e_minus tracks
     for (auto& track : e_minus_tracks) {
       trk = *(track.trk); // we will fill this data into the tree
-      std::cout << trk.nactive << std::endl;
-      // // Get the track segments at the tracker entrance
-      // const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
 
-      // // Loop through the tracker entrance track segments
-      // for (const auto& segment : trk_ent_segments) {
-      //   trk_ent = *(segment.trkseg); // we will fill this data into the tree
-      // }
+      // Get the track segments at the tracker entrance
+      const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
+
+      // Loop through the tracker entrance track segments
+      for (const auto& segment : trk_ent_segments) {
+        trk_ent = *(segment.trkseg); // we will fill this data into the tree
+      }
 
       // Fill the tree once per track
       tree->Fill();
@@ -50,7 +49,7 @@ void CreateTree(std::string filename) {
   }
 
   // Create an output file
-  TFile* outfile = new TFile("example_tree.root", "RECREATE");
+  TFile* outfile = new TFile("example_track_ntuple.root", "RECREATE");
   tree->Write();
   outfile->Close();
 }
