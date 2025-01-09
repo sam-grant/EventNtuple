@@ -171,5 +171,29 @@ void PrintEvents(std::string filename, bool has_mc = false) {
       }
     }
 
+    // crvpulses branch
+    if (event.crvpulses != nullptr) {
+      for (const auto& crvpulse : *(event.crvpulses)) {
+        std::cout << "crvpulse: " << crvpulse.pos.x() << "," << crvpulse.barId << "," << crvpulse.time << std::endl;
+      }
+    }
+
+    // crvpulsesmc branch
+    if (has_mc) {
+      if (event.crvpulsesmc != nullptr) {
+        for (const auto& crvpulsemc : *(event.crvpulsesmc)) {
+          std::cout << "crvpulsemc: " << crvpulsemc.valid << "," << crvpulsemc.pdgId << "," << crvpulsemc.depositedEnergy << std::endl;
+        }
+      }
+    }
+
+    // crvcoincsmcplane branch
+    if (has_mc) {
+      if (event.crvcoincsmcplane != nullptr) {
+        for (const auto& crvcoincmcplane : *(event.crvcoincsmcplane)) {
+          std::cout << "crvcoincmcplane: " << crvcoincmcplane.pdgId << "," << crvcoincmcplane.primary.z() << ", " << crvcoincmcplane.kineticEnergy << ", " << crvcoincmcplane.dataSource << std::endl;
+        }
+      }
+    }
   }
 }

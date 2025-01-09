@@ -16,6 +16,8 @@
 #include "EventNtuple/inc/CrvHitInfoReco.hh"
 #include "EventNtuple/inc/CrvHitInfoMC.hh"
 #include "EventNtuple/inc/CrvWaveformInfo.hh"
+#include "EventNtuple/inc/CrvPulseInfoReco.hh"
+#include "EventNtuple/inc/CrvPlaneInfoMC.hh"
 
 #include "EventNtuple/inc/SimInfo.hh"
 #include "EventNtuple/inc/LoopHelixInfo.hh"
@@ -77,6 +79,16 @@ struct Event {
     if (ntuple->GetBranch("crvdigis")) {
       ntuple->SetBranchAddress("crvdigis", &this->crvdigis);
     }
+    if (ntuple->GetBranch("crvpulses")) {
+      ntuple->SetBranchAddress("crvpulses", &this->crvpulses);
+    }
+    if (ntuple->GetBranch("crvpulsesmc")) {
+      ntuple->SetBranchAddress("crvpulsesmc", &this->crvpulsesmc);
+    }
+    if (ntuple->GetBranch("crvcoincsmcplane")) {
+      ntuple->SetBranchAddress("crvcoincsmcplane", &this->crvcoincsmcplane);
+    }
+
 
     if (ntuple->GetBranch("trkmcsim")) {
       ntuple->SetBranchAddress("trkmcsim", &this->trkmcsim);
@@ -233,6 +245,9 @@ struct Event {
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;
   std::vector<mu2e::CrvWaveformInfo>* crvdigis = nullptr;
+  std::vector<mu2e::CrvPulseInfoReco>* crvpulses = nullptr;
+  std::vector<mu2e::CrvHitInfoMC>* crvpulsesmc = nullptr;
+  std::vector<mu2e::CrvPlaneInfoMC>* crvcoincsmcplane = nullptr;
 
   std::vector<std::vector<mu2e::SimInfo>>* trkmcsim = nullptr;
 };

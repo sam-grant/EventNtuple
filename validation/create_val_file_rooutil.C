@@ -373,6 +373,58 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_crvdigis_time = new TH1F("h_crvdigis_time", "", 100,0,100);
   TH1F* h_crvdigis_SiPMId = new TH1F("h_crvdigis_SiPMId", "", 100,0,100);
 
+  TH1F* h_crvpulses_pos_x = new TH1F("h_crvpulses_pos_x", "", 100,0,100);
+  TH1F* h_crvpulses_pos_y = new TH1F("h_crvpulses_pos_y", "", 100,0,100);
+  TH1F* h_crvpulses_pos_z = new TH1F("h_crvpulses_pos_z", "", 100,0,100);
+  TH1F* h_crvpulses_barId = new TH1F("h_crvpulses_barId", "", 100,0,100);
+  TH1F* h_crvpulses_sectorId = new TH1F("h_crvpulses_sectorId", "", 100,0,100);
+  TH1F* h_crvpulses_SiPMId = new TH1F("h_crvpulses_SiPMId", "", 100,0,100);
+  TH1F* h_crvpulses_PEs = new TH1F("h_crvpulses_PEs", "", 100,0,100);
+  TH1F* h_crvpulses_PEsPulseHeight = new TH1F("h_crvpulses_PEsPulseHeight", "", 100,0,100);
+  TH1F* h_crvpulses_pulseHeight = new TH1F("h_crvpulses_pulseHeight", "", 100,0,100);
+  TH1F* h_crvpulses_pulseBeta = new TH1F("h_crvpulses_pulseBeta", "", 100,0,100);
+  TH1F* h_crvpulses_pulseFitChi2 = new TH1F("h_crvpulses_pulseFitChi2", "", 100,0,100);
+  TH1F* h_crvpulses_time = new TH1F("h_crvpulses_time", "", 100,0,100);
+
+  TH1F* h_crvpulsesmc_valid = new TH1F("h_crvpulsesmc_valid", "", 100,0,100);
+  TH1F* h_crvpulsesmc_pdgId = new TH1F("h_crvpulsesmc_pdgId", "", 100,0,100);
+  TH1F* h_crvpulsesmc_primaryPdgId = new TH1F("h_crvpulsesmc_primaryPdgId", "", 100,0,100);
+  TH1F* h_crvpulsesmc_primaryE = new TH1F("h_crvpulsesmc_primaryE", "", 100,0,100);
+  TH1F* h_crvpulsesmc_primary_x = new TH1F("h_crvpulsesmc_primary_x", "", 100,0,100);
+  TH1F* h_crvpulsesmc_primary_y = new TH1F("h_crvpulsesmc_primary_y", "", 100,0,100);
+  TH1F* h_crvpulsesmc_primary_z = new TH1F("h_crvpulsesmc_primary_z", "", 100,0,100);
+  TH1F* h_crvpulsesmc_parentPdgId = new TH1F("h_crvpulsesmc_parentPdgId", "", 100,0,100);
+  TH1F* h_crvpulsesmc_parentE = new TH1F("h_crvpulsesmc_parentE", "", 100,0,100);
+  TH1F* h_crvpulsesmc_parent_x = new TH1F("h_crvpulsesmc_parent_x", "", 100,0,100);
+  TH1F* h_crvpulsesmc_parent_y = new TH1F("h_crvpulsesmc_parent_y", "", 100,0,100);
+  TH1F* h_crvpulsesmc_parent_z = new TH1F("h_crvpulsesmc_parent_z", "", 100,0,100);
+  TH1F* h_crvpulsesmc_gparentPdgId = new TH1F("h_crvpulsesmc_gparentPdgId", "", 100,0,100);
+  TH1F* h_crvpulsesmc_gparentE = new TH1F("h_crvpulsesmc_gparentE", "", 100,0,100);
+  TH1F* h_crvpulsesmc_gparent_x = new TH1F("h_crvpulsesmc_gparent_x", "", 100,0,100);
+  TH1F* h_crvpulsesmc_gparent_y = new TH1F("h_crvpulsesmc_gparent_y", "", 100,0,100);
+  TH1F* h_crvpulsesmc_gparent_z = new TH1F("h_crvpulsesmc_gparent_z", "", 100,0,100);
+  TH1F* h_crvpulsesmc_pos_x = new TH1F("h_crvpulsesmc_pos_x", "", 100,0,100);
+  TH1F* h_crvpulsesmc_pos_y = new TH1F("h_crvpulsesmc_pos_y", "", 100,0,100);
+  TH1F* h_crvpulsesmc_pos_z = new TH1F("h_crvpulsesmc_pos_z", "", 100,0,100);
+  TH1F* h_crvpulsesmc_time = new TH1F("h_crvpulsesmc_time", "", 100,0,100);
+  TH1F* h_crvpulsesmc_depositedEnergy = new TH1F("h_crvpulsesmc_depositedEnergy", "", 100,0,100);
+
+  TH1F* h_crvcoicsmcplane_pdgId = new TH1F("h_crvcoincsmcplane_pdgId", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_primaryPdgId = new TH1F("h_crvcoincsmcplane_primaryPdgId", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_primaryE = new TH1F("h_crvcoincsmcplane_primaryE", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_primary_x = new TH1F("h_crvcoincsmcplane_primary_x", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_primary_y = new TH1F("h_crvcoincsmcplane_primary_y", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_primary_z = new TH1F("h_crvcoincsmcplane_primary_z", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_pos_x = new TH1F("h_crvcoincsmcplane_pos_x", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_pos_y = new TH1F("h_crvcoincsmcplane_pos_y", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_pos_z = new TH1F("h_crvcoincsmcplane_pos_z", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_dir_x = new TH1F("h_crvcoincsmcplane_dir_x", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_dir_y = new TH1F("h_crvcoincsmcplane_dir_y", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_dir_z = new TH1F("h_crvcoincsmcplane_dir_z", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_time = new TH1F("h_crvcoincsmcplane_time", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_kineticEnergy = new TH1F("h_crvcoincsmcplane_kineticEnergy", "", 100,0,100);
+  TH1F* h_crvcoicsmcplane_dataSource = new TH1F("h_crvcoincsmcplane_dataSource", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
     std::cout << "Event #" << i_event << std::endl;
     const auto& event = util.GetEvent(i_event);
@@ -825,6 +877,74 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
         h_crvdigis_adc->Fill(crvdigi.adc);
         h_crvdigis_time->Fill(crvdigi.time);
         h_crvdigis_SiPMId->Fill(crvdigi.SiPMId);
+      }
+    }
+
+    if (event.crvpulses != nullptr) {
+      std::cout << "Creating crvpulse histograms..." << std::endl;
+      for (const auto& crvpulse : *(event.crvpulses)) {
+        h_crvpulses_pos_x->Fill(crvpulse.pos.x());
+        h_crvpulses_pos_y->Fill(crvpulse.pos.y());
+        h_crvpulses_pos_z->Fill(crvpulse.pos.z());
+        h_crvpulses_barId->Fill(crvpulse.barId);
+        h_crvpulses_sectorId->Fill(crvpulse.sectorId);
+        h_crvpulses_SiPMId->Fill(crvpulse.SiPMId);
+        h_crvpulses_PEs->Fill(crvpulse.PEs);
+        h_crvpulses_PEsPulseHeight->Fill(crvpulse.PEsPulseHeight);
+        h_crvpulses_pulseHeight->Fill(crvpulse.pulseHeight);
+        h_crvpulses_pulseBeta->Fill(crvpulse.pulseBeta);
+        h_crvpulses_pulseFitChi2->Fill(crvpulse.pulseFitChi2);
+        h_crvpulses_time->Fill(crvpulse.time);
+      }
+    }
+
+
+    if (event.crvpulsesmc != nullptr) {
+      std::cout << "Creating crvpulsesmc histograms..." << std::endl;
+      for (const auto& crvpulsemc : *(event.crvpulsesmc)) {
+        h_crvpulsesmc_valid->Fill(crvpulsemc.valid);
+        h_crvpulsesmc_pdgId->Fill(crvpulsemc.pdgId);
+        h_crvpulsesmc_primaryPdgId->Fill(crvpulsemc.primaryPdgId);
+        h_crvpulsesmc_primaryE->Fill(crvpulsemc.primaryE);
+        h_crvpulsesmc_primary_x->Fill(crvpulsemc.primary.x());
+        h_crvpulsesmc_primary_y->Fill(crvpulsemc.primary.y());
+        h_crvpulsesmc_primary_z->Fill(crvpulsemc.primary.z());
+        h_crvpulsesmc_parentPdgId->Fill(crvpulsemc.parentPdgId);
+        h_crvpulsesmc_parentE->Fill(crvpulsemc.parentE);
+        h_crvpulsesmc_parent_x->Fill(crvpulsemc.parent.x());
+        h_crvpulsesmc_parent_y->Fill(crvpulsemc.parent.y());
+        h_crvpulsesmc_parent_z->Fill(crvpulsemc.parent.z());
+        h_crvpulsesmc_gparentPdgId->Fill(crvpulsemc.gparentPdgId);
+        h_crvpulsesmc_gparentE->Fill(crvpulsemc.gparentE);
+        h_crvpulsesmc_gparent_x->Fill(crvpulsemc.gparent.x());
+        h_crvpulsesmc_gparent_y->Fill(crvpulsemc.gparent.y());
+        h_crvpulsesmc_gparent_z->Fill(crvpulsemc.gparent.z());
+        h_crvpulsesmc_pos_x->Fill(crvpulsemc.pos.x());
+        h_crvpulsesmc_pos_y->Fill(crvpulsemc.pos.y());
+        h_crvpulsesmc_pos_z->Fill(crvpulsemc.pos.z());
+        h_crvpulsesmc_time->Fill(crvpulsemc.time);
+        h_crvpulsesmc_depositedEnergy->Fill(crvpulsemc.depositedEnergy);
+      }
+    }
+
+    if (event.crvcoincsmcplane != nullptr) {
+      std::cout << "Creating crvcoincsmcplane histograms..." << std::endl;
+      for (const auto& crvcoincmcplane : *(event.crvcoincsmcplane)) {
+        h_crvcoicsmcplane_pdgId->Fill(crvcoincmcplane.pdgId);
+        h_crvcoicsmcplane_primaryPdgId->Fill(crvcoincmcplane.primaryPdgId);
+        h_crvcoicsmcplane_primaryE->Fill(crvcoincmcplane.primaryE);
+        h_crvcoicsmcplane_primary_x->Fill(crvcoincmcplane.primary.x());
+        h_crvcoicsmcplane_primary_y->Fill(crvcoincmcplane.primary.y());
+        h_crvcoicsmcplane_primary_z->Fill(crvcoincmcplane.primary.z());
+        h_crvcoicsmcplane_pos_x->Fill(crvcoincmcplane.pos.x());
+        h_crvcoicsmcplane_pos_y->Fill(crvcoincmcplane.pos.y());
+        h_crvcoicsmcplane_pos_z->Fill(crvcoincmcplane.pos.z());
+        h_crvcoicsmcplane_dir_x->Fill(crvcoincmcplane.dir.x());
+        h_crvcoicsmcplane_dir_y->Fill(crvcoincmcplane.dir.y());
+        h_crvcoicsmcplane_dir_z->Fill(crvcoincmcplane.dir.z());
+        h_crvcoicsmcplane_time->Fill(crvcoincmcplane.time);
+        h_crvcoicsmcplane_kineticEnergy->Fill(crvcoincmcplane.kineticEnergy);
+        h_crvcoicsmcplane_dataSource->Fill(crvcoincmcplane.dataSource);
       }
     }
   }
