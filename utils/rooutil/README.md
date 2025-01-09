@@ -1,11 +1,17 @@
-# RooUtil (draft)
+# RooUtil
 
 ## Table of Contents
 1. [Introduction](#Introduction)
 2. [```RooUtil``` Class](#RooUtil-Class)
-3. [The Simplest Example](#The-Simplest-Example)
-5. [Speed Optimizations](#Speed-Optimizations)
-6. [Debugging](#Debugging)
+3. [The ```Event``` Class](#The-Event-Class)
+4. [User-Friendly Classes](#User-Friendly-Classes)
+5. [Accessing User-Friendly Classes](#Accessing-User-Friendly-Classes)
+6. [Cut Functions](#Cut-Functions)
+7. [Common Cut Functions](#Common-Cut-Functions)
+8. [Combining Cut Function](#Combining-Cut-Functions)
+9. [Speed Optimizations](#Speed-Optimizations)
+10. [Debugging](#Debugging)
+11. [For Developers](#For-Developers)
 
 ## Introduction
 
@@ -18,9 +24,8 @@ The constructor takes two arguments:
 * ```filename``` can be the name of a single ROOT file (ending in ```.root```) or a list of ROOT files
 * (optional) ```treename``` the name of the tree
 
-## The Simplest Example
-
-This is the simplest example:
+## The Event Class
+All branches and leaves can be accessed through the ```Event``` class like so:
 
 ```
 #include "EventNtuple/utils/rooutil/inc/RooUtil.hh"
@@ -42,59 +47,117 @@ void PrintEvents(std::string filename) {
   }
 }
 ```
+However to aid in the complex structure of the ntuple, we also provide helper classes that combine certain branches together.
 
-The ```filename``` can be either the name of a single EventNtuple ROOT file (ending in ".root") or a list of EventNtuple files.
+## User-Friendly Classes
+Because some vector-object branches in the EventNtuple should be paired and looped through coherenetly, we have several user-friendly classes that help with this. They contain the relevent branches from the EventNtuple, often reduced in dimensionality.
 
-Branches can be directly accessed from this ```event```. However to aid in the complex structure of the ntuple, we also provide helper classes that combine certain branches together.
+### The ```Track``` Class
+The ```Track``` class contains all information related to a single track
 
-This is currently under development and the available branches are listed [below](#Supported-Branches)
+* single objects: ```trk```, ```trkmc```, ```trkcalohit```, ```trkqual```
+* vectors: ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ```trkhitsmc```, ```trkmats```
 
-## ```rooutilhelper```
+Example: [PlotTrackNHits_RecoVsTrue.C](./examples/PlotTrackNHits_RecoVsTrue.C)
 
-```rootuilhelper --list-available-cuts``` lists the cuts that are already available in common_cuts.hh
+### ```TrackSegment``` Class
+The ```TrackSegment``` class contains paired reco and MC information about a single track segment
 
-## Classes
-There are various classes that combine together branches at different dimensions
+* single objects: ```trkseg```, ```trksegmc```, ```trksegpars_{lh,ch,kl}```
 
-| Class | Single Objects | Vectors | Vector-of-Vectors |
-|-----|-----|----|-----|
-| Event | ```evtinfo```, ```evtinfomc```, ```hitcount```, ```crvsummary```, ```crvsummarymc``` | ```trk```, ```trkmc```, ```trkcalohit```, ```trkcalohitmc```, ```trkqual```, ```crvcoincs```, ```crvcoincsmc```, ```crvdigis```, ```crvpulses```, ```crvpulsesmc```, ```crvcoincsmcplane``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ``trkhitsmc```, ```trkmats``` |
-| Track | ```trk```, ```trkmc```, ```trkcalohit```, ```trkqual``` | ```trksegs```, ```trksegmcs```, ```trksegpars_{lh,ch,kl}```, ```trkmcsim```, ```trkhits```, ```trkhitsmc```, ```trkmats``` | none |
-| TrackSegment | ```trkseg```, ```trksegmc```, ```trksegpars_{lh,ch,kl}``` | none | none |
-| CrvCoinc | ```crvcoinc```, ```crvcoincmc``` | none | none |
-| MCParticle | ```mcsim``` | none | none |
-| TrackHit | ```trkhit```, ```trkhitmc``` | none | none |
+Note: that some TrackSegements contain only a ```trkseg``` or only a ```trksegmc```
 
-## Supported Branches
-The currently supported branches are:
-* evtinfo, evtinfomc, hitcount
-* trk, trkmc
-* trksegs, trksegmcs, trksegpars_{lh,ch,kl}
-* trkcalohit
-* trkcalohitmc (only at Event class)
-* crvcoincs, crvcoincsmc
-* trkmcsim
-* trkqual
-* trkhits, trkhitsmc
-* trkmats
-* crvsummary, crvsummarymc
-* crvdigis, crvpulses, crvpulsesmc, crvcoincsmcplane
+Example: [PlotEntranceMomentumResolution.C](./examples/PlotEntranceMomentumResolution.C)
+
+### ```TrackHit``` Class
+The ```TrackHit``` class contains paired reco and MC information about a single track hit.
+
+* single objects: ```trkhit```, ```trkhitmc```
+
+Note: In the EventNtuple, the branches are filled such that the first N hits in each correspond one-to-one with each other, and the remainining, unused MC hits complete the ```trkhitmc``` branch. The ```TrackHit``` class handles this for you.
+
+Example: [PlotTrackHitTimesMC.C](./examples/PlotTrackHitTimesMC.C)
+
+### ```CrvCoinc``` Class
+The ```CrvCoinc``` class contains paired reco and MC information about a single CRV coincidence
+
+* single objects: ```crvcoinc```, ```crvcoincmc```
+
+Example: [PlotCRVPEsVsMCEDep.C](./examples/PlotCRVPEsVsMCEDep.C)
+
+### ```MCParticle``` Class
+The ```MCParticle``` class contains information about a single SimParticle in the genealogy
+
+* single objects: ```mcsim```
+
+Example: [PlotMCParentPosZ.C](./examples/PlotMCParentPosZ.C)
+
+### Branches not contained within a class
+Some branches are not contained in any of the above classes:
+
+* ```trkcalohitmc```
+* ```crvdigis```
+* ```crvpulses``` and ```crvpulsesmc```
+* ```crvcoincsmcplane```
+
+Reach out to the developers on the #analysis-tools Slack channel if you have a need to have these added somewhere.
+
+## Accessing User-Friendly Classes
+The ```Event``` class provides access to ```Tracks``` and ```CrvCoincs```:
+
+* ```CountTracks()```: counts the number of tracks in the event
+* ```GetTracks()```: gets the tracks (passes you a copy)
+* ```CountCrvCoincs()```: counts the number of CRV coincidences in the event
+* ```GetCrvCoincs()```: gets the CRV coincidences
+
+The ```Track``` class provides access to the ```TrackSegments```, the ```TrackHits```, and the ```MCParticles```:
+* ```GetSegments()```, ```CountSegments()```
+* ```GetHits()```, ```CountHits()```
+* ```GetMCParticles()```, ```CountMCParticles()```
+
+All of these can be passed a cut function (see below) to count / select just a subset of the objects
 
 ## Cut Functions
+RooUtil also provides easy ways to select a subset of objects using the above user-friendly classes. A simple C++-style function with the signature:
 
-### Common Cut Functions
+```
+bool function_name(Object& obj);
+```
 
-There are the common cut functions defined in ```EventNtuple/utils/rooutil/inc/common_cuts.hh```, They can be listed (with explanations) using:
+can be passed to the various ```GetObject()``` and ```CountObject()``` functions.
+
+Here is an example using the ```is_e_minus()``` function that is defined in ```EventNtuple/utils/rooutil/inc/common_cuts.hh```
+
+```
+#include "EventNtuple/utils/rooutil/inc/RooUtil.hh"
+#include "EventNtuple/utils/rooutil/inc/common_cuts.hh"
+...
+RooUtil util(filename);
+for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
+    auto& event = util.GetEvent(i_event);
+    auto& all_tracks = event.GetTracks();
+    auto& e_minus_tracks = event.GetTracks(is_e_minus); // gives you a vector of tracks that are only used the e-minus fit hypothesis
+}
+
+```
+
+## Common Cut Functions
+Many cuts are already available in ```common_cuts.hh`` and can be easiliy listed with:
 
 ```
 rooutilhelper --list-available-cuts
 ```
 
-### Combining Cut Functions
+Feel free to add to common_cuts.hh. Some notes on the file:
+* We use the following special characters for the cuts to be printed nicely with ```rooutilhelper```:
+   * ```//+``` gives the cut section heading
+   * ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
+
+## Combining Cut Functions
 
 There are two ways to combine cut functions:
 
-1. Write a new one yourself e.g:
+1. Write a new one yourself that uses already existing functions e.g:
 
 ```
 // before your main function
@@ -111,14 +174,6 @@ int n_e_minus_good_tracks = event.CountTracks(my_cut);
 ```
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
 ```
-
-### Adding new cuts
-Feel free to add to common_cuts.hh
-
-Some notes on the file:
-* We use the following special characters for the cuts to be printed with ```rooutilhelper```:
-   * ```//+``` gives the cut section heading
-   * ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
 
 ## Speed Optimizations
 By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you will be reading. This can increase the speed by as much as a factor of 10.
