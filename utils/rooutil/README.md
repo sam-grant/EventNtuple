@@ -9,9 +9,10 @@
 6. [Cut Functions](#Cut-Functions)
 7. [Common Cut Functions](#Common-Cut-Functions)
 8. [Combining Cut Function](#Combining-Cut-Functions)
-9. [Speed Optimizations](#Speed-Optimizations)
-10. [Debugging](#Debugging)
-11. [For Developers](#For-Developers)
+9. [Creating Reduced EventNtuple](#Creating-Reduced-EventNtuple)
+10. [Speed Optimizations](#Speed-Optimizations)
+11. [Debugging](#Debugging)
+12. [For Developers](#For-Developers)
 
 ## Introduction
 
@@ -175,6 +176,11 @@ int n_e_minus_good_tracks = event.CountTracks(my_cut);
 int n_e_minus_good_tracks = event.CountTracks([](const Track& track){ return is_e_minus(track) && good_track(track); });
 ```
 
+## Creating Reduced EventNtuple
+RooUtil can also be used to create reduced EventNtuples. You create the output ntuple with ```RooUtil::CreateOutputEventNtuple()``` and fill it in your event loop with ```RooUtil::FillOutputEventNtuple()```. The created reduced EventNtuple is compatible with RooUtil again. See example here: [CreateNtuple.C](./examples/CreateNtuple.C)
+
+If you want to also remove tracks from the event, you should use ```SelectTracks(cut)``` instead of ```GetTracks(cut)```. Note that this changes the ```Event``` so if you want to get the whole event again, you should use ```RooUtil::GetEvent()``` again.
+
 ## Speed Optimizations
 By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you will be reading. This can increase the speed by as much as a factor of 10.
 
@@ -203,7 +209,8 @@ If a new branch is added to the EventNtuple, then the following needs to be done
 2. In [Event.hh](inc/Event.hh) constructor, set the branch address
   - make sure to test for existence if the branch may not exist (e.g. it is an MC branch)
 3. In [Event.hh](inc/Event.hh) add the #include to the underlying object
-4. Add to validation places:
+4. In [RooUtil.hh](inc/RooUtil.hh) add it to the ```CreateOutputEventNtuple()``` function
+5. Add to validation places:
   - [PrintEvents.C](examples/PrintEvents.C): at least the first and last leaf in the struct
   - [create_val_file_rooutil.C](../../validation/create_val_file_rooutil.C)
      - copy contents of struct into place where histograms are defined
@@ -217,6 +224,6 @@ If a new branch is added to the EventNtuple, then the following needs to be done
      - search and replace "", "", 100,0,100);" with ");"
      - search and replace "(branchname_" with "(branchname."
      - update histogram ranges
-5. (Optional) If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
+6. (Optional) If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
    - be sure to test it with an example script
-6. Add to this documentation
+7. Add to this documentation

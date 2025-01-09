@@ -12,6 +12,11 @@ do
     root -l -b -q utils/rooutil/examples/${script}++\(${filename}\)
 
     if [ $? != 0 ]; then # quit as soon as one script fails
+        echo $script " failed"
         break;
     fi
 done
+
+# Check the that reduced ntuple runs in RooUtil
+filename="\"example_ntuple.root\""
+root -l -b -q utils/rooutil/examples/PrintEvents.C++\(${filename},true\) # special script that takes an additional argument
