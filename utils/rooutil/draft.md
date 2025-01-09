@@ -2,15 +2,25 @@
 
 ## Table of Contents
 1. [Introduction](#Introduction)
-2. [The Simplest Example](#The-Simplest-Example)
+2. [```RooUtil``` Class](#RooUtil-Class)
+3. [The Simplest Example](#The-Simplest-Example)
+5. [Speed Optimizations](#Speed-Optimizations)
+6. [Debugging](#Debugging)
 
 ## Introduction
 
-RooUtil is a utility class to help analyze the EventNtuple in ROOT-based analysis frameworks. It handles all the ROOT and provides user-friendly classes that allow for to loop coherently through branches.
+RooUtil is a utility class to help analyze the EventNtuple in ROOT-based analysis frameworks. It handles all the ROOT and provides user-friendly classes that allow for coherent looping through parallel branches.
+
+This documentation contains quick references. A thorough set of tutorial exercises are in the [Tutorial repo](https://github.com/Mu2e/Tutorial/AnalysisTools/)
+
+## ```RooUtil``` Class
+The constructor takes two arguments:
+* ```filename``` can be the name of a single ROOT file (ending in ```.root```) or a list of ROOT files
+* (optional) ```treename``` the name of the tree
 
 ## The Simplest Example
 
-It can be used simply like so:
+This is the simplest example:
 
 ```
 #include "EventNtuple/utils/rooutil/inc/RooUtil.hh"
@@ -21,9 +31,14 @@ void PrintEvents(std::string filename) {
 
   // Now loop through the events
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
-    const auto& event = util.GetEvent(i_event);
+    auto& event = util.GetEvent(i_event);
     // Any single-object branch can be accessed with...
     event.branchname->leafname;
+
+    // ...and vector-object branches can be looped through like this
+    for (auto& obj : *(event.branchname)) {
+       obj.leafname;
+    }
   }
 }
 ```
@@ -105,14 +120,25 @@ Some notes on the file:
    * ```//+``` gives the cut section heading
    * ```bool function_name(args) // explanation``` ensures the cut name has an explanation printed too
 
-## Possible Speed Optimizations
-By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you want reading. This can increase the speed by as much as a factor of 10.
+## Speed Optimizations
+By default, RooUtil will read all the branches for every entry. If you are finding that this is too slow, then you can explicity turn on only the branches that you will be reading. This can increase the speed by as much as a factor of 10.
 
 ```
 RooUtil util(filename);
 util.TurnOffAllBranches(); // first turn all branches off
 util.TurnOnBranches(std::vector<std::string>{"branch1", "branch2"});
 ```
+
+## Debugging
+Debugging output can be turned on like this:
+
+```
+RooUtil util(filename);
+util.SetDebug(true);
+```
+
+Beware: there are a lot of debug messages.
+
 
 ## For Developers
 ### Adding a new branch
