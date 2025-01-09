@@ -15,6 +15,7 @@
 
 #include "EventNtuple/inc/CrvHitInfoReco.hh"
 #include "EventNtuple/inc/CrvHitInfoMC.hh"
+#include "EventNtuple/inc/CrvWaveformInfo.hh"
 
 #include "EventNtuple/inc/SimInfo.hh"
 #include "EventNtuple/inc/LoopHelixInfo.hh"
@@ -72,6 +73,9 @@ struct Event {
     }
     if (ntuple->GetBranch("crvcoincsmc")) {
       ntuple->SetBranchAddress("crvcoincsmc", &this->crvcoincsmc);
+    }
+    if (ntuple->GetBranch("crvdigis")) {
+      ntuple->SetBranchAddress("crvdigis", &this->crvdigis);
     }
 
     if (ntuple->GetBranch("trkmcsim")) {
@@ -228,6 +232,7 @@ struct Event {
 
   std::vector<mu2e::CrvHitInfoReco>* crvcoincs = nullptr;
   std::vector<mu2e::CrvHitInfoMC>* crvcoincsmc = nullptr;
+  std::vector<mu2e::CrvWaveformInfo>* crvdigis = nullptr;
 
   std::vector<std::vector<mu2e::SimInfo>>* trkmcsim = nullptr;
 };

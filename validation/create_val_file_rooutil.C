@@ -369,7 +369,12 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_crvsummarymc_sectorType = new TH1F("h_crvsummarymc_sectorType", "", 100,0,100);
   TH1F* h_crvsummarymc_pdgId = new TH1F("h_crvsummarymc_pdgId", "", 100,0,100);
 
+  TH1F* h_crvdigis_adc = new TH1F("h_crvdigis_adc", "", 100,0,100);
+  TH1F* h_crvdigis_time = new TH1F("h_crvdigis_time", "", 100,0,100);
+  TH1F* h_crvdigis_SiPMId = new TH1F("h_crvdigis_SiPMId", "", 100,0,100);
+
   for (int i_event = 0; i_event < util.GetNEvents(); ++i_event) {
+    std::cout << "Event #" << i_event << std::endl;
     const auto& event = util.GetEvent(i_event);
 
     std::cout << "Creating evtinfo histograms..." << std::endl;
@@ -814,6 +819,14 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
     h_crvsummarymc_sectorType->Fill(crvsummarymc.sectorType);
     h_crvsummarymc_pdgId->Fill(crvsummarymc.pdgId);
 
+    if (event.crvdigis != nullptr) {
+      std::cout << "Creating crvdigi histograms..." << std::endl;
+      for (const auto& crvdigi : *(event.crvdigis)) {
+        h_crvdigis_adc->Fill(crvdigi.adc);
+        h_crvdigis_time->Fill(crvdigi.time);
+        h_crvdigis_SiPMId->Fill(crvdigi.SiPMId);
+      }
+    }
   }
 
   // // resolution histograms

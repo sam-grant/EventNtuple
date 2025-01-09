@@ -12,7 +12,7 @@ void PrintEvents(std::string filename, bool has_mc = false) {
   std::cout << filename << " has " << util.GetNEvents() << " events" << std::endl;
 
   // Only print one event
-  for (int i_event = 0; i_event < 1; ++i_event) {
+  for (int i_event = 1; i_event < 2; ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
     // evtinfo branch
@@ -163,5 +163,13 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     // crvsummarymc
     auto crvsummarymc = *(event.crvsummarymc);
     std::cout << "crvsummarymc: " << crvsummarymc.totalEnergyDeposited << ", " << crvsummarymc.minPathLayer << ", " << crvsummarymc.pdgId << std::endl;
+
+    // crvdigis
+    if (event.crvdigis != nullptr) {
+      for (const auto& crvdigi : *(event.crvdigis)) {
+        std::cout << "crvdigi: " << crvdigi.adc << "," << crvdigi.time << "," << crvdigi.SiPMId << std::endl;
+      }
+    }
+
   }
 }
