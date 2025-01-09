@@ -1,6 +1,16 @@
 # RooUtil (draft)
 
-RooUtil is a utility class to help analyze EventNtuple in ROOT-based analysis frameworks. It can be used simply like so:
+## Table of Contents
+1. [Introduction](#Introduction)
+2. [The Simplest Example](#The-Simplest-Example)
+
+## Introduction
+
+RooUtil is a utility class to help analyze the EventNtuple in ROOT-based analysis frameworks. It handles all the ROOT and provides user-friendly classes that allow for to loop coherently through branches.
+
+## The Simplest Example
+
+It can be used simply like so:
 
 ```
 #include "EventNtuple/utils/rooutil/inc/RooUtil.hh"
@@ -106,7 +116,7 @@ util.TurnOnBranches(std::vector<std::string>{"branch1", "branch2"});
 
 ## For Developers
 ### Adding a new branch
-Checklist:
+If a new branch is added to the EventNtuple, then the following needs to be done to so that RooUtil can access the branch:
 
 1. In [Event.hh](inc/Event.hh) add the pointers at the bottom of the file
 2. In [Event.hh](inc/Event.hh) constructor, set the branch address
@@ -126,6 +136,6 @@ Checklist:
      - search and replace "", "", 100,0,100);" with ");"
      - search and replace "(branchname_" with "(branchname."
      - update histogram ranges
-5. If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
+5. (Optional) If appropriate, add branches to other classes (e.g. Track.hh) and to ```Event::Update()```
    - be sure to test it with an example script
 6. Add to this documentation
