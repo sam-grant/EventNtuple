@@ -1,0 +1,33 @@
+#
+#  Run TrkAna on the output of the trigger, including MC truth matching
+#
+#include "Offline/fcl/standardServices.fcl"
+#include "EventNtuple/fcl/prolog.fcl"
+process_name : TrkAnaTriggerMC
+services : @local::Services.Reco
+source : {
+  module_type : RootInput
+}
+
+physics : {
+  producers : @local::TTProducers
+  analyzers : {
+    EventNtupleTTMCApr : {
+      @table::EventNtupleMakerTTMC
+      branches : [ {
+        @table::TTMCBranch
+        input : "MergeTTAprKSF"
+      } ]
+      KalSeedMCAssns: "TTAprKSFMC"
+      RecoCountTag : "TTAprKSFMC"
+      SelectEvents : [ "Digitize:apr_highP_stopTarg"  ]
+   }
+  }
+  EndPath : [EventNtupleTTMCApr]
+  TrigPath : [ @sequence::TTProducersPath]
+}
+physics.analyzers.TAapr.InfoMCStructHelper.SimParticleCollectionTag: "compressDetStepMCs"
+
+end_paths : [ EndPath ]
+physics.trigger_paths : [ "TrigPath" ]
+services.TFileService.fileName: "nts.owner.trkana-triggerMC.version.sequencer.root"
