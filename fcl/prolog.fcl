@@ -45,8 +45,8 @@ TrkQualProducers : {
   TrkQualAll : @local::TrkQualAll
   TrkQualDe : @local::TrkQualDe
 }
-TrkQualProducersPath : [ TrkQualDeM, TrkQualUeM, TrkQualDmuM, TrkQualDeP, TrkQualUeP, TrkQualDmuP, TrkQualUmuM, TrkQualUmuP ]
 
+TrkQualProducersPath : [ TrkQualDeM, TrkQualUeM, TrkQualDmuM, TrkQualDeP, TrkQualUeP, TrkQualDmuP, TrkQualUmuM, TrkQualUmuP ]
 
 # track PID module
 TrkPID : {
@@ -68,6 +68,16 @@ TrkPIDProducers : {
   TrkPIDDe : @local::TrkPIDDe
 }
 TrkPIDProducersPath : [ TrkPIDDeM, TrkPIDDeP ]
+
+# trigger
+
+TTProducers : {
+  MergeTTAprKSF : {
+    module_type : MergeKalSeeds
+    KalSeedCollections : ["TTAprKSF"]
+  }
+}
+TTProducersPath : [ MergeTTAprKSF ]
 
 genCountLogger: { module_type: GenEventCountReader }
 
@@ -238,6 +248,32 @@ EventNtupleMaker : {
   ExtraMCStepCollectionTags : []
   SurfaceStepCollectionTag : "MakeSS"
   FitType : LoopHelix
+}
+# instance for processing trigger (digitization) output from simulation
+EventNtupleMakerTTMC: {
+  @table::EventNtupleMaker
+  diagLevel : 2
+  FillCRVCoincs : false
+  FillCaloMC : false
+  FillTriggerInfo : true
+  FillTrkPIDInfo : false
+  FillHitInfo : true
+  PrimaryParticleTag: "compressDigiMCs"
+  MCTrajectoriesTag: "compressDigiMCs"
+  FitType : LoopHelix
+  TriggerProcessName : "Digitize"
+  SimParticlesTag : "compressDetStepMCs"
+  ExtraMCStepCollectionTags: []
+  InfoMCStructHelper : {
+    MinGoodMomFraction : 0.9
+    MaxVDDt : 5 # ns
+    SimParticleCollectionTag : "compressDetStepMCs"
+  }
+}
+
+TTMCBranch : {
+  branch : "trk"
+  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
 }
 
 EventNtuple : {
