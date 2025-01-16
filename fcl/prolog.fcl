@@ -72,12 +72,24 @@ TrkPIDProducersPath : [ TrkPIDDeM, TrkPIDDeP ]
 # trigger
 
 TTProducers : {
-  MergeTTAprKSF : {
+  MergeTTApr : {
     module_type : MergeKalSeeds
     KalSeedCollections : ["TTAprKSF"]
   }
+  MergeTTTpr : {
+    module_type : MergeKalSeeds
+    KalSeedCollections : ["TTKSF"]
+  }
+  MergeTTCpr : {
+    module_type : MergeKalSeeds
+    KalSeedCollections : ["TTCalSeedFit"]
+  }
+  MergeTTMpr : {
+    module_type : MergeKalSeeds
+    KalSeedCollections : ["TTMprKSF"]
+  }
 }
-TTProducersPath : [ MergeTTAprKSF ]
+TTProducersPath : [ MergeTTApr, MergeTTTpr, MergeTTCpr, MergeTTMpr ]
 
 genCountLogger: { module_type: GenEventCountReader }
 
