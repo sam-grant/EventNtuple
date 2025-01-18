@@ -274,12 +274,12 @@ EventNtupleMakerTTMC: {
   MCTrajectoriesTag: "compressDigiMCs"
   FitType : LoopHelix
   TriggerProcessName : "Digitize"
-  SimParticlesTag : "compressDetStepMCs"
+  SimParticlesTag : "compressDigiMCs"
   ExtraMCStepCollectionTags: []
   InfoMCStructHelper : {
     MinGoodMomFraction : 0.9
     MaxVDDt : 5 # ns
-    SimParticleCollectionTag : "compressDetStepMCs"
+    SimParticleCollectionTag : "compressDigiMCs"
   }
 }
 
