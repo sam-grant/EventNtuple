@@ -134,6 +134,7 @@ namespace mu2e {
       tsi.mom = kinter.momentum3();
       tsi.pos = kinter.position3();
       tsi.time = kinter.time();
+
       tsi.momerr = kinter.momerr();
       tsi.inbounds = kinter.inBounds();
       tsi.gap = kinter.gap();
@@ -147,6 +148,8 @@ namespace mu2e {
       tsis[imin].early = true;
       tsis[imax].late = true;
     }
+    //TODO add in the sorting code here!
+    std::sort(tsis.begin(),tsis.end(),[](const auto& a, const auto& b){return a.time < b.time;});
     all_tsis.push_back(tsis);
   }
 
