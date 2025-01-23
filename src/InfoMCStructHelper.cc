@@ -405,7 +405,9 @@ namespace mu2e {
       //  std::cout << "Found matching surface step sid" << ss << " particle time " << simp->startGlobalTime() << std::endl;
         ssic.emplace_back(ss); // temporary
       }
+      
     }
+    std::sort(ssic.begin(),ssic.end(),[](const auto& a, const auto& b){return a.time < b.time;});
   }
 
 }

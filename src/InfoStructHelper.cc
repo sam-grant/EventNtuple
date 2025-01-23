@@ -147,6 +147,7 @@ namespace mu2e {
       tsis[imin].early = true;
       tsis[imax].late = true;
     }
+    std::sort(tsis.begin(),tsis.end(),[](const auto& a, const auto& b){return a.time < b.time;});
     all_tsis.push_back(tsis);
   }
 
