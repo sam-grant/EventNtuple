@@ -180,7 +180,7 @@ namespace mu2e {
       n_match = std::numeric_limits<int>::max();
     }
     
-    //first loop to get vector of particles:
+    //create vector of art Ptr to particles:
     std::vector<art::Ptr<SimParticle> > allParts;
 
     //loop over all sime particles in KalSeedMC
@@ -198,7 +198,7 @@ namespace mu2e {
               isSame = true;
             }
         }
-        allParts.push_back(current_sim_particle_ptr);
+        if(!isSame) allParts.push_back(current_sim_particle_ptr);
       
         SimInfo sim_info;
         
