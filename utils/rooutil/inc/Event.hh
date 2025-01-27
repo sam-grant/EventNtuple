@@ -184,6 +184,17 @@ struct Event {
       }
       for (int i_trk = trks_to_remove.size()-1; i_trk >= 0; --i_trk) {
         trk->erase(trk->begin()+trks_to_remove[i_trk]);
+        if (trkmc) { trkmc->erase(trkmc->begin()+trks_to_remove[i_trk]); }
+        if (trksegs) { trksegs->erase(trksegs->begin()+trks_to_remove[i_trk]); }
+        if (trksegsmc) { trksegsmc->erase(trksegsmc->begin()+trks_to_remove[i_trk]); }
+        if (trkcalohit) { trkcalohit->erase(trkcalohit->begin()+trks_to_remove[i_trk]); }
+        if (trkqual) { trkqual->erase(trkqual->begin()+trks_to_remove[i_trk]); }
+        if (trksegpars_lh) { trksegpars_lh->erase(trksegpars_lh->begin()+trks_to_remove[i_trk]); }
+        if (trksegpars_ch) { trksegpars_ch->erase(trksegpars_ch->begin()+trks_to_remove[i_trk]); }
+        if (trksegpars_kl) { trksegpars_kl->erase(trksegpars_kl->begin()+trks_to_remove[i_trk]); }
+        if (trkhits) { trkhits->erase(trkhits->begin()+trks_to_remove[i_trk]); }
+        if (trkhitsmc) { trkhitsmc->erase(trkhitsmc->begin()+trks_to_remove[i_trk]); }
+        if (trkmats) { trkmats->erase(trkmats->begin()+trks_to_remove[i_trk]); }
       }
 
       tracks.erase(newEnd, tracks.end()); // remove only rearranges and returns the new end
