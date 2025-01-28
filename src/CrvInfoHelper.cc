@@ -164,7 +164,7 @@ namespace mu2e
         if(abs(trajectorySimParticle->pdgId())!=PDGCode::mu_minus) continue;
         const art::Ptr<SimParticle> &trajectoryPrimaryParticle = FindPrimaryParticle(trajectorySimParticle);
         GenId genId = trajectoryPrimaryParticle->genParticle()->generatorId();
-        if(genId==GenId::cosmicToy || genId==GenId::cosmicDYB || genId==GenId::cosmic || genId==GenId::cosmicCRY)
+        if(genId.isCosmic())
         {
           const std::vector<MCTrajectoryPoint> &points = trajectoryIter->second.points();
           if(points.size()<1) continue;
