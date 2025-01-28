@@ -209,6 +209,10 @@ bool from_gen_id(MCParticle& particle, mu2e::GenId::enum_type genid) { // MCPart
   else { return false; }
 }
 
+bool is_cosmic(MCParticle& particle) { // MCParticle is a cosmic. This uses the function GenId::isCosmic() from Offline
+  return mu2e::GenId(mu2e::GenId::enum_type(particle.mcsim->gen)).isCosmic();
+}
+
 //+ MCParticle Cuts - Genealogy
 bool has_track_relationship(MCParticle& particle, mu2e::MCRelationship::relation rel) { // MCParticle has this relationship to track primary
   if (particle.mcsim->trkrel == rel) { return true; }
