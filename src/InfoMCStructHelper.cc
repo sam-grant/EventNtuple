@@ -198,7 +198,7 @@ namespace mu2e {
               isSame = true;
             }
         }
-        if(!isSame) allParts.push_back(current_sim_particle_ptr);
+        if(!isSame) { allParts.push_back(current_sim_particle_ptr); }
       
         SimInfo sim_info;
         
