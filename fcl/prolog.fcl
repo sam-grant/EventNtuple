@@ -285,7 +285,7 @@ EventNtupleMakerTTMC: {
 
 TTMCBranch : {
   branch : "trk"
-  options : { fillMC : true   genealogyDepth : -1 matchDepth : -1 }
+  options : { fillMC : true  fillHits : true genealogyDepth : -1 matchDepth : -1 }
 }
 
 EventNtuple : {
