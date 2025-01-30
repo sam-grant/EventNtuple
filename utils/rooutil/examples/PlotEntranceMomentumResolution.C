@@ -8,10 +8,10 @@
 
 #include "TH1F.h"
 
-void PlotEntranceMomentum(std::string filename) {
+void PlotEntranceMomentumResolution(std::string filename) {
 
   // Create the histogram you want to fill
-  TH1F* hRecoMom = new TH1F("hRecoMom", "Reconstructed Momentum at Tracker Entrance", 50,95,110);
+  TH1F* hRecoMomRes = new TH1F("hRecoMomRes", "Momentum Resolution at Tracker Entrance", 200,-10,10);
 
   // Set up RooUtil
   RooUtil util(filename);
@@ -27,18 +27,18 @@ void PlotEntranceMomentum(std::string filename) {
     // Loop through the e_minus tracks
     for (auto& track : e_minus_tracks) {
 
-      // Get the track segments at the tracker entrance
-      auto trk_ent_segments = track.GetSegments([](TrackSegment& segment){ return tracker_entrance(segment) && has_reco_step(segment); });
+      // Get the track segments at the tracker entrance and has an MC step
+      auto trk_ent_segments = track.GetSegments([](TrackSegment& segment){ return tracker_entrance(segment) && has_mc_step(segment) && has_reco_step(segment); });
 
       // Loop through the tracker entrance track segments
       for (auto& segment : trk_ent_segments) {
 
         // Fill the histogram
-        hRecoMom->Fill(segment.trkseg->mom.R());
+        hRecoMomRes->Fill(segment.trkseg->mom.R() - segment.trksegmc->mom.R());
       }
     }
   }
 
   // Draw the histogram
-  hRecoMom->Draw("HIST E");
+  hRecoMomRes->Draw("HIST E");
 }

@@ -16,7 +16,7 @@
 The EventNtuple is a simplified data format that can be used for Mu2e analyses.
 
 ## Structure
-The EventNtuple structure is complex.
+The EventNtuple structure is complex. Some branches consist of a single object (e.g. ```evtinfo```), some are vectors of objects (e.g. ```trk```) and some are vectors-of-vectors of objects (e.g. ```trksegs```).
 
 A [list of branches is available](./doc/branches.md)
 
@@ -25,9 +25,9 @@ The help understand what all the branches and leaves mean, we have an [```ntuple
 ## How to Analyze an EventNtuple
 To help with analyzing the EventNtuple given its complex structure, we have two sets of utilities:
 * [RooUtil](utils/rooutil/README.md) for ROOT-based analyses, and
-* [PyUtil](utils/pyutil/README.md) for python-based analyses.
+* [PyUtil](utils/pyutils/README.md) for python-based analyses.
 
-Both of these are currently undergoing rapid development. Feel free to use these prototypes and let us know your thoughts.
+Feel free to send questions, comments, or suggestions for improvement to the #analysis-tools Slack channel.
 
 ## How to Create an EventNtuple
 In case you need to create your own EventNtuple you can do the following from a clean login in your working directory with the list of files you want to run over in a text file called ```your-art-filelist.txt```:

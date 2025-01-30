@@ -8,10 +8,10 @@
 
 #include "TH1F.h"
 
-void PlotEntranceMomentum(std::string filename) {
+void PlotTrkCaloHitEnergy(std::string filename) {
 
   // Create the histogram you want to fill
-  TH1F* hRecoMom = new TH1F("hRecoMom", "Reconstructed Momentum at Tracker Entrance", 50,95,110);
+  TH1F* hTrkCaloHitEnergy = new TH1F("hTrkCaloHitEnergy", "TrkCaloHit Energy", 50,95,110);
 
   // Set up RooUtil
   RooUtil util(filename);
@@ -27,18 +27,13 @@ void PlotEntranceMomentum(std::string filename) {
     // Loop through the e_minus tracks
     for (auto& track : e_minus_tracks) {
 
-      // Get the track segments at the tracker entrance
-      auto trk_ent_segments = track.GetSegments([](TrackSegment& segment){ return tracker_entrance(segment) && has_reco_step(segment); });
-
-      // Loop through the tracker entrance track segments
-      for (auto& segment : trk_ent_segments) {
-
-        // Fill the histogram
-        hRecoMom->Fill(segment.trkseg->mom.R());
+      // Fill the histogram
+      if (track.trkcalohit->active) {
+        hTrkCaloHitEnergy->Fill(track.trkcalohit->edep);
       }
     }
   }
 
   // Draw the histogram
-  hRecoMom->Draw("HIST E");
+  hTrkCaloHitEnergy->Draw("HIST E");
 }
