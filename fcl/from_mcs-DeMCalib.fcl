@@ -9,9 +9,8 @@ physics :
 {
   producers : {
     @table::EventNtuple.producers
-    MakeSS : @local::CommonMC.MakeSSReco
   }
-  TriggerPath : [ MergeKKDeMCalib, MakeSS ]
+  TriggerPath : [ MergeKKDeMCalib ]
   analyzers : {
     EventNtuple : {
       @table::EventNtupleMaker
