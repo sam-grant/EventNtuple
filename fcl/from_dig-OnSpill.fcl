@@ -62,7 +62,7 @@ physics : {
   EndPath : [EventNtupleTTMCApr, EventNtupleTTMCTpr, EventNtupleTTMCCpr, EventNtupleTTMCMpr]
   TrigPath : [ @sequence::TTProducersPath]
 }
-physics.analyzers.TAapr.InfoMCStructHelper.SimParticleCollectionTag: "compressDetStepMCs"
+#physics.analyzers.TAapr.InfoMCStructHelper.SimParticleCollectionTag: "compressDetStepMCs"
 
 end_paths : [ EndPath ]
 physics.trigger_paths : [ "TrigPath" ]
