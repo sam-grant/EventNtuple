@@ -5,6 +5,7 @@
 
 #include "TFile.h"
 #include "TTree.h"
+#include "TH1I.h"
 
 #include "EventNtuple/utils/rooutil/inc/Event.hh"
 
@@ -17,14 +18,21 @@ public:
     std::string root_suffix = ".root";
     if (filename.compare(filename.size() - root_suffix.size(), root_suffix.size(), root_suffix) == 0) {
       ntuple->Add(filename.c_str());
+      SetVersionNumber(filename);
     }
     else { //  assume its a file list
       std::ifstream filelist(filename);
 
       if (filelist.is_open()) {
         std::string line;
+        bool first_line = true;
         while (std::getline(filelist, line)) {
           ntuple->Add(line.c_str());
+
+          if (first_line) {
+            SetVersionNumber(line);
+            first_line = false;
+          }
         }
         filelist.close();
       } else {
@@ -36,6 +44,22 @@ public:
   }
 
   void Debug(bool dbg) { debug = dbg; }
+
+  void SetVersionNumber(std::string filename) {
+    TFile* file = new TFile(filename.c_str(), "READ");
+    TH1I* hVersion = (TH1I*) file->Get("EventNtuple/version");
+    if (!hVersion) {
+      std::cout << "Warning: this EventNtuple file does not contain a version number. This is just a warning..." << std::endl;
+    }
+    else {
+      majorVer = hVersion->GetBinContent(1);
+      minorVer = hVersion->GetBinContent(2);
+      patchVer = hVersion->GetBinContent(3);
+      std::cout << "EventNtuple v" << majorVer << "." << minorVer << "." << patchVer << std::endl;
+    }
+    file->Close();
+    delete file;
+  }
 
   int GetNEvents() { return ntuple->GetEntries(); }
 
@@ -117,6 +141,10 @@ private:
   TChain* ntuple;
   Event* event; // holds all the variables for SetBranchAddress
   bool debug;
+
+  int majorVer;
+  int minorVer;
+  int patchVer;
 
   TTree* output_ntuple; // for output
 };
