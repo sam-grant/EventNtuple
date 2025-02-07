@@ -221,6 +221,9 @@ namespace mu2e {
           sim_info.nhits = kseedmc.simParticle(imatch)._nhits;
           sim_info.nactive = kseedmc.simParticle(imatch)._nactive;
         }
+        else { // don't set a rank for ancestor particles
+          sim_info.rank = -1;
+        }
         // record the index this object will have
         sim_info.index = siminfos.size();
         
