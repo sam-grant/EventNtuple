@@ -131,18 +131,18 @@ MergeKKDe           : @local::MergeKK
 MergeKKDe.KalSeedCollections : [ "KKDe" ]
 
 
-MergeKKDeMCalib : {
+MergeKKDeCalib : {
   @table::MergeKK
-  KalSeedCollections : ["KKDeM"]
+  KalSeedCollections : ["KKDe"]
   Selector : {
     tool_type : SimpleKalSeedSelector
-    MinMomentum : 70.0 # MeV/c
+    MinMomentum : 0.0 # MeV/c
     MaxMomentum : 300.0 #MeV/c
     MinFitConsistency : 1e-10
     MinDeltaNHitFraction : 0.05 # Consider a 5% difference in active hit count to be 'significant', and call the track more hits 'better'.  Otherwise, use fit quality to determine 'better'
     MinActiveHits : 15 # Require a reasonable # of active hits
   }
-  SelectBest : true # use only the 'best' DeM in every event
+  SelectBest : true # use only the 'best' De in every event
 }
 
 MergeKKProducers : {
@@ -157,8 +157,8 @@ MergeKKProducers : {
   MergeKKLine : @local::MergeKKLine
   MergeKKOff : @local::MergeKKOff
   MergeKKAll : @local::MergeKKAll
-  MergeKKDeMCalib : @local::MergeKKAll
   MergeKKDe : @local::MergeKKDe
+  MergeKKDeCalib : @local::MergeKKDeCalib
 }
 MergeKKProducersPath : [ MergeKKAll ]
 MergeKKNoFieldPath : [ MergeKKLine ]
@@ -211,7 +211,7 @@ All : { input : "MergeKKAll"
   options : { fillHits : true fillMC : true   genealogyDepth : -1 matchDepth : -1 }
   trkQualTag : "TrkQualAll"
 }
-DeMCalib : { input : "MergeKKDeMCalib"
+DeCalib : { input : "MergeKKDeCalib"
   branch : "trk"
   options : { fillMC : true fillHits : true  genealogyDepth : -1 matchDepth : -1 }
 }
