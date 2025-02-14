@@ -22,9 +22,9 @@ def main():
                 folder = f.Get(foldername)
                 if (folder.GetListOfKeys().Contains("version")):
                     h = f.Get("EventNtuple/version")
-                    print("{} contains EventNtuple v{:0.0f}.{:0.0f}.{:0.0f}".format(filename, h.GetBinContent(1), h.GetBinContent(2), h.GetBinContent(3)))
+                    print("{} contains EventNtuple v{:02.0f}_{:02.0f}_{:02.0f}".format(filename, h.GetBinContent(1), h.GetBinContent(2), h.GetBinContent(3)))
                 else:
-                    print("{} histogram does not exist in {} (it is likely older than v6.3.0)".format(histname, filename))
+                    print("{} histogram does not exist in {} (it is v06_02_00 or older)".format(histname, filename))
             else:
                 print("{}/ folder does not exist in {}".format(foldername, filename))
         except OSError:
