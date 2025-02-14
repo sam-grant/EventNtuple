@@ -11,7 +11,7 @@
 
 class RooUtil {
 public:
-  RooUtil(std::string filename, std::string treename = "EventNtuple/ntuple") : debug(false) {
+  RooUtil(std::string filename, bool debug = false, std::string treename = "EventNtuple/ntuple") : debug(true) {
     ntuple = new TChain(treename.c_str());
 
     // Check if the given filename contains .root at the end
