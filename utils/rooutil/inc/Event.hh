@@ -37,16 +37,31 @@
 struct Event {
   Event(TChain* ntuple) {
 
-    ntuple->SetBranchAddress("evtinfo", &this->evtinfo);
-    ntuple->SetBranchAddress("hitcount", &this->hitcount);
-    ntuple->SetBranchAddress("crvsummary", &this->crvsummary);
+    if (ntuple->GetBranch("evtinfo")) {
+      ntuple->SetBranchAddress("evtinfo", &this->evtinfo);
+    }
+    if (ntuple->GetBranch("hitcount")) {
+      ntuple->SetBranchAddress("hitcount", &this->hitcount);
+    }
+    if (ntuple->GetBranch("crvsummary")) {
+      ntuple->SetBranchAddress("crvsummary", &this->crvsummary);
+    }
 
-    ntuple->SetBranchAddress("trk", &this->trk);
-    ntuple->SetBranchAddress("trksegs", &this->trksegs);
-    ntuple->SetBranchAddress("trkcalohit", &this->trkcalohit);
-    ntuple->SetBranchAddress("trkqual", &this->trkqual);
-
-    ntuple->SetBranchAddress("crvcoincs", &this->crvcoincs);
+    if (ntuple->GetBranch("trk")) {
+      ntuple->SetBranchAddress("trk", &this->trk);
+    }
+    if (ntuple->GetBranch("trksegs")) {
+      ntuple->SetBranchAddress("trksegs", &this->trksegs);
+    }
+    if (ntuple->GetBranch("trkcalohit")) {
+      ntuple->SetBranchAddress("trkcalohit", &this->trkcalohit);
+    }
+    if (ntuple->GetBranch("trkqual")) {
+      ntuple->SetBranchAddress("trkqual", &this->trkqual);
+    }
+    if (ntuple->GetBranch("crvcoincs")) {
+      ntuple->SetBranchAddress("crvcoincs", &this->crvcoincs);
+    }
 
     // Check if the MC branches exist
     if (ntuple->GetBranch("evtinfomc")) {
@@ -105,39 +120,51 @@ struct Event {
   };
 
   void Update(bool debug = false) {
-    if (debug) { std::cout << "Event::pdate(): Clearing previous Tracks... " << std::endl; }
+    if (debug) { std::cout << "Event::Update(): Clearing previous Tracks... " << std::endl; }
     tracks.clear();
     for (int i_track = 0; i_track < nTracks(); ++i_track) {
       if (debug) { std::cout << "Event::Update(): Creating Track " << i_track << "... " << std::endl; }
       Track track(&(trk->at(i_track)), &(trksegs->at(i_track)), &(trkcalohit->at(i_track))); // passing the addresses of the underlying structs
       if (trkmc != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkmc to Track " << i_track << "... " << std::endl; }
         track.trkmc = &(trkmc->at(i_track));
       }
       if (trksegsmc != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trksegsmc to Track " << i_track << "... " << std::endl; }
         track.trksegsmc = &(trksegsmc->at(i_track));
       }
       if (trksegpars_lh != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trksegpars_lh to Track " << i_track << "... " << std::endl; }
         track.trksegpars_lh = &(trksegpars_lh->at(i_track));
       }
       if (trksegpars_ch != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trksegpars_ch to Track " << i_track << "... " << std::endl; }
         track.trksegpars_ch = &(trksegpars_ch->at(i_track));
       }
       if (trksegpars_kl != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trksegpars_kl to Track " << i_track << "... " << std::endl; }
         track.trksegpars_kl = &(trksegpars_kl->at(i_track));
       }
       if (trkmcsim != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkmcsim to Track " << i_track << "... (size = " << trkmcsim->at(i_track).size() << ")" << std::endl; }
         track.trkmcsim = &(trkmcsim->at(i_track));
       }
       if (trkhits != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkhits to Track " << i_track << "... " << std::endl; }
         track.trkhits = &(trkhits->at(i_track));
       }
       if (trkhitsmc != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkhitsmc to Track " << i_track << "... " << std::endl; }
         track.trkhitsmc = &(trkhitsmc->at(i_track));
       }
       if (trkmats != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkmats to Track " << i_track << "... " << std::endl; }
         track.trkmats = &(trkmats->at(i_track));
       }
-      track.trkqual = &(trkqual->at(i_track));
+      if (trkqual != nullptr) {
+        if (debug) { std::cout << "Event::Update(): Adding trkqual to Track " << i_track << "... " << std::endl; }
+        track.trkqual = &(trkqual->at(i_track));
+      }
 
       if (debug) { std::cout << "Event::Update(): Updating Track " << i_track << "... " << std::endl; }
       track.Update(debug);

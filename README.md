@@ -3,13 +3,15 @@
 ## Table of Contents
 1. [Introduction](#Introduction)
 2. [Structure](#Structure)
-3. [How to Analyze an EventNtuple](#How-to-Analyze-an-EventNtuple)
-4. [How to Create an EventNtuple](#How-to-Create-an-EventNtuple)
-5. [Validation](#Validation)
-6. [Notes for Developers](#Notes-for-Developers)
-7. [Previous Verisons](#Previous-Versions)
+3. [How to get the version of EventNtuple](#How-to-get-the-version-of-EventNtuple)
+4. [How to Analyze an EventNtuple](#How-to-Analyze-an-EventNtuple)
+5. [How to Create an EventNtuple](#How-to-Create-an-EventNtuple)
+6. [Validation](#Validation)
+7. [Tagging a New Release](#Tagging-a-New-Release)
+8. [Notes for Developers](#Notes-for-Developers)
+9. [Previous Verisons](#Previous-Versions)
    - [Upgrading from v5 to 6](#Upgrading-from-v5-to-v6)
-8. [Other Useful Links](#Other-Useful-Links)
+10. [Other Useful Links](#Other-Useful-Links)
 
 ## Introduction
 
@@ -21,6 +23,13 @@ The EventNtuple structure is complex. Some branches consist of a single object (
 A [list of branches is available](./doc/branches.md)
 
 The help understand what all the branches and leaves mean, we have an [```ntuplehelper```](doc/ntuplehelper.md) tool
+
+## How to get the version of EventNtuple that is in a file
+For versions of EventNtuple later than v6.3.0, we store the version number in the ROOT file. You can check the version number with the ```checkEventNtuple``` tool:
+
+```
+checkEventNtuple file1.root file2.root
+```
 
 ## How to Analyze an EventNtuple
 To help with analyzing the EventNtuple given its complex structure, we have two sets of utilities:
@@ -47,6 +56,9 @@ Notes for developers contributing to EventNtuple are [here](doc/developers.md)
 
 ## Validation
 Validation scripts and instructions are [here](validation/README.md)
+
+## Tagging a New Release
+Don't forget to set the new version number in ```src/EventNtupleMaker_module.cc```!
 
 ## Previous Versions
 The version history of EventNtuple is [here](https://mu2ewiki.fnal.gov/wiki/EventNtuple).
