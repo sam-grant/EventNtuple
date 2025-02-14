@@ -106,7 +106,6 @@ struct Event {
 
 
     if (ntuple->GetBranch("trkmcsim")) {
-      std::cout << "AE: HERE" << std::endl;
       ntuple->SetBranchAddress("trkmcsim", &this->trkmcsim);
     }
     if (ntuple->GetBranch("trkhits")) {
