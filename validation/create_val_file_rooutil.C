@@ -176,6 +176,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
   TH1F* h_crvcoincsmc_depositedEnergy = new TH1F("h_crvcoincsmc_depositedEnergy", "", 100,0,100);
 
   TH1F* h_trkmcsim_valid = new TH1F("h_trkmcsim_valid", "", 100,0,100);
+  TH1F* h_trkmcsim_id = new TH1F("h_trkmcsim_id", "", 100,0,100);
   TH1F* h_trkmcsim_nhits = new TH1F("h_trkmcsim_nhits", "", 100,0,100);
   TH1F* h_trkmcsim_nactive = new TH1F("h_trkmcsim_nactive", "", 100,0,100);
   TH1F* h_trkmcsim_rank = new TH1F("h_trkmcsim_rank", "", 100,0,100);
@@ -625,6 +626,7 @@ void create_val_file_rooutil(std::string filename, std::string outfilename) {
     for (const auto& trkmcsims : *(event.trkmcsim)) {
       for (const auto& trkmcsim : trkmcsims) {
         h_trkmcsim_valid->Fill(trkmcsim.valid);
+        h_trkmcsim_id->Fill(trkmcsim.id);
         h_trkmcsim_nhits->Fill(trkmcsim.nhits);
         h_trkmcsim_nactive->Fill(trkmcsim.nactive);
         h_trkmcsim_rank->Fill(trkmcsim.rank);

@@ -221,6 +221,9 @@ namespace mu2e {
           sim_info.nhits = kseedmc.simParticle(imatch)._nhits;
           sim_info.nactive = kseedmc.simParticle(imatch)._nactive;
         }
+        else { // don't set a rank for ancestor particles
+          sim_info.rank = -1;
+        }
         // record the index this object will have
         sim_info.index = siminfos.size();
         
@@ -277,7 +280,8 @@ namespace mu2e {
   void InfoMCStructHelper::fillSimInfo(const SimParticle& sp, SimInfo& siminfo) {
     GeomHandle<DetectorSystem> det;
     siminfo.valid = true;
-    if(sp.genParticle().isNonnull())siminfo.gen = sp.genParticle()->generatorId().id();
+    siminfo.id = sp.id().asInt();
+    if(sp.genParticle().isNonnull()) { siminfo.gen = sp.genParticle()->generatorId().id(); }
     siminfo.startCode = sp.creationCode();
     siminfo.stopCode = sp.stoppingCode();
     siminfo.pdg = sp.pdgId();
