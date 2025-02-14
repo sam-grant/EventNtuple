@@ -25,6 +25,7 @@ struct Track {
     if (trksegsmc != nullptr) { // if we have MC information
       // search for corresponding SurfaceStepInfo (it will have the same sid and sindex)
       // also, trksegs and trksegms may not be the same length...
+      if (debug) { std::cout << "Track::Update(): Updating trksegsmc..." << std::endl; }
       for (size_t i_segment_mc = 0; i_segment_mc < trksegsmc->size(); ++i_segment_mc) {
         if (debug) { std::cout << "Track::Update(): Looking for trkseg to match trksegmc " << i_segment_mc << ".(of " << trksegsmc->size() << ").. "; }
         bool reco_step_found = false;
@@ -59,30 +60,36 @@ struct Track {
     }
 
     if (trkmcsim != nullptr) {
+      if (debug) { std::cout << "Track::Update(): Updating trkmcsim..." << std::endl; }
       // Create the underlying MCParticles if possible
       for (int i_mc_particle = 0; i_mc_particle < nMCParticles(); ++i_mc_particle) {
+        if (debug) { std::cout << "Track::Update(): Creating MCParticle " << i_mc_particle << " / " << nMCParticles() << "..." << std::endl; }
         MCParticle mc_particle(&(trkmcsim->at(i_mc_particle))); // passing the addresses of the underlying structs
         mc_particles.emplace_back(mc_particle);
       }
     }
 
     if (trksegpars_lh != nullptr) { // if we LoopHelix info
+      if (debug) { std::cout << "Track::Update(): Updating trksegpars_lh..." << std::endl; }
       for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
         segments[i_segment].trksegpars_lh = &(trksegpars_lh->at(i_segment));
       }
     }
     if (trksegpars_ch != nullptr) { // if we CentralHelix info
+      if (debug) { std::cout << "Track::Update(): Updating trksegpars_ch..." << std::endl; }
       for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
         segments[i_segment].trksegpars_ch = &(trksegpars_ch->at(i_segment));
       }
     }
     if (trksegpars_kl != nullptr) { // if we CentralHelix info
+      if (debug) { std::cout << "Track::Update(): Updating trksegpars_kl..." << std::endl; }
       for (int i_segment = 0; i_segment < nSegments(); ++i_segment) {
         segments[i_segment].trksegpars_kl = &(trksegpars_kl->at(i_segment));
       }
     }
 
     if (trkhits != nullptr) {
+      if (debug) { std::cout << "Track::Update(): Updating trkhits..." << std::endl; }
       // Create the underlying TrackHits
       for (int i_trkhit = 0; i_trkhit < nHits(); ++i_trkhit) {
         TrackHit trkhit;
@@ -95,6 +102,7 @@ struct Track {
         hits.emplace_back(trkhit);
       }
       if (trkhitsmc != nullptr) {
+        if (debug) { std::cout << "Track::Update(): Updating trkhitsmc..." << std::endl; }
         // Fill in the remainder of the track hits
         for (size_t i_trkhitmc = nHits(); i_trkhitmc < trkhitsmc->size(); ++i_trkhitmc) {
           TrackHit trkhit;
