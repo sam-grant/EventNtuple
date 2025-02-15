@@ -111,7 +111,7 @@ else
 fi
 
 echo -n "creating validation file... "
-root -l -b -q validation/create_val_file.C\(\"nts.ntuple.after.root\",\"val.ntuple.after.root\"\) >> ${log_file} 2>&1
+root -l -b -q validation/create_val_file_rooutil.C\(\"nts.ntuple.after.root\",\"val.ntuple.after.root\"\) >> ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
 else
