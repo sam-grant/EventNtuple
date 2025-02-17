@@ -15,7 +15,6 @@ physics :
   producers : {
     @table::Reconstruction.producers
     @table::EventNtuple.producers
-    MakeSS : @local::CommonMC.MakeSSDigi
   }
   filters : {
     @table::Reconstruction.filters
@@ -34,17 +33,14 @@ outputs : {
 }
 
 physics.EventNtuplePath : [
-  MakeSS,
   @sequence::Reconstruction.RecoMCPath,
-  @sequence::EventNtuple.PathNoMakeSS
+  @sequence::EventNtuple.Path
 ]
 physics.EventNtupleEndPath : [ @sequence::Reconstruction.EndPath, @sequence::EventNtuple.EndPathNoMC ]
 physics.analyzers.EventNtuple.SelectEvents : [ "EventNtuplePath" ]
 
 physics.trigger_paths : [ EventNtuplePath ]
 physics.end_paths : [ EventNtupleEndPath ]
-
-physics.producers.compressRecoMCs.surfaceStepTags: [ "MakeSS" ] # because these are not made in compressDigiMCs
 
 #include "Production/JobConfig/common/epilog.fcl"
 #include "Production/JobConfig/reco/epilog.fcl"

@@ -11,7 +11,7 @@
 
 class RooUtil {
 public:
-  RooUtil(std::string filename, bool debug = false, std::string treename = "EventNtuple/ntuple") : debug(true) {
+  RooUtil(std::string filename, bool debug = false, std::string treename = "EventNtuple/ntuple") : debug(debug) {
     ntuple = new TChain(treename.c_str());
 
     // Check if the given filename contains .root at the end
@@ -55,7 +55,9 @@ public:
       majorVer = hVersion->GetBinContent(1);
       minorVer = hVersion->GetBinContent(2);
       patchVer = hVersion->GetBinContent(3);
-      std::cout << "EventNtuple v" << std::setw(2) << std::setfill('0') << majorVer << "_" << minorVer << "_" << patchVer << std::endl;
+      std::cout << "EventNtuple v" << std::setw(2) << std::setfill('0') << majorVer << "_"
+                << std::setw(2) << std::setfill('0') << minorVer << "_"
+                << std::setw(2) << std::setfill('0') << patchVer << std::endl;
     }
     file->Close();
     delete file;

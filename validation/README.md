@@ -19,7 +19,7 @@ Before making any changes, create an EventNtuple file and run the validation scr
 ```
 mu2e -c EventNtuple/fcl/from_mcs_mockdata.fcl -S filelist.txt --TFileName nts.ntuple.before.root
 
-root -l -b EventNtuple/validation/create_val_file.C\(\"nts.ntuple.before.root\",\"val.ntuple.before.root\"\)
+root -l -b EventNtuple/validation/create_val_file_rooutil.C\(\"nts.ntuple.before.root\",\"val.ntuple.before.root\"\)
 ```
 
 ### Validating EventNtuple Contents

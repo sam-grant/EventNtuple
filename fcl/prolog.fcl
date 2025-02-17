@@ -258,7 +258,7 @@ EventNtupleMaker : {
   }
 #  ExtraMCStepCollectionTags : [ "compressRecoMCs:protonabsorber", "compressRecoMCs:stoppingtarget" ]
   ExtraMCStepCollectionTags : []
-  SurfaceStepCollectionTag : "MakeSS"
+  SurfaceStepCollectionTag : "compressRecoMCs"
   FitType : LoopHelix
 }
 # instance for processing trigger (digitization) output from simulation
@@ -294,8 +294,6 @@ EventNtuple : {
     @table::TrkQualProducers
     @table::TrkPIDProducers
     @table::MergeKKProducers
-    # patch for SurfaceSteps in MDC2020
-    MakeSS : @local::CommonMC.MakeSSReco
   }
 
   analyzers : {
@@ -304,11 +302,10 @@ EventNtuple : {
   }
 
   #  TrigSequence : [ PBIWeight, @sequence::TrkQualProducersPath, @sequence::TrkPIDProducersPath]
-  Path : [ @sequence::MergeKKProducersPath, PBIWeight, MakeSS, TrkQualAll ]
-  PathNoMakeSS : [ @sequence::MergeKKProducersPath, PBIWeight, TrkQualAll ]
+  Path : [ @sequence::MergeKKProducersPath, PBIWeight, TrkQualAll ]
   PathExt : [ @sequence::MergeKKNoFieldPath ]
   PathOff : [ @sequence::MergeKKOffSpillPath ]
-  PathSeparate : [ @sequence::MergeKKSeparatePath, PBIWeight, MakeSS, @sequence::TrkQualProducersPath]
+  PathSeparate : [ @sequence::MergeKKSeparatePath, PBIWeight, @sequence::TrkQualProducersPath]
   PathNoMC : [ @sequence::MergeKKProducersPath, TrkQualAll ]
   EndPath : [ EventNtuple, genCountLogger ]
   EndPathNoMC : [ EventNtuple ]
