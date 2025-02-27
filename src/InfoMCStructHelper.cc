@@ -171,7 +171,7 @@ namespace mu2e {
 
   void InfoMCStructHelper::fillAllSimInfos(const KalSeedMC& kseedmc, const PrimaryParticle& primary, std::vector<std::vector<SimInfo>>& all_siminfos, int n_generations, int n_match) {
     std::vector<SimInfo> siminfos;
-    
+
     // interpret -1 as no llimit
     if (n_generations == -1) {
       n_generations = std::numeric_limits<int>::max();
@@ -179,7 +179,7 @@ namespace mu2e {
     if (n_match == -1 ) {
       n_match = std::numeric_limits<int>::max();
     }
-    
+
     //create vector of art Ptr to particles:
     std::vector<art::Ptr<SimParticle> > allParts;
 
@@ -188,8 +188,8 @@ namespace mu2e {
       auto trkprimaryptr = kseedmc.simParticle(imatch).simParticle(_spcH);
       auto trkprimary = trkprimaryptr->originParticle();
       auto current_sim_particle_ptr = trkprimaryptr;
-      auto current_sim_particle = trkprimary; 
-      
+      auto current_sim_particle = trkprimary;
+
       for (int i_generation = 0; i_generation < n_generations; ++i_generation) {
         bool isSame = false;
         for(unsigned int ipart = 0; ipart < allParts.size() ; ipart++){
@@ -199,9 +199,8 @@ namespace mu2e {
             }
         }
         if(!isSame) { allParts.push_back(current_sim_particle_ptr); }
-      
+
         SimInfo sim_info;
-        
         fillSimInfo(current_sim_particle, sim_info);
         sim_info.trkrel = MCRelationship(current_sim_particle_ptr, trkprimaryptr);
         sim_info.rank = imatch;
@@ -221,9 +220,12 @@ namespace mu2e {
           sim_info.nhits = kseedmc.simParticle(imatch)._nhits;
           sim_info.nactive = kseedmc.simParticle(imatch)._nactive;
         }
+        else { // don't set a rank for ancestor particles
+          sim_info.rank = -1;
+        }
         // record the index this object will have
         sim_info.index = siminfos.size();
-        
+
         if(!isSame) {
           siminfos.push_back(sim_info);
         }
@@ -277,7 +279,8 @@ namespace mu2e {
   void InfoMCStructHelper::fillSimInfo(const SimParticle& sp, SimInfo& siminfo) {
     GeomHandle<DetectorSystem> det;
     siminfo.valid = true;
-    if(sp.genParticle().isNonnull())siminfo.gen = sp.genParticle()->generatorId().id();
+    siminfo.id = sp.id().asInt();
+    if(sp.genParticle().isNonnull()) { siminfo.gen = sp.genParticle()->generatorId().id(); }
     siminfo.startCode = sp.creationCode();
     siminfo.stopCode = sp.stoppingCode();
     siminfo.pdg = sp.pdgId();

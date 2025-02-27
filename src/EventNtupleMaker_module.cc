@@ -132,7 +132,8 @@ namespace mu2e {
         fhicl::Atom<int> debug{Name("debugLevel"),0};
         fhicl::Atom<int> splitlevel{Name("splitlevel"),99};
         fhicl::Atom<int> buffsize{Name("buffsize"),32000};
-        // General event info
+        fhicl::Atom<bool> hastrks{Name("hasTracks"), Comment("Require >=1 tracks to fill tuple"), false};
+       // General event info
         fhicl::Atom<art::InputTag> rctag{Name("RecoCountTag"), Comment("RecoCount"), art::InputTag()};
         fhicl::Atom<art::InputTag> PBITag{Name("PBITag"), Comment("Tag for ProtonBunchIntensity object") ,art::InputTag()};
         fhicl::Atom<art::InputTag> PBTTag{Name("PBTTag"), Comment("Tag for ProtonBunchTime object") ,art::InputTag()};
@@ -191,13 +192,15 @@ namespace mu2e {
 
       Config _conf;
       std::vector<BranchConfig> _allBranches; // configurations for all track branches
-
       // main TTree
       TTree* _ntuple;
+      TH1I* _hVersion;
       // general event info branch
       EventInfo _einfo;
       EventInfoMC _einfomc;
       art::InputTag _recoCountTag, _PBITag, _PBTTag, _PBTMCTag;
+      // track control
+      bool _hastrks;
       // hit counting
       HitCount _hcnt;
       // track counting
@@ -313,8 +316,9 @@ namespace mu2e {
     _PBITag(conf().PBITag()),
     _PBTTag(conf().PBTTag()),
     _PBTMCTag(conf().PBTMCTag()),
+    _hastrks(conf().hastrks()),
     _fillmc(conf().fillmc()),
-    _fillcalomc(conf().fillCaloMC()),
+   _fillcalomc(conf().fillCaloMC()),
     // CRV
     _fillcrvcoincs(conf().fillcrvcoincs()),
     _fillcrvpulses(conf().fillcrvpulses()),
@@ -393,6 +397,10 @@ namespace mu2e {
     art::ServiceHandle<art::TFileService> tfs;
     // create TTree
     _ntuple=tfs->make<TTree>("ntuple","Mu2e Event Ntuple");
+    _hVersion = tfs->make<TH1I>("version", "version number",3,0,3);
+    _hVersion->GetXaxis()->SetBinLabel(1, "major"); _hVersion->SetBinContent(1, 6);
+    _hVersion->GetXaxis()->SetBinLabel(2, "minor"); _hVersion->SetBinContent(2, 3);
+    _hVersion->GetXaxis()->SetBinLabel(3, "patch"); _hVersion->SetBinContent(3, 0);
     // add event info branch
     _ntuple->Branch("evtinfo",&_einfo,_buffsize,_splitlevel);
     if (_fillmc) {
@@ -605,6 +613,7 @@ namespace mu2e {
     event.getByLabel(_surfaceStepsTag,_surfaceStepsHandle);
 
     // loop through all track types
+    unsigned ntrks(0);
     for (BranchIndex i_branch = 0; i_branch < _allBranches.size(); ++i_branch) {
       _allTIs.at(i_branch).clear();
       _allTSIs.at(i_branch).clear();
@@ -643,6 +652,7 @@ namespace mu2e {
           auto hptr = (*khassns)[i_kseedptr].second;
           _infoStructHelper.fillHelixInfo(hptr, _hinfos);
         }
+        ntrks++; // count total # of tracks
       }
     }
 
@@ -679,10 +689,8 @@ namespace mu2e {
       }
 
     }
-
-
     // fill this row in the TTree
-    _ntuple->Fill();
+    if((!_hastrks) || ntrks > 0) _ntuple->Fill();
   }
 
 

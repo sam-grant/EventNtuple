@@ -6,43 +6,52 @@
 
 #include <iostream>
 
-void PrintEvents(std::string filename, bool has_mc = false) {
+void PrintEvents(std::string filename) {
 
   RooUtil util(filename);
+  //  util.Debug(true);
   std::cout << filename << " has " << util.GetNEvents() << " events" << std::endl;
 
   // Only print one event
-  for (int i_event = 1; i_event < 2; ++i_event) {
+  for (int i_event = 0; i_event < 1; ++i_event) {
     const auto& event = util.GetEvent(i_event);
 
     // evtinfo branch
-    std::cout << "evtinfo: "<< event.evtinfo->run << "," << event.evtinfo->subrun << "," << event.evtinfo->event << "," << event.evtinfo->nprotons << "," << event.evtinfo->pbtime << "," << event.evtinfo->pbterr << std::endl;
+    if (event.evtinfo != nullptr) {
+      std::cout << "evtinfo: "<< event.evtinfo->run << "," << event.evtinfo->subrun << "," << event.evtinfo->event << "," << event.evtinfo->nprotons << "," << event.evtinfo->pbtime << "," << event.evtinfo->pbterr << std::endl;
+    }
 
     // evtinfomc branch
-    if (has_mc) {
+    if (event.evtinfomc != nullptr) {
       std::cout << "evtinfomc: " << event.evtinfomc->nprotons << "," << event.evtinfomc->pbtime << std::endl;
     }
 
     // trk branch
-    for (const auto& trk : *(event.trk)) {
-      std::cout << "trk: " << trk.status << "," << trk.nhits << "," << trk.nactive << "," << trk.avgedep << std::endl;
+    if (event.trk != nullptr) {
+      for (const auto& trk : *(event.trk)) {
+        std::cout << "trk: " << trk.status << "," << trk.nhits << "," << trk.nactive << "," << trk.avgedep << std::endl;
+      }
     }
 
     // trkmc branch
-    if (has_mc) {
+    if (event.trkmc != nullptr) {
       for (const auto& trkmc : *(event.trkmc)) {
         std::cout << "trkmc: " << trkmc.valid << "," << trkmc.nhits << "," << trkmc.nactive << "," << trkmc.t0 << std::endl;
       }
     }
 
     // trksegs branch
-    for (const auto& trksegs : *(event.trksegs)) {
-      std::cout << "New Track!" << std::endl;
-      for (const auto& trkseg : trksegs) {
-        std::cout << "trksegs: time = " << trkseg.time << " ns, p_mag = " << trkseg.mom.R() << " MeV/c, sid = " << trkseg.sid << ", p_z = " << trkseg.mom.z() << " MeV/c, z = " << trkseg.pos.z() << " mm" << std::endl;
+    if (event.trksegs != nullptr) {
+      for (const auto& trksegs : *(event.trksegs)) {
+        std::cout << "New Track!" << std::endl;
+        for (const auto& trkseg : trksegs) {
+          std::cout << "trksegs: time = " << trkseg.time << " ns, p_mag = " << trkseg.mom.R() << " MeV/c, sid = " << trkseg.sid << ", p_z = " << trkseg.mom.z() << " MeV/c, z = " << trkseg.pos.z() << " mm, momerr = " << trkseg.momerr << " MeV/c" << std::endl;
+        }
       }
     }
-    if (has_mc) {
+
+    // trksegsmc branch
+    if (event.trksegsmc != nullptr) {
       for (const auto& trksegsmc : *(event.trksegsmc)) {
         std::cout << "New Track!" << std::endl;
         for (const auto& trksegmc : trksegsmc) {
@@ -52,12 +61,14 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     }
 
     // trkcalohit branch
-    for (const auto& trkcalohit : *(event.trkcalohit)) {
-      std::cout << "trkcalohit: " << trkcalohit.active << "," << trkcalohit.mom.R() << "," << trkcalohit.edep << "," << trkcalohit.edeperr << std::endl;
+    if (event.trkcalohit != nullptr) {
+      for (const auto& trkcalohit : *(event.trkcalohit)) {
+        std::cout << "trkcalohit: " << trkcalohit.active << "," << trkcalohit.mom.R() << "," << trkcalohit.edep << "," << trkcalohit.edeperr << std::endl;
+      }
     }
 
     // trkcalohitmc branch
-    if (has_mc) {
+    if (event.trkcalohitmc != nullptr) {
       for (const auto& trkcalohitmc : *(event.trkcalohitmc)) {
         std::cout << "trkcalohitmc: " << trkcalohitmc.nsim << "," << trkcalohitmc.etot << "," << trkcalohitmc.prel.relationship() << std::endl;
       }
@@ -65,21 +76,23 @@ void PrintEvents(std::string filename, bool has_mc = false) {
 
 
     // crvcoincs branch
-    for (const auto& crvcoinc : *(event.crvcoincs)) {
-      std::cout << "crvcoinc: " << crvcoinc.sectorType << "," << crvcoinc.PEs << "," << crvcoinc.angle << std::endl;
-      for (const auto& layer_PE : crvcoinc.PEsPerLayer) {
-        std::cout << "crvcoinc layer PE: " << layer_PE << std::endl;
+    if (event.crvcoincs != nullptr) {
+      for (const auto& crvcoinc : *(event.crvcoincs)) {
+        std::cout << "crvcoinc: " << crvcoinc.sectorType << "," << crvcoinc.PEs << "," << crvcoinc.angle << std::endl;
+        for (const auto& layer_PE : crvcoinc.PEsPerLayer) {
+          std::cout << "crvcoinc layer PE: " << layer_PE << std::endl;
+        }
       }
     }
 
     // crvcoincsmc branch
-    if (has_mc) {
+    if (event.crvcoincsmc != nullptr) {
       for (const auto& crvcoincmc : *(event.crvcoincsmc)) {
         std::cout << "crvcoincmc: " << crvcoincmc.valid << "," << crvcoincmc.pdgId << "," << crvcoincmc.depositedEnergy << std::endl;
       }
     }
 
-    if (has_mc) {
+    if (event.trkmcsim != nullptr) {
       for (const auto& trkmcsim : *(event.trkmcsim)) {
         std::cout << "New Track!" << std::endl;
         for (const auto& sim : trkmcsim) {
@@ -89,8 +102,10 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     }
 
     // trkqual branch
-    for (const auto& trkqual : *(event.trkqual)) {
-      std::cout << "trkqual: " << trkqual.valid << ", " << trkqual.result << std::endl;
+    if (event.trkqual != nullptr) {
+      for (const auto& trkqual : *(event.trkqual)) {
+        std::cout << "trkqual: " << trkqual.valid << ", " << trkqual.result << std::endl;
+      }
     }
 
     // trksegpars_lh
@@ -153,17 +168,22 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     }
 
     // hitcount
-    auto hitcount = *(event.hitcount);
-    std::cout << "hitcount: " << hitcount.nsd << ", " << hitcount.nesel << ", " << hitcount.nrsel << ", " << hitcount.ntsel << ", " << hitcount.nbkg << std::endl;
+    if (event.hitcount != nullptr) {
+      auto hitcount = *(event.hitcount);
+      std::cout << "hitcount: " << hitcount.nsd << ", " << hitcount.nesel << ", " << hitcount.nrsel << ", " << hitcount.ntsel << ", " << hitcount.nbkg << std::endl;
+    }
 
     // crvsummary
-    auto crvsummary = *(event.crvsummary);
-    std::cout << "crvsummary: " << crvsummary.totalPEs << ", " << crvsummary.nHitCounters << std::endl;
+    if (event.crvsummary != nullptr) {
+      auto crvsummary = *(event.crvsummary);
+      std::cout << "crvsummary: " << crvsummary.totalPEs << ", " << crvsummary.nHitCounters << std::endl;
+    }
 
     // crvsummarymc
-    auto crvsummarymc = *(event.crvsummarymc);
-    std::cout << "crvsummarymc: " << crvsummarymc.totalEnergyDeposited << ", " << crvsummarymc.minPathLayer << ", " << crvsummarymc.pdgId << std::endl;
-
+    if (event.crvsummarymc != nullptr) {
+      auto crvsummarymc = *(event.crvsummarymc);
+      std::cout << "crvsummarymc: " << crvsummarymc.totalEnergyDeposited << ", " << crvsummarymc.minPathLayer << ", " << crvsummarymc.pdgId << std::endl;
+    }
     // crvdigis
     if (event.crvdigis != nullptr) {
       for (const auto& crvdigi : *(event.crvdigis)) {
@@ -179,20 +199,16 @@ void PrintEvents(std::string filename, bool has_mc = false) {
     }
 
     // crvpulsesmc branch
-    if (has_mc) {
-      if (event.crvpulsesmc != nullptr) {
-        for (const auto& crvpulsemc : *(event.crvpulsesmc)) {
-          std::cout << "crvpulsemc: " << crvpulsemc.valid << "," << crvpulsemc.pdgId << "," << crvpulsemc.depositedEnergy << std::endl;
-        }
+    if (event.crvpulsesmc != nullptr) {
+      for (const auto& crvpulsemc : *(event.crvpulsesmc)) {
+        std::cout << "crvpulsemc: " << crvpulsemc.valid << "," << crvpulsemc.pdgId << "," << crvpulsemc.depositedEnergy << std::endl;
       }
     }
 
     // crvcoincsmcplane branch
-    if (has_mc) {
-      if (event.crvcoincsmcplane != nullptr) {
-        for (const auto& crvcoincmcplane : *(event.crvcoincsmcplane)) {
-          std::cout << "crvcoincmcplane: " << crvcoincmcplane.pdgId << "," << crvcoincmcplane.primary.z() << ", " << crvcoincmcplane.kineticEnergy << ", " << crvcoincmcplane.dataSource << std::endl;
-        }
+    if (event.crvcoincsmcplane != nullptr) {
+      for (const auto& crvcoincmcplane : *(event.crvcoincsmcplane)) {
+        std::cout << "crvcoincmcplane: " << crvcoincmcplane.pdgId << "," << crvcoincmcplane.primary.z() << ", " << crvcoincmcplane.kineticEnergy << ", " << crvcoincmcplane.dataSource << std::endl;
       }
     }
   }

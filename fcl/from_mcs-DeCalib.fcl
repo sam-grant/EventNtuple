@@ -2,22 +2,24 @@
 # hit information in the branch
 #include "EventNtuple/fcl/from_mcs-mockdata.fcl"
 
-process_name: TADeM
+process_name: DeCalib
 source : { module_type : RootInput }
 services : @local::Services.Reco
 physics :
 {
   producers : {
     @table::EventNtuple.producers
-    MakeSS : @local::CommonMC.MakeSSReco
+    DeMFilter : {
+    }
   }
-  TriggerPath : [ MergeKKDeMCalib, MakeSS ]
+  TriggerPath : [ MergeKKDeCalib ]
   analyzers : {
     EventNtuple : {
       @table::EventNtupleMaker
+      hasTracks : true
       FitType : LoopHelix
       branches :  [
-        { input: "MergeKKDeMCalib"
+        { input: "MergeKKDeCalib"
           branch : "trk"
           options : { fillMC : true fillHits : true  genealogyDepth : -1 }
         }
@@ -29,4 +31,4 @@ physics :
 physics.trigger_paths : [ TriggerPath ]
 physics.end_paths : [ EndPath ]
 services.TimeTracker.printSummary: true
-services.TFileService.fileName: "nts.owner.EventNtupleDeMCalib.version.sequence.root"
+services.TFileService.fileName: "nts.owner.EventNtupleDeCalib.version.sequence.root"
