@@ -10,7 +10,7 @@ class nthelper:
     trk_branches = ['trk', 'trkmc', 'trkcalohit', 'trkqual']
     trksegs_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trksegsmc']
     straw_branches = ['trkhits', 'trkmats', 'trkhitsmc']
-    trkmc_branches = ['trkmcsim']
+    mc_branches = ['trkmcsim']
     crv_branches = ['crvsummary','crvsummarymc','crvcoincs','crvcoincsmc','crvcoincsmcplane']
     unknown_branches = ['trkcalohitmc','trkmcsci','trkmcssi']
 
@@ -132,7 +132,7 @@ class nthelper:
             print("Within each Kalman fit element, there is a vector describing the track segment parameters when intersecting virtual detectors (identified by their surface id sid)\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
-        for branch in self.vector_vector_object_branches:
+        for branch in self.trksegs_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
             struct_file = struct + ".hh";
@@ -151,7 +151,7 @@ class nthelper:
             print("The number of elements in the vector is found in the leaf trk.nhits\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
-        for branch in self.vector_vector_object_branches:
+        for branch in self.straw_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
             struct_file = struct + ".hh";
@@ -171,7 +171,7 @@ class nthelper:
             print("The vector is sorted in reverse chronological order, such that the last element is the initial particle simulated in GEANT4, and each element before correspond to one of its daughter particles\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
-        for branch in self.vector_vector_object_branches:
+        for branch in self.mc_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
             struct_file = struct + ".hh";
@@ -190,7 +190,7 @@ class nthelper:
             print("The branch is empty if there are no CRV hit during the event\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
-        for branch in self.vector_vector_object_branches:
+        for branch in self.crv_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
             struct_file = struct + ".hh";

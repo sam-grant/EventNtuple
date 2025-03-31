@@ -37,12 +37,6 @@ Within each Kalman fit element, there is a vector describing the track segment p
 | trksegpars_lh |  Vector-of-vector branch |   LoopHelix track parameters at each trkseg surface (used for looping tracks)| [see LoopHelixInfo.hh](../inc/LoopHelixInfo.hh)
 | trksegpars_ch |  Vector-of-vector branch |   CentralHelix track parameters at each trkseg surface (used for field-on cosmic tracks)| [see CentralHelixInfo.hh](../inc/CentralHelixInfo.hh)
 | trksegpars_kl |  Vector-of-vector branch |   KinematicLine track parameters for each trkseg surface (used for field-off cosmics)| [see KinematicLineInfo.hh](../inc/KinematicLineInfo.hh)
-| trkmcsim |  Vector-of-vector branch |   information about SimParticles in genealogy| [see SimInfo.hh](../inc/SimInfo.hh)
-| trkhits |  Vector-of-vector branch |   information about the straw hits assigned to a track| [see TrkStrawHitInfo.hh](../inc/TrkStrawHitInfo.hh)
-| trkhitsmc |  Vector-of-vector branch |   MC-truth information of straw hits assigned to a track| [see TrkStrawHitInfoMC.hh](../inc/TrkStrawHitInfoMC.hh)
-| trkmats |  Vector-of-vector branch |   information on the straw materials used in the Kalman fit| [see TrkStrawMatInfo.hh](../inc/TrkStrawMatInfo.hh)
-| trkmcsci |  Vector-of-vector branch |   information about StepPointMCs| [see MCStepInfo.hh](../inc/MCStepInfo.hh)
-| trkmcssi |  Vector-of-vector branch |   information that summarizes all StepPointMCs in a given location| [see MCStepSummaryInfo.hh](../inc/MCStepSummaryInfo.hh)
 | trksegsmc |  Vector-of-vector branch |   MC-truth information of the SurfaceSteps taken by a particle through passive elements, or virtual detectors| [see SurfaceStepInfo.hh](../inc/SurfaceStepInfo.hh)
 ## Straw Branches
 
@@ -51,17 +45,9 @@ The number of elements in the vector is found in the leaf trk.nhits
 
 | branch | structure | explanation | leaf information |
 |--------|-----------|-------------|------------------|
-| trksegs |  Vector-of-vector branch |   track fit results at particular surfaces| [see TrkSegInfo.hh](../inc/TrkSegInfo.hh)
-| trksegpars_lh |  Vector-of-vector branch |   LoopHelix track parameters at each trkseg surface (used for looping tracks)| [see LoopHelixInfo.hh](../inc/LoopHelixInfo.hh)
-| trksegpars_ch |  Vector-of-vector branch |   CentralHelix track parameters at each trkseg surface (used for field-on cosmic tracks)| [see CentralHelixInfo.hh](../inc/CentralHelixInfo.hh)
-| trksegpars_kl |  Vector-of-vector branch |   KinematicLine track parameters for each trkseg surface (used for field-off cosmics)| [see KinematicLineInfo.hh](../inc/KinematicLineInfo.hh)
-| trkmcsim |  Vector-of-vector branch |   information about SimParticles in genealogy| [see SimInfo.hh](../inc/SimInfo.hh)
 | trkhits |  Vector-of-vector branch |   information about the straw hits assigned to a track| [see TrkStrawHitInfo.hh](../inc/TrkStrawHitInfo.hh)
-| trkhitsmc |  Vector-of-vector branch |   MC-truth information of straw hits assigned to a track| [see TrkStrawHitInfoMC.hh](../inc/TrkStrawHitInfoMC.hh)
 | trkmats |  Vector-of-vector branch |   information on the straw materials used in the Kalman fit| [see TrkStrawMatInfo.hh](../inc/TrkStrawMatInfo.hh)
-| trkmcsci |  Vector-of-vector branch |   information about StepPointMCs| [see MCStepInfo.hh](../inc/MCStepInfo.hh)
-| trkmcssi |  Vector-of-vector branch |   information that summarizes all StepPointMCs in a given location| [see MCStepSummaryInfo.hh](../inc/MCStepSummaryInfo.hh)
-| trksegsmc |  Vector-of-vector branch |   MC-truth information of the SurfaceSteps taken by a particle through passive elements, or virtual detectors| [see SurfaceStepInfo.hh](../inc/SurfaceStepInfo.hh)
+| trkhitsmc |  Vector-of-vector branch |   MC-truth information of straw hits assigned to a track| [see TrkStrawHitInfoMC.hh](../inc/TrkStrawHitInfoMC.hh)
 ## Monte Carlo Branches
 
 These branches contain 4 elements per event corresponding to different Kalman fit hypotheses (see Track branches)
@@ -70,17 +56,7 @@ The vector is sorted in reverse chronological order, such that the last element 
 
 | branch | structure | explanation | leaf information |
 |--------|-----------|-------------|------------------|
-| trksegs |  Vector-of-vector branch |   track fit results at particular surfaces| [see TrkSegInfo.hh](../inc/TrkSegInfo.hh)
-| trksegpars_lh |  Vector-of-vector branch |   LoopHelix track parameters at each trkseg surface (used for looping tracks)| [see LoopHelixInfo.hh](../inc/LoopHelixInfo.hh)
-| trksegpars_ch |  Vector-of-vector branch |   CentralHelix track parameters at each trkseg surface (used for field-on cosmic tracks)| [see CentralHelixInfo.hh](../inc/CentralHelixInfo.hh)
-| trksegpars_kl |  Vector-of-vector branch |   KinematicLine track parameters for each trkseg surface (used for field-off cosmics)| [see KinematicLineInfo.hh](../inc/KinematicLineInfo.hh)
 | trkmcsim |  Vector-of-vector branch |   information about SimParticles in genealogy| [see SimInfo.hh](../inc/SimInfo.hh)
-| trkhits |  Vector-of-vector branch |   information about the straw hits assigned to a track| [see TrkStrawHitInfo.hh](../inc/TrkStrawHitInfo.hh)
-| trkhitsmc |  Vector-of-vector branch |   MC-truth information of straw hits assigned to a track| [see TrkStrawHitInfoMC.hh](../inc/TrkStrawHitInfoMC.hh)
-| trkmats |  Vector-of-vector branch |   information on the straw materials used in the Kalman fit| [see TrkStrawMatInfo.hh](../inc/TrkStrawMatInfo.hh)
-| trkmcsci |  Vector-of-vector branch |   information about StepPointMCs| [see MCStepInfo.hh](../inc/MCStepInfo.hh)
-| trkmcssi |  Vector-of-vector branch |   information that summarizes all StepPointMCs in a given location| [see MCStepSummaryInfo.hh](../inc/MCStepSummaryInfo.hh)
-| trksegsmc |  Vector-of-vector branch |   MC-truth information of the SurfaceSteps taken by a particle through passive elements, or virtual detectors| [see SurfaceStepInfo.hh](../inc/SurfaceStepInfo.hh)
 ## CRV Branches
 
 These branches contain a vector where each element is a CRV hit that happened during the event
@@ -88,14 +64,8 @@ The branch is empty if there are no CRV hit during the event
 
 | branch | structure | explanation | leaf information |
 |--------|-----------|-------------|------------------|
-| trksegs |  Vector-of-vector branch |   track fit results at particular surfaces| [see TrkSegInfo.hh](../inc/TrkSegInfo.hh)
-| trksegpars_lh |  Vector-of-vector branch |   LoopHelix track parameters at each trkseg surface (used for looping tracks)| [see LoopHelixInfo.hh](../inc/LoopHelixInfo.hh)
-| trksegpars_ch |  Vector-of-vector branch |   CentralHelix track parameters at each trkseg surface (used for field-on cosmic tracks)| [see CentralHelixInfo.hh](../inc/CentralHelixInfo.hh)
-| trksegpars_kl |  Vector-of-vector branch |   KinematicLine track parameters for each trkseg surface (used for field-off cosmics)| [see KinematicLineInfo.hh](../inc/KinematicLineInfo.hh)
-| trkmcsim |  Vector-of-vector branch |   information about SimParticles in genealogy| [see SimInfo.hh](../inc/SimInfo.hh)
-| trkhits |  Vector-of-vector branch |   information about the straw hits assigned to a track| [see TrkStrawHitInfo.hh](../inc/TrkStrawHitInfo.hh)
-| trkhitsmc |  Vector-of-vector branch |   MC-truth information of straw hits assigned to a track| [see TrkStrawHitInfoMC.hh](../inc/TrkStrawHitInfoMC.hh)
-| trkmats |  Vector-of-vector branch |   information on the straw materials used in the Kalman fit| [see TrkStrawMatInfo.hh](../inc/TrkStrawMatInfo.hh)
-| trkmcsci |  Vector-of-vector branch |   information about StepPointMCs| [see MCStepInfo.hh](../inc/MCStepInfo.hh)
-| trkmcssi |  Vector-of-vector branch |   information that summarizes all StepPointMCs in a given location| [see MCStepSummaryInfo.hh](../inc/MCStepSummaryInfo.hh)
-| trksegsmc |  Vector-of-vector branch |   MC-truth information of the SurfaceSteps taken by a particle through passive elements, or virtual detectors| [see SurfaceStepInfo.hh](../inc/SurfaceStepInfo.hh)
+| crvsummary |  Single objects branch |   summary of the CRV information in the event| [see CrvSummaryReco.hh](../inc/CrvSummaryReco.hh)
+| crvsummarymc |  Single objects branch |   summary of the MC-truth CRV information in the event| [see CrvSummaryMC.hh](../inc/CrvSummaryMC.hh)
+| crvcoincs |  Vector branch |   information about a cluster of CRV coincidence triplets| [see CrvHitInfoReco.hh](../inc/CrvHitInfoReco.hh)
+| crvcoincsmc |  Vector branch |   information about the MC track which most likely caused the CRV coincidence triplets| [see CrvHitInfoMC.hh](../inc/CrvHitInfoMC.hh)
+| crvcoincsmcplane |  Vector branch |   information about the point where the MC trajectory crosses the xz plane of CRV-T| [see CrvPlaneInfoMC.hh](../inc/CrvPlaneInfoMC.hh)
