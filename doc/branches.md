@@ -12,8 +12,9 @@ These branches contain one element per event.
 | tcnt |  Single objects branch |   counts track types and track-related quantities in an event (MARKED FOR REMOVAL)| [see TrkCount.hh](../inc/TrkCount.hh)
 ## Track Branches
 
-These branches contain 4 elements per event corresponding to different Kalman fit hypotheses:
+Each element in these branch corresponds to a different Kalman fit hypotheses to reconstruct the track:
 
+In most cases, there are 4 different Kalman fit hypotheses:
 - downstream electron
 
 - downstream positron
@@ -23,15 +24,16 @@ These branches contain 4 elements per event corresponding to different Kalman fi
 - downstream positive muon
 
 
-In case the track is reflected and have an upstream leg and a downstream leg, then each event contains 8 elements.
+In case the track is reflected (it has an upstream leg and a downstream leg), then each event contains 8 elements, the last 4 being upstream equivalent of the 4 listed above.
 
-The last 4 elements are upstream equivalent to the 4 elements listed above.
+If a Kalman fit fails or there are multiple downstream tracks to fit, the number of element may vary.
 
 | branch | structure | explanation | leaf information |
 |--------|-----------|-------------|------------------|
 | trk |  Vector branch |   information about the reconstructed track| [see TrkInfo.hh](../inc/TrkInfo.hh)
 | trkmc |  Vector branch |   MC-truth information about the track| [see TrkInfoMC.hh](../inc/TrkInfoMC.hh)
 | trkcalohit |  Vector branch |   the calorimeter cluster assigned to a track| [see TrkCaloHitInfo.hh](../inc/TrkCaloHitInfo.hh)
+| trkcalohitmc |  Vector branch |   MC-truth infromation for calorimeter clusters| [see CaloClusterInfoMC.hh](../inc/CaloClusterInfoMC.hh)
 | trkqual |  Vector branch |   the output of a multi-variate analysis (MVA)| [see MVAResultInfo.hh](../inc/MVAResultInfo.hh)
 ## Track segments Branches
 
@@ -61,7 +63,7 @@ The number of elements in the vector is found in the leaf trk.nhits.
 
 These branches contain 4 elements per event corresponding to different Kalman fit hypotheses (see Track branches).
 
-Within each Kalman fit element, there is a vector containing Monte Carlo truth information about the particle leaving the track and its parent particles.
+Within each Kalman fit element, there is a vector containing Monte Carlo truth information about the particle making the track and its parent particles.
 
 The vector is sorted in reverse chronological order, such that the last element is the initial particle simulated in GEANT4, and each element before correspond to one of its daughter particles.
 
@@ -70,8 +72,8 @@ The vector is sorted in reverse chronological order, such that the last element 
 | trkmcsim |  Vector-of-vector branch |   information about SimParticles in genealogy| [see SimInfo.hh](../inc/SimInfo.hh)
 ## CRV Branches
 
-These branches contain a vector where each element is a CRV hit that happened during the event
-The branch is empty if there are no CRV hit during the event
+These branches contain a vector where each element is a CRV hit that happened during the event.
+The branch is empty if there are no CRV hit during the event.
 
 | branch | structure | explanation | leaf information |
 |--------|-----------|-------------|------------------|
@@ -80,3 +82,11 @@ The branch is empty if there are no CRV hit during the event
 | crvcoincs |  Vector branch |   information about a cluster of CRV coincidence triplets| [see CrvHitInfoReco.hh](../inc/CrvHitInfoReco.hh)
 | crvcoincsmc |  Vector branch |   information about the MC track which most likely caused the CRV coincidence triplets| [see CrvHitInfoMC.hh](../inc/CrvHitInfoMC.hh)
 | crvcoincsmcplane |  Vector branch |   information about the point where the MC trajectory crosses the xz plane of CRV-T| [see CrvPlaneInfoMC.hh](../inc/CrvPlaneInfoMC.hh)
+## Deprecated Branches
+
+These branches are remnants from trkana and are deprecated.
+
+| branch | structure | explanation | leaf information |
+|--------|-----------|-------------|------------------|
+| trkmcsci |  Vector-of-vector branch |   information about StepPointMCs| [see MCStepInfo.hh](../inc/MCStepInfo.hh)
+| trkmcssi |  Vector-of-vector branch |   information that summarizes all StepPointMCs in a given location| [see MCStepSummaryInfo.hh](../inc/MCStepSummaryInfo.hh)

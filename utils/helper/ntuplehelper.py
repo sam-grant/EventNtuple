@@ -7,12 +7,12 @@ class nthelper:
     vector_vector_object_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trkmcsim', 'trkhits', 'trkhitsmc', 'trkmats', 'trkmcsci', 'trkmcssi', 'trksegsmc' ]
 
     evt_branches = ['evtinfo','evtinfomc','hitcount','tcnt']
-    trk_branches = ['trk', 'trkmc', 'trkcalohit', 'trkqual']
+    trk_branches = ['trk', 'trkmc', 'trkcalohit', 'trkcalohitmc', 'trkqual']
     trksegs_branches = ['trksegs', 'trksegpars_lh', 'trksegpars_ch', 'trksegpars_kl', 'trksegsmc']
     straw_branches = ['trkhits', 'trkmats', 'trkhitsmc']
     mc_branches = ['trkmcsim']
     crv_branches = ['crvsummary','crvsummarymc','crvcoincs','crvcoincsmc','crvcoincsmcplane']
-    unknown_branches = ['trkcalohitmc','trkmcsci','trkmcssi']
+    deprecated_branches = ['trkmcsci','trkmcssi']
 
     track_types_dict = { 'kl' : "kinematic line fit (i.e. straight-line fit)",
                          'dem' : "downstream e-minus fit",
@@ -104,13 +104,14 @@ class nthelper:
             print("================")
         else:
             print("## Track Branches\n")
-            print("These branches contain 4 elements per event corresponding to different Kalman fit hypotheses:\n")
+            print("Each element in these branch corresponds to a different Kalman fit hypotheses to reconstruct the track:\n")
+            print("In most cases, there are 4 different Kalman fit hypotheses:")
             print("- downstream electron\n")
             print("- downstream positron\n")
             print("- downstream negative muon\n")
             print("- downstream positive muon\n")
-            print("\nIn case the track is reflected and have an upstream leg and a downstream leg, then each event contains 8 elements.\n")
-            print("The last 4 elements are upstream equivalent to the 4 elements listed above.\n")
+            print("\nIn case the track is reflected (it has an upstream leg and a downstream leg), then each event contains 8 elements, the last 4 being upstream equivalent of the 4 listed above.\n")
+            print("If a Kalman fit fails or there are multiple downstream tracks to fit, the number of element may vary.\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
         for branch in self.trk_branches:
@@ -167,7 +168,7 @@ class nthelper:
         else:
             print("## Monte Carlo Branches\n")
             print("These branches contain 4 elements per event corresponding to different Kalman fit hypotheses (see Track branches).\n")
-            print("Within each Kalman fit element, there is a vector containing Monte Carlo truth information about the particle leaving the track and its parent particles.\n")
+            print("Within each Kalman fit element, there is a vector containing Monte Carlo truth information about the particle making the track and its parent particles.\n")
             print("The vector is sorted in reverse chronological order, such that the last element is the initial particle simulated in GEANT4, and each element before correspond to one of its daughter particles.\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
@@ -186,11 +187,29 @@ class nthelper:
             print("================")
         else:
             print("## CRV Branches\n")
-            print("These branches contain a vector where each element is a CRV hit that happened during the event")
-            print("The branch is empty if there are no CRV hit during the event\n")
+            print("These branches contain a vector where each element is a CRV hit that happened during the event.")
+            print("The branch is empty if there are no CRV hit during the event.\n")
             print("| branch | structure | explanation | leaf information |")
             print("|--------|-----------|-------------|------------------|")
         for branch in self.crv_branches:
+            explanation = self.get_branch_explanation(branch)
+            struct = self.branch_struct_dict[branch]
+            struct_file = struct + ".hh";
+            if not export_to_md:
+                print(explanation)
+            else:
+                tokens=explanation.split(":")
+                print("| " + tokens[0] + " | " + tokens[1] + " | " + tokens[2] + "| [see " + struct_file + "](../inc/"+struct_file+")")
+
+        if not export_to_md:
+            print("\nDeprecated Branches")
+            print("================")
+        else:
+            print("## Deprecated Branches\n")
+            print("These branches are remnants from trkana and are deprecated.\n")
+            print("| branch | structure | explanation | leaf information |")
+            print("|--------|-----------|-------------|------------------|")
+        for branch in self.deprecated_branches:
             explanation = self.get_branch_explanation(branch)
             struct = self.branch_struct_dict[branch]
             struct_file = struct + ".hh";
