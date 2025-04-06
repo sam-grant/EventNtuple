@@ -60,8 +60,9 @@ class Print:
     """
     print(f"\n---> Printing {n_events} event(s)...\n")
     for i, event in enumerate(array, start=1): # Iterate event-by-event 
-      print(f'-------------------------------------------------------------------------------------')
+      print('-'*85)
       self.PrintEvent(event) # Call self.print_event() 
-      print(f'-------------------------------------------------------------------------------------\n')
+      print('-'*85)
+      print()
       if i == n_events: # Return if 'n_events' is reached
         return 
