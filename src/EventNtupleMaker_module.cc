@@ -700,15 +700,19 @@ namespace mu2e {
     _einfo.run = event.run();
     _einfo.subrun = event.subRun();
 
-    auto recoCountHandle = event.getValidHandle<mu2e::RecoCount>(_recoCountTag);
-    auto recoCount = *recoCountHandle;
-    _infoStructHelper.fillHitCount(recoCount, _hcnt);
+    if (_recoCountTag != "") {
+      auto recoCountHandle = event.getValidHandle<mu2e::RecoCount>(_recoCountTag);
+      auto recoCount = *recoCountHandle;
+      _infoStructHelper.fillHitCount(recoCount, _hcnt);
+    }
 
     // currently no reco nproton estimate TODO
-    auto PBThandle = event.getValidHandle<mu2e::ProtonBunchTime>(_PBTTag);
-    auto PBT = *PBThandle;
-    _einfo.pbtime = PBT.pbtime_;
-    _einfo.pbterr = PBT.pbterr_;
+    if (_PBTTag != "") {
+      auto PBThandle = event.getValidHandle<mu2e::ProtonBunchTime>(_PBTTag);
+      auto PBT = *PBThandle;
+      _einfo.pbtime = PBT.pbtime_;
+      _einfo.pbterr = PBT.pbterr_;
+    }
 
     if (_fillmc) {
       auto PBTMChandle = event.getValidHandle<mu2e::ProtonBunchTimeMC>(_PBTMCTag);
