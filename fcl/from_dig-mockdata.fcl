@@ -33,10 +33,10 @@ outputs : {
 }
 
 physics.EventNtuplePath : [
-  @sequence::Reconstruction.RecoMCPath,
+  @sequence::Reconstruction.OnSpillMCPath,
   @sequence::EventNtuple.Path
 ]
-physics.EventNtupleEndPath : [ @sequence::Reconstruction.EndPath, @sequence::EventNtuple.EndPathNoMC ]
+physics.EventNtupleEndPath : [ @sequence::EventNtuple.EndPathNoMC ]
 physics.analyzers.EventNtuple.SelectEvents : [ "EventNtuplePath" ]
 
 physics.trigger_paths : [ EventNtuplePath ]
