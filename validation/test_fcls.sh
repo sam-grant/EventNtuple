@@ -11,8 +11,9 @@ primary_dataset="mcs.mu2e.CeEndpointOnSpillTriggered.MDC2020aq_best_v1_3.art"
 mixed_dataset="mcs.mu2e.CeEndpointMix1BBTriggered.MDC2020am_best_v1_3.art"
 extracted_dataset="mcs.mu2e.CosmicCRYExtractedCatTriggered.MDC2020ae_best_v1_3.art"
 digi_dataset="dig.mu2e.ensembleMDS1gOnSpillTriggered.MDC2020aq_perfect_v1_3.art"
+crv_vst_dataset="rec.mu2e.CRV_wideband_cosmics.CRVWBA-000-000-000.art"
 
-all_datasets=( $mock_dataset $primary_dataset $mixed_dataset $extracted_dataset $digi_dataset )
+all_datasets=( $mock_dataset $primary_dataset $mixed_dataset $extracted_dataset $digi_dataset $crv_vst_dataset )
 
 if [ ! -d ../filelists ]; then
      echo "Making directory ../filelists/"
@@ -112,6 +113,14 @@ fi
 
 echo -n "creating validation file... "
 root -l -b -q validation/create_val_file_rooutil.C\(\"nts.ntuple.after.root\",\"val.ntuple.after.root\"\) >> ${log_file} 2>&1
+if [ $? == 0 ]; then
+    echo "OK"
+else
+    echo "FAIL"
+fi
+
+echo -n "from_rec-crv-vst.fcl... "
+mu2e -c fcl/from_rec-crv-vst.fcl -S ../filelists/${crv_vst_dataset}.list --TFileName nts.ntuple.crv-vst.root -n 100 >> ${log_file} 2>&1
 if [ $? == 0 ]; then
     echo "OK"
 else
