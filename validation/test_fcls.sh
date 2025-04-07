@@ -6,11 +6,11 @@
 log_file="test_fcls.log"
 rm ${log_file}
 
-mock_dataset="mcs.mu2e.ensembleMDS1gOnSpillTriggered.MDC2020am_perfect_v1_3.art"
-primary_dataset="mcs.mu2e.CeEndpointOnSpillTriggered.MDC2020an_best_v1_3.art"
-mixed_dataset="mcs.mu2e.CeEndpointMix2BBTriggered.MDC2020an_best_v1_3.art"
+mock_dataset="mcs.mu2e.ensembleMDS1gOnSpillTriggered.MDC2020aq_perfect_v1_3.art"
+primary_dataset="mcs.mu2e.CeEndpointOnSpillTriggered.MDC2020aq_best_v1_3.art"
+mixed_dataset="mcs.mu2e.CeEndpointMix1BBTriggered.MDC2020am_best_v1_3.art"
 extracted_dataset="mcs.mu2e.CosmicCRYExtractedCatTriggered.MDC2020ae_best_v1_3.art"
-digi_dataset="dig.mu2e.ensembleMDS1gOnSpillTriggered.MDC2020am_perfect_v1_3.art"
+digi_dataset="dig.mu2e.ensembleMDS1gOnSpillTriggered.MDC2020aq_perfect_v1_3.art"
 
 all_datasets=( $mock_dataset $primary_dataset $mixed_dataset $extracted_dataset $digi_dataset )
 
@@ -23,8 +23,8 @@ for dataset in "${all_datasets[@]}"
 do
     if [ ! -f ../filelists/$dataset.list ]; then
         echo "File list for $dataset doesn't exist. Creating..."
-        setup dhtools
-        samListLocations -d --defname $dataset > ../filelists/$dataset.list
+        setup mu2efiletools
+        mu2eDatasetFileList $dataset > ../filelists/$dataset.list
     fi
 done
 
