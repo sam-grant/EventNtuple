@@ -183,8 +183,14 @@ struct Event {
     }
   }
 
-  int nTracks() const { return trk->size(); }
-  int nCrvCoincs() const { return crvcoincs->size(); }
+  int nTracks() const {
+    if (trk == nullptr) { return 0; }
+    else { return trk->size(); }
+  }
+  int nCrvCoincs() const {
+    if (crvcoincs == nullptr) { return 0; }
+    else { return crvcoincs->size(); }
+  }
 
   Tracks GetTracks() { return tracks; }
   Tracks GetTracks(TrackCut cut, bool inplace = false) {
