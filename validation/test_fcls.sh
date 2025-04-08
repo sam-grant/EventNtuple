@@ -126,3 +126,11 @@ if [ $? == 0 ]; then
 else
     echo "FAIL"
 fi
+
+echo -n "from_mcs-DeCalib.fcl... "
+mu2e -c fcl/from_mcs-DeCalib.fcl -S ../filelists/${mixed_dataset}.list --TFileName nts.ntuple.deCalib.root -n 100 >> ${log_file} 2>&1
+if [ $? == 0 ]; then
+    echo "OK"
+else
+    echo "FAIL"
+fi
