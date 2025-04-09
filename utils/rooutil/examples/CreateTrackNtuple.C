@@ -36,7 +36,7 @@ void CreateTrackNtuple(std::string filename) {
       trk = *(track.trk); // we will fill this data into the tree
 
       // Get the track segments at the tracker entrance
-      const auto& trk_ent_segments = track.GetSegments(tracker_entrance);
+      auto trk_ent_segments = track.GetSegments([](TrackSegment& segment){ return tracker_entrance(segment) && has_reco_step(segment); });
 
       // Loop through the tracker entrance track segments
       for (const auto& segment : trk_ent_segments) {

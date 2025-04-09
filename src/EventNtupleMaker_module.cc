@@ -133,6 +133,7 @@ namespace mu2e {
         fhicl::Atom<int> splitlevel{Name("splitlevel"),99};
         fhicl::Atom<int> buffsize{Name("buffsize"),32000};
         fhicl::Atom<bool> hastrks{Name("hasTracks"), Comment("Require >=1 tracks to fill tuple"), false};
+        fhicl::Atom<bool> hascrv{Name("hasCRV"), Comment("Require CRV information to fill tuple"), false};
        // General event info
         fhicl::Atom<art::InputTag> rctag{Name("RecoCountTag"), Comment("RecoCount"), art::InputTag()};
         fhicl::Atom<art::InputTag> PBITag{Name("PBITag"), Comment("Tag for ProtonBunchIntensity object") ,art::InputTag()};
@@ -201,6 +202,7 @@ namespace mu2e {
       art::InputTag _recoCountTag, _PBITag, _PBTTag, _PBTMCTag;
       // track control
       bool _hastrks;
+      bool _hascrv;
       // hit counting
       HitCount _hcnt;
       // track counting
@@ -317,6 +319,7 @@ namespace mu2e {
     _PBTTag(conf().PBTTag()),
     _PBTMCTag(conf().PBTMCTag()),
     _hastrks(conf().hastrks()),
+    _hascrv(conf().hascrv()),
     _fillmc(conf().fillmc()),
    _fillcalomc(conf().fillCaloMC()),
     // CRV
@@ -690,7 +693,16 @@ namespace mu2e {
 
     }
     // fill this row in the TTree
-    if((!_hastrks) || ntrks > 0) _ntuple->Fill();
+    bool fill = true; // default to fliling event
+    if(_hastrks && ntrks == 0) { // if we require tracks (_hastrks) but we have none, don't write
+      fill = false;
+    }
+    if (_hascrv && _crvsummary.totalPEs == 0) { // if we require CRV but we have none, don't write
+      fill = false;
+    }
+    if (fill) {
+      _ntuple->Fill();
+    }
   }
 
 
@@ -700,15 +712,19 @@ namespace mu2e {
     _einfo.run = event.run();
     _einfo.subrun = event.subRun();
 
-    auto recoCountHandle = event.getValidHandle<mu2e::RecoCount>(_recoCountTag);
-    auto recoCount = *recoCountHandle;
-    _infoStructHelper.fillHitCount(recoCount, _hcnt);
+    if (_recoCountTag != "") {
+      auto recoCountHandle = event.getValidHandle<mu2e::RecoCount>(_recoCountTag);
+      auto recoCount = *recoCountHandle;
+      _infoStructHelper.fillHitCount(recoCount, _hcnt);
+    }
 
     // currently no reco nproton estimate TODO
-    auto PBThandle = event.getValidHandle<mu2e::ProtonBunchTime>(_PBTTag);
-    auto PBT = *PBThandle;
-    _einfo.pbtime = PBT.pbtime_;
-    _einfo.pbterr = PBT.pbterr_;
+    if (_PBTTag != "") {
+      auto PBThandle = event.getValidHandle<mu2e::ProtonBunchTime>(_PBTTag);
+      auto PBT = *PBThandle;
+      _einfo.pbtime = PBT.pbtime_;
+      _einfo.pbterr = PBT.pbterr_;
+    }
 
     if (_fillmc) {
       auto PBTMChandle = event.getValidHandle<mu2e::ProtonBunchTimeMC>(_PBTMCTag);
