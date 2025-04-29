@@ -58,7 +58,24 @@ Notes for developers contributing to EventNtuple are [here](doc/developers.md)
 Validation scripts and instructions are [here](validation/README.md)
 
 ## Tagging a New Release
-Don't forget to set the new version number in ```src/EventNtupleMaker_module.cc```!
+Instructions for tagging a new release:
+
+* from your development area:
+```
+git fetch mu2e main
+git checkout --no-track -b vXX-YY-ZZ mu2e/main
+```
+* update version number in ```src/EventNtupleMaker_module.cc``` and commit
+* make sure EventNtuple runs following these [steps](validation/README.md#Validating-eventntuple-runs)
+* create a comparison booklet following these [steps](vaidation/README.md#Validating-EventNtuple-Contents)
+   * make sure any differences are understood
+* open PR with final changes and merge
+* create new release on GitHub
+   * auto-generate release notes but add text to highlight important changes
+* ask for a new Musing to be made
+* post announcement on #analysis-tools Slack channel
+* update [Mu2eWiki page](https://mu2ewiki.fnal.gov/wiki/EventNtuple)
+* present updates at next Infra / Tools meeting
 
 ## Previous Versions
 The version history of EventNtuple is [here](https://mu2ewiki.fnal.gov/wiki/EventNtuple).
